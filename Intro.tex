@@ -1,0 +1,186 @@
+\section{Introduction and Prerequisites}
+
+Before we can get started on this journey, we will need some preliminary results.  
+We will not present every proof and every detail, but rather list the necessary results and make some remarks on their consequences. 
+We will define homotopy groups, state some theorems about their consequences, define stable groups and introduce some important technical tools: the Steenrod Operations.
+
+\subsection{Homotopy Groups}
+
+\begin{Def}[Homotopy Groups]
+  Let $S^n$ be the $n$-sphere and $X$ be a topological space with base-point.  
+  Define the set 
+  \[\pi_n(X)=[S^n,X]\]
+  be the set of homotopy classes of base-point preserving maps.  
+  Notice that $\pi_1(X)$ is the familiar fundamental group.  
+\end{Def}
+
+We need to define the group operation on these groups, which in fact we can do for the suspension of any space $Y$
+Let $\Sigma$ be the reduced suspension functor, and 
+\[f,g:\Sigma Y\to X\]
+be pointed maps, so we can form
+\[f\vee g :S^n\vee S^n\to X\]
+Let $C$ be the cone functor.  
+Since $\Sigma Y\cong CY/Y$, we can write $\Sigma Y\vee \Sigma Y\cong \Sigma Y/Y$, where we identify $Y$ as the ``equator'' of $\Sigma Y$.  
+Letting $p: \Sigma Y\to \Sigma Y\vee \Sigma Y$ be the projection, we define
+\[f+g=(f\vee g)\circ p : \Sigma Y\to X\]
+It isn't hard to see this sum is well-defined on homotopy classes of pointed maps, homotopy-associative, has null-homotopic maps as identity and 
+has inverses up to homotopy, given by ``swapping the cones'' in the suspension.
+This means that $[\Sigma Y,X]$ is a group.  
+Better yet, if $\Sigma^2Y=S^2\wedge Y$ is an iterated suspension, this is an abelian group, where the homotopy $f+g\sim g+f$ is given by ``rotating'' the $S^2$ smash-factor.  
+It is an easy exercise to make these constructions precise, and they can be found in \cite{HatcherAT}.  Since $S^n=\Sigma^n(S^0)$, we have that $\pi_n(X)$ is a group and if $n\ge 2$ then it is an abelian group.  
+
+The calculation of these homotopy groups is notoriously difficult.  
+There is no analogy of Mayer-Vietoris or Siefert-Van Kampen, making it difficult to build homotopy groups of spaces from the homotopy groups of smaller spaces.
+Even for the simplest and most ubiquitous spaces, spheres, these computations are a long (but, in my opinion, quite beautiful) journey.  
+We can make a few quick computations, however.  
+First of all, if $k<n$, then a map $S^k\to S^n$ is not essentially surjective, this such a map factors through $S^n-\{*\}=\R^n$, which is contractible.  
+Thus $\pi_k(S^n)=0$.  
+We also have that, since $S^n$ is simply-connected for $n>1$, we have that any map from $S^n\to S^1$ factors through the universal cover, $\R$, which again is contractible.  
+This $\pi_n(S^1)=0$.  
+You might be inclined to hope the rest of the $\pi_k(S^n)$ will fall this easily, but in fact this is the last of the easy computations.  
+
+\subsection{The Hurewicz Map}
+
+Just like $H_1$ is the abelianization of the fundamental group, we can relate the first nontrivial homology group to the first nontrivial homotopy group.  
+We make the following terminology:
+\begin{Def}
+We say a space $X$ is $n$-connected if $\pi_i(X)=0$ for $i\le n$.
+\end{Def}
+
+
+There is a map 
+\[h_n:\pi_n(X)\to H_n(X)\]
+called the Hurewicz Map, given as follows.  Let $[f]\in \pi_n(X)$, and let $\alpha$ generate $H_n(S^n)$.  
+Then $h([f])=f_*(\alpha)\in H_n(X)$.  
+\begin{Theorem}[Hurewicz Theorem]
+  Let $X$ be $n-1$ connected for $n>1$.  
+  Then $h_n$ is an isomorphism and $h_{n+1}$ is a surjection.  
+\end{Theorem}
+
+This is proved in \cite[Thm~4.32]{HatcherAT}.
+
+\subsection{The Whitehead Theorem}
+The homotopy groups, and induced maps between them, completely determine the homotopy type of a CW-complexes.  
+
+\begin{Theorem}[Whitehead Theorem]
+  Let $f:X\to Y$ be a map of base-pointed CW-complexes, such that $f_*:\pi_n(X)\to \pi_n(Y)$ is an isomorphism.  Then $f$ is a homotopy equivalence.  
+\end{Theorem}
+
+This is proved in \cite[Thm~4.5]{HatcherAT}.  
+The proof comes from the so-called Compression Lemma, which we state for it's usefulness.  It is proved in \cite[Thm~4.6]{HatcherAT}.
+
+\begin{Lemma}[Compression Lemma]
+  Let $f:(X,A)\to (Y,B)$ be a map of CW-pairs.  Suppose that for each $n$ such that $X-A$ has an $n$-cell, $\pi_n(Y/B)=0$.  Then $f$ is homotopic, relative to $A$, to a map $X\to B$.  
+\end{Lemma}
+
+\begin{Def}
+  In the notation of the Lemma, we say that $f$ is ``compressed'' to a map into $B$.  If $\pi_n(Y/B)$ is nonzero, we call the nonzero elements obstructions to compression.  
+\end{Def}
+
+\subsection{The Freudenthal Suspension Theorem}
+
+The homotopy groups of spheres are difficult to compute, but there is little a miracle which makes it possible to compute certain homotopy groups in a stable range.  
+Let $\Omega$ be the loop functor, and recall the adjoint relationship
+\[[\Sigma X, Y]=[X, \Omega Y]\]
+The miracle is the Fruedenthal Suspension Theorem, which is stated as follows:
+\begin{Theorem}
+  Let $X$ be an $n$-connected space.  
+  Then the natural map $X\to \Omega\Sigma X$ induces a map 
+  \[\pi_k(X)\to \pi_k(\Omega\Sigma X)\cong\pi_{k+1}(\Sigma X)\]
+  is an isomorphism for $k\le 2n$ and an epimorphism for $k=n2+1$.  
+\end{Theorem}
+\begin{Cor}
+  If $n>k+1$, $\pi_{k+n}(S^n)$ is independent of $n$.
+\end{Cor}
+
+There are a few proofs of this.  A primitive homotopy based proof is given in \cite[Cor~4.24]{HatcherAT}.  
+A proof using the Serre Spectral Sequence is given in \cite[Ch~12]{MosherTengora}.  
+There is also a Morse Theory based proof given in \cite[Cor~22.3]{MilnorMorse}.  
+
+
+Because of this theorem, we can define the so called Stable Homotopy Groups.  
+
+
+\begin{Def}
+  The  $k^{\mbox{th}}$ stable homotopy group of a space $X$ is given
+  \[\pi_k^s(X)=\varinjlim_n \pi_{k+n}(\Sigma^n X) \]
+\end{Def}
+
+We will find that these so called Stable Homotopy Groups are somewhat easier to compute.  
+The computation of these groups will be the goal of the rest of the paper.  
+
+
+\subsection{Eilenberg-Maclane Spaces and the Cohomology Operations}
+
+\begin{Def}[Eilenberg-Maclane Space]
+  Let $G$ be an abelian group.  We say that a space $K(G,n)$ is an Eilenberg-Maclane Space if
+  \[\pi_k(K(G,n))=\left\{\begin{array}{cc} G & n=k \\ 0 & n\ne k\end{array}\right.\]
+\end{Def}
+There is a construction of Eilenberg-Maclane spaces which has no $i$ cells for $i<n$, but unfortunately most are infinite-dimensional and complicated.  However, these spaces have enormous theoretic importance, for the reason we will see in a second  However, given any two, a map between them can be found inducing isomorphisms in homotopy groups, meaning $K(G,n)$ is unique up to $homotopy$. 
+
+Now, consider 
+\[H^n(K(G,n);G)\]
+By the universal coefficient theorem, this is the same as
+\[Hom(H_n(K(G,n)),G)\cong Hom(\pi_n(K(G,n)),G)\cong Hom(G,G)\]
+using the Hurewicz Theorem.  
+This means there is a cohomology class in $i\in H^n(K(G,n);G)$ corresponding to the identity in $Hom(G,G)$, which we will call the ``fundamental class''.  
+Define
+\[\Phi:[?,K(G,n)]\to H^n(?)\]
+be the natural transformation defined by
+\[\Phi([f]) = f^*(i)\]
+
+\begin{Theorem}
+  $\Phi$ is an isomorphism
+\end{Theorem}
+
+\begin{proof}
+  First we notice that this works for $S^n$, since 
+  \[H^n(S^n;G)\cong Hom(\Z,G)\cong G\]
+  Let $X_i$ be the $i$-skeleton of $X$.  
+  Then by CW-approximation, any $f:X_n\to K(G,n)$ is homotopic to a map of pairs
+  \[f: (X_n,X_{n-1}) \to (K(G,n),*)\]
+  since $K(G,n)$ can be given a cell-structure with no $n-1$ cells.  
+  This means $f$ factors through a wedge of spheres 
+  \[\bigvee_{\alpha\mbox{ is an $n$-cell}} f_\alpha\]
+  where each $f_\alpha\in \pi_n(K(G,n))$
+  \[\Phi(f)=(\bigoplus_\alpha f_\alpha)^*(i)\]
+  This $\Phi$ is injective and surjective on $X_n$.
+
+  Letting $i:X_{n+1}\to X$ and $j:X_n\to X{n+1}$ be the inclusions, we have a diagram
+  \begin{diagram}
+    [X,K(G,n)] & \rTo^{i^*} & [X_{n+1},K(G,n)] & \rTo^{j^*} & [X_n,K(G,n)]\\
+     \dTo^\Phi &            &   \dTo^{\Phi}    &            & \dTo_\Phi\\
+      H^n(X;G) & \rTo^{i^*} & H^n(X_{n+1};G)   & \rTo^{j^*} & H^n(X_n;G)
+  \end{diagram}
+  Now, if a map $f:X_n\to K(G,n)$ can be extended to $X_{n+1}$, it can be extended all the way up to $X$, so the top $i^*$ is an isomorphism.  
+  The top $(ij)^*$ is an injection, since obstructions to extending a homotopy lies in $\pi_i(K(G,n))$, for $i>n$.  
+  Likewise, the lower $i^*$ is an isomorphism, again by cellular homology and $(ij)^*$ is an injection.  
+  Thus, because the diagram commutes ($\Phi$ is natural), $\Phi$ is an isomorphism for $X$.  
+\end{proof}
+
+This is a strange and remarkable theorem.  
+Since we cannot usually compute $K(G,n)$, this does not help with computation, but it makes the formal properties of $H^*$ obvious.  
+
+We now introduce cohomology operations.  
+\begin{Def}
+  Let $\OO(n,\pi,m,G)$ be the set of natural transformations
+  \[H^n(?;\pi)\to H^m(?;G)\]
+  We call these cohomology operations
+\end{Def}
+
+\begin{Cor}
+  \[\OO(n,\pi,m,G)=H^m(K(\pi,n);G)\]
+\end{Cor}
+
+\begin{proof}
+  Seeing $H^m(K(\pi,n);G)$ as maps $[K(\pi,n),K(G,m)]$, post-composition obviously gives natural transformations.  Given such a natural transformation, we can apply it to $i\in H^n(K(\pi,n);\pi)=[K(\pi,n),K(\pi,n)]$, yielding an element in $H^m(K(\pi,n);G)$.  Composition of these maps yields identity, since $i$ is the identity in $[K(\pi,n),K(\pi,n)]$.  
+\end{proof}
+
+This fact will become very important later.  
+
+
+\subsection{The Steenrod Operations}
+
+
+
+
