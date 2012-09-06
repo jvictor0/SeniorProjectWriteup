@@ -2,3 +2,7 @@
 *.pdf
 *.aux
 *.log
+*.bbl
+*.blg
+*.toc
+_TZ*
