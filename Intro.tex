@@ -6,6 +6,8 @@ We will define homotopy groups, state some theorems about their consequences, de
 
 \subsection{Homotopy Groups}
 
+\label{sec:HomotopyIntro}
+
 \begin{Def}[Homotopy Groups]
   Let $S^n$ be the $n$-sphere and $X$ be a topological space with base-point.  
   Define the set 
@@ -79,11 +81,13 @@ The proof comes from the so-called Compression Lemma, which we state for it's us
 
 \subsection{The Freudenthal Suspension Theorem}
 
+\label{sec:Freudenthal}
+
 The homotopy groups of spheres are difficult to compute, but there is little a miracle which makes it possible to compute certain homotopy groups in a stable range.  
 Let $\Omega$ be the loop functor, and recall the adjoint relationship
 \[[\Sigma X, Y]=[X, \Omega Y]\]
 The miracle is the Fruedenthal Suspension Theorem, which is stated as follows:
-\begin{Theorem}
+\begin{Theorem}[Freudenthal Suspension Theorem]
   Let $X$ be an $n$-connected space.  
   Then the natural map $X\to \Omega\Sigma X$ induces a map 
   \[\pi_k(X)\to \pi_k(\Omega\Sigma X)\cong\pi_{k+1}(\Sigma X)\]
@@ -141,25 +145,27 @@ be the natural transformation defined by
   \[f: (X_n,X_{n-1}) \to (K(G,n),*)\]
   since $K(G,n)$ can be given a cell-structure with no $n-1$ cells.  
   This means $f$ factors through a wedge of spheres 
-  \[\bigvee_{\alpha\mbox{ is an $n$-cell}} f_\alpha\]
-  where each $f_\alpha\in \pi_n(K(G,n))$
-  \[\Phi(f)=(\bigoplus_\alpha f_\alpha)^*(i)\]
-  This $\Phi$ is injective and surjective on $X_n$.
-
+  \[\bigvee S^n\]
+  and so in homotopy, $f$ is essentially wedge sum of elements of $\pi_n(K(G,n))=G$, $\Phi$ surjects onto $C^*(X;G)$ at the cochain level, so also at the cohomology level.
+  Thus $\Phi$ is surjective.  
+  Since, at the cochain level, maps yielding the same cochain are homotopic, and since $\Phi$ is surely well-defined on cohomology, two maps yielding the same cohomology class are homotopic.  
+  Thus $\Phi$ is also injective.  
+  
   Letting $i:X_{n+1}\to X$ and $j:X_n\to X{n+1}$ be the inclusions, we have a diagram
   \begin{diagram}
     [X,K(G,n)] & \rTo^{i^*} & [X_{n+1},K(G,n)] & \rTo^{j^*} & [X_n,K(G,n)]\\
      \dTo^\Phi &            &   \dTo^{\Phi}    &            & \dTo_\Phi\\
       H^n(X;G) & \rTo^{i^*} & H^n(X_{n+1};G)   & \rTo^{j^*} & H^n(X_n;G)
   \end{diagram}
-  Now, if a map $f:X_n\to K(G,n)$ can be extended to $X_{n+1}$, it can be extended all the way up to $X$, so the top $i^*$ is an isomorphism.  
-  The top $(ij)^*$ is an injection, since obstructions to extending a homotopy lies in $\pi_i(K(G,n))$, for $i>n$.  
-  Likewise, the lower $i^*$ is an isomorphism, again by cellular homology and $(ij)^*$ is an injection.  
+  Now, if a map $f:X_n\to K(G,n)$ can be extended to $X_{n+1}$, it can be extended all the way up to $X$, since $\pi_i(K(G,n))=0$ for $i>n$, 
+  so the top $i^*$ is an isomorphism.  
+  The top $j^*$ is an injection, since obstructions to extending a homotopy lies in $\pi_{n+1}(K(G,n))$, so homotopic maps from $X_n$ are homotopic in $X_{n+1}$. 
+  Likewise, the lower $i^*$ is an isomorphism, again by cellular homology and $j^*$ is an injection.  
   Thus, because the diagram commutes ($\Phi$ is natural), $\Phi$ is an isomorphism for $X$.  
 \end{proof}
 
 This is a strange and remarkable theorem.  
-Since we cannot usually compute $K(G,n)$, this does not help with computation, but it makes the formal properties of $H^*$ obvious.  
+Since we cannot usually visualize $K(G,n)$, this does not help with computation, but it makes the formal properties of $H^*$ obvious.  
 
 We now introduce cohomology operations.  
 \begin{Def}
@@ -169,6 +175,7 @@ We now introduce cohomology operations.
 \end{Def}
 
 \begin{Cor}
+  \label{sec:SteenrodAreCohom}
   \[\OO(n,\pi,m,G)=H^m(K(\pi,n);G)\]
 \end{Cor}
 
@@ -181,6 +188,56 @@ This fact will become very important later.
 
 \subsection{The Steenrod Operations}
 
+\label{sec:SteenrodCohom}
 
+It turns out that we can explicitly describe the cohomology operations in $\F_2$ cohomology in terms of operations called Steenrod Squares.  
+Loosely speaking, the Steenrod Squares measure the failure of the cup product square to be commutative.  
+The $\F_2$-algebra they generate is known as the Steenrod Algebra, $\A$, and it will show up thoughout the calculations of the stable homotopy groups.  
+
+We will first give an axiomatic description of the Steenrod Squares.
+The let $H^n$ denote mod-2 cohomology.  
+
+\begin{Theorem}[Steenrod Squares]
+  For each $i\ge 0$ there is a natural map
+  \[Sq^i:H^n(?)\to H^{n+i}(?)\]
+  Such that
+  \begin{enumerate}
+    \item $Sq^0$ is the identity map
+    \item $Sq^1$ is the Bockstien Map
+    \item $Sq^n$ is the cup-product square
+    \item $Sq^i$ is 0 for all $i>n$.  
+    \item The Cartan formula holds:
+      \[Sq^k(a\smile b)=\sum_{i+j=k}Sq^i(a)\smile Sq^j(b)\]
+    \item The Adem relationship holds if $i<2j$
+      \[Sq^iSq^j=\sum_{k=0}^{i/2}\binomial{j-k-1}{i-2k}Sq^{i+j-k}Sq^k\]
+    \item The Steenrod Squares commute with the natural isomorphism $H^n(X)\to H^{n+1}(\Sigma X)$, that is, they are ``stable''
+  \end{enumerate}
+\end{Theorem}
+
+
+The construction of these operations specifically is given in \cite[Ch~2]{MosherTengora}.  
+We give a more general approach in \ref{sec:SteenrodConstruction}
+
+We want to consider some of the structure of the Steenrod Algebra $\A$.  
+First notice that by the Adem relation it is spanned by $Sq^{i_1}Sq^{i_n}...Sq^{i_k}$ where $i_j\ge i_{j+1}$.  
+It is shown in \cite[Ch~6]{MosherTengora} that these elements are actually a basis, known as the Serre-Cartan Basis.  
+The Steenrod Algebra is also, importantly, a Hopf Algebra, with comultiplication given
+\[Sq^i\mapsto \sum_{i=j+k} Sq^j\otimes Sq^k\]
+One can check that this, with the obvious unit and counit (sending $Sq^0$ to 1, other squares to 0 and 1 to $Sq^0$) is a Hopf Algebra.  
+
+An easy application of the definition is to show the nonexistence of elements of Hopf Invariant 1 (see \ref{sec:HopfInvariant}).
+For a space to have Hopf Invariant 1, it must have Hopf Invariant 1 (mod 2).  
+Let $X=S^{2n}\cup_f e^{4n}$ be a space with Hopf Invariant, and let $\eta$ and $\mu$ be the two generators of cohomology.  
+Then if the Hopf Invariant of $f$ is 1 (mod 2), $Sq^{2n}(\eta)=\mu$.
+Now, suppose that we can decompose the operation (as a natural transformation, or equivalently, as an element of the Steenrod Algebra) $Sq^{2n}$ as a sum of products of Steenrod Squares $Sq^i$ with $i<2n$.  
+This means that $Sq^{2n}(\eta)=0$, because for all $0<i<2n$ we have $H^{i+2n}(X)=0$, since there are no cells in these dimensions.  
+But it is an easy exercise in using the Adem relation to show $Sq^i$ is decomposable if $i$ is not a power of 2.  
+Thus we can conclude
+\begin{Cor}
+  There is no element of $\pi_{4n-1}(S^{2n})$ of Hopf Invariant 1 except possibly if $n$ is a power of $2$.  
+\end{Cor}
+\begin{Cor}
+  $\R^n$ is not a division algebra except possibly if $n$ is a power of $2$.  
+\end{Cor}
 
 

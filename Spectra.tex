@@ -1,0 +1,269 @@
+\section{Spectra and the Stable Homotopy Category}
+
+Using the Freudenthal Suspension Theorem \ref{sec:Freudenthal}, we can construct the topological invariant $\pi_*^s(X)$ of stable homotopy groups.  
+The functor $\pi_*^s$ itself is somewhat awkward.
+It would be nice if we could create a category in which it was representable, that is, where stable maps were simply maps.  
+Stable homotopy in the category of spaces is in fact a rather awkward game, because one constantly must suspend maps to stay in the stable range.
+To save ourselves from this awkwardness, we will work in a stable homotopy category, that is, a category of ``spectra''.  
+
+Spectra are a sort of dimension-less generalization of topological spaces.  
+There is a functor from spaces to spectra called $\Sigma^\infty$, 
+with the homotopy classes of maps between $\Sigma^\infty S^0$ and $\Sigma^\infty Y$ being exactly $\pi_*^s(Y)$.  
+Another somewhat strange thing happens; cohomology theories end up begin objects in the stable homotopy category.  
+Cohomology theories end up on the same footing as $\Sigma^\infty$ as spaces, and these cohomology spectra represent the cohomology of spectra.  
+
+The category has a number of improved formal properties over topological spaces.  
+First of all, there is a ``desuspension'' functor $\Sigma^{-1}$ which is an inverse to the suspension functor $\Sigma$.  
+This means for any two spectra $X$ and $Y$, $[X,Y]$ is an abelian group (see \ref{sec:HomotopyIntro}).  
+Better yet, cofiberings and fiberings are the same, so when you form the Puppe-Barratt Sequence of a map, you can, 
+for any spectrum $X$, apply the functor $[?,X]$ or $[X,?]$, and get a long exact sequence.  
+Cohomology and stable homotopy are functors of that form in this category.  
+
+Without further ado, let us define the stable homotopy category, which we do following \cite{AdamsStable}
+
+
+\subsection{Spectra}
+
+We will now define the objects in the stable homotopy category.  
+\begin{Def}
+  A Spectrum is a sequence of topological spaces $X=\{X_n\}$ for $n\in \Z$, along with structure maps 
+  \[\epsilon_n:\Sigma X_n\to X_{n+1}\]
+  You can always assume the structure maps are inclusions of subcomplexes.  
+  A ``cell'' of a Spectrum is an equivalence class of cells $e^m$ in $X_n$, where two cells $e^m$ and $e^{m'}$ ($m<m'$) are equivalent if $e^m$ 
+  becomes $e^{m'}$ after $m'-m$ applications of the structure map.  
+  The dimension of a cell represented by $e^m$ in $X_n$ is $m-n$.  
+\end{Def}
+
+We promised a functor from spaces to spectra, which will be an important source of examples.  
+
+\begin{Def}
+  Let $X$ be a topological space.  Let $\Sigma^\infty X$ be a topological space with
+  \[(\Sigma^\infty X)_n = \left\{\begin{array}{cc} 
+  \Sigma^n X & n \ge 0\\
+  \{*\} & n < 0
+  \end{array}\right.\]
+  We call this the ``suspension spectrum'' of $X$.
+  We define 
+  \[S=\Sigma^\infty S^0\]
+\end{Def}
+
+
+Let $K^n$ be a cohomology theory, and let it be represented
+\[K^n(?)=[X,K_n]\]
+for some space $K_n$ (for instance $K_n$ could be $K(G,n)$ for some $G$).  
+We have
+\[[K_n,K_n]\cong[\Sigma K_n,K_{n+1}]\]
+The image of the identity makes the structure map, thus a generalized cohomology theory is a spectrum.  
+We call the spectrum associated with $K(G,n)$ by the name $HG$.  
+
+
+\subsection{Functions, Maps and Morphisms}
+
+We now have two rich sources of examples of spectra, but objects do not a category make.  
+We also need to define the morphisms of our category.  
+We do this first by defining ``functions''.  
+\begin{Def}
+  A degree $i$ function between two spectra $f:X\to Y$ is a serious of maps of topological spaces 
+  \[f_n:X_n\to Y_{n-i}\]
+  that ``commute'' with suspension, that is
+  \[\epsilon_{n-i}(\Sigma f_n)=f_{n+1}\epsilon_n\]
+\end{Def}
+
+The problem with functions is that there aren't enough of them.  
+The requirement they be defined on every single space keeps use from being in a stable situation.  
+For instance, let $\eta:S^3\to S^2$ be the Hopf Fibration \ref{sec:HopfInvariant}.  
+We would want this to define a degree 1 function from $\eta:S\to S$ with $\eta_3=\eta$.  
+This means that would have to be $\eta_n=\Sigma^{n-3}\eta$ for $n\ge 3$.  
+But what can $\eta_2$ be?  Since is a map $\eta_2:S^2\to S^1$, $\eta_2$ must be null-homotopic, so the suspension of it would have to be null-homotopic, 
+which the Hopf Fibration is not.  
+For this reason, we must weaken the notion to make maps in this category.  
+
+\begin{Def}
+  A ``cofinal'' subspectra $K\subset X$ is a subspectra such that for each $n$ and each cell $
+  e\in X_n$ there is an $i$ such that applying the structure map to $e$ $i$ times will land $e$ in $K_{i+n}$.  
+\end{Def}
+
+Note that the intersection of two cofinal subspectra is again cofinal.  
+
+\begin{Def}
+  A ``map'' $f:X\to Y$ between two spectra $X$ and $Y$ is a function (or an equivalence class of functions) defined on any cofinal subspectra $K\subset X$.  
+  Two maps are considered equal if they are equal on the intersection of their domains.  
+\end{Def}
+
+Now we can make $\eta:S\to S$ a map, since it is defined on the cofinal subspectrum $K\subset$ with
+\[K_n = \left\{\begin{array}{cc} 
+S^n & n \ge 3\\
+\{*\} & n < 3
+\end{array}\right.\]
+
+Finally, we can define morphisms
+\begin{Def}
+  Let $X$ and $Y$ be spectra.  Then $Cyl(X)$ is a spectra with 
+  \[(Cyl(X))_n=I^+\wedge X_n\]
+  where $I^+$ is the unit interval with disjoint basepoint.  
+  Note that the obvious structure map $1\wedge \epsilon_n$ works as a structure map.  
+  There are two natural injections $i_1,i_2 X\to Cyl(X)$.  
+  Two maps $f,g$ if there is a map 
+  \[H:Cyl(X)\to Y\]
+  with $Hi_1=f, Hi_2=g$.  
+  A ``morphism'' $f:X\to Y$ is a homotopy class of maps.  
+  We let $[X,Y]_n$ be the set up homotopy classes of degree $n$ maps between spectra $X$ and $Y$.  
+\end{Def}
+
+We can now make the definition
+\begin{Def}
+  Let $X$ be a spectrum.  Define the homotopy group
+  \[\pi_n(X)=[S,X]_n\]
+\end{Def}
+Here is the thing to notice.  
+The homotopy groups in the stable category are exactly the stable homotopy groups, that is
+\begin{Theorem}
+  Let $X$ be a topological space.  Then
+  \[\pi_n^s(X)=\pi_n(\Sigma^\infty(X))\]
+\end{Theorem}
+
+Make sure to convince yourself of this before moving on.  
+
+We can define cohomology, but it is somewhat different than for spaces.  A cohomology theory is always a spectrum, but in fact any spectrum is sufficient to define cohomology.  
+\begin{Def}
+  Let $E$ and $X$ be spectra.  
+  The $E$-cohomology of $X$ is given
+  \[E^k(X)=[X,E]_k\]
+\end{Def}
+Notice that 
+\[(HG)^k(\Sigma^\infty X)=H^k(X;G)\]
+and
+\[(H\F_2)^*(H\F_2)=\A\]
+by Cor  \ref{sec:SteenrodAreCohom}.  
+
+
+\subsection{Additive Category of Spectra}
+
+We have the following self-evident consequence:
+\begin{Lemma}
+  If $X$ is a spectra and $K\subset X$ is cofinal, then the inclusion $K\to X$ is an isomorphism
+\end{Lemma}
+
+Notice that since the subspectrum of a spectrum defined by collapsing negative-indexed spaces to a point is cofinal, so it doesn't matter whether we consider spaces indexed by all integers or positive integers.  
+
+\begin{Def}
+  Let $X$ be a spectra.  Define $\Sigma X$ by
+  \[(\Sigma X)_n=\Sigma X_n\]
+  and use the obvious structure maps.
+\end{Def}
+Obviously this is functorial.  
+Define $\mbox{shift}_+$ and $\mbox{shift}_-$ to be the obvious functors.  
+The structure maps define a degree 0 map 
+\[\epsilon:\Sigma X\to \mbox{shift}_+\]
+The image of $\epsilon$ is obviously cofinal and $\Sigma X$ is isomorphic to its image, so $\epsilon$ is an isomorphism.  
+But $\mbox{shift}_-$ is an obvious inverse to $\mbox{shift}_+$, so there is a functor $\Sigma^{-1}$ inverting $\Sigma$.  
+Thus any spectrum $X\cong\Sigma^2 X'$, so $X$ is isomorphic to a spectrum where each $X_n$ is a double-suspension.  
+
+Let $X$ and $Y$ be spectra and $K\subset X$ be a cofinal subspectrum on which $f,g:K\to Y$ be representing functions for maps $f$ and $g$.  
+We can assume that for each $n$, $K_n$ is a double suspension, so we can form $(f+g)_n=f_n+g_n$.  
+While the sum is only defined up to homotopy, representing maps can be picked to commute so that $f+g$ is a bonafide morphism in the stable homotopy category.  
+This makes $[X,Y]_n$ an abelian group.  
+Obviously composition in either direction is a bilinear group homomorphism, that is, function composition gives abelian group-maps
+\[[X,Y]\otimes [Y,Z]\to [X,Z]\]
+
+We can construct wedge products in the obvious way
+\begin{Def}
+  If $X$ and $Y$ are spectra, we can form $X\vee Y$ with
+  \[(X\vee Y)_n=X_n\vee Y_n\]
+  and the wedge product of the structure map, where we use that
+  \[\Sigma(X\vee Y)=(\Sigma X)\vee (\Sigma Y)\]
+  for reduced suspensions.  The same construction works for infinite products.  
+\end{Def}
+This is obviously a coproduct, that is, for any spaces $X,Y,W$, we naturally have
+\[[X\vee Y,W]\cong [X,W]\oplus [Y,W]\]
+
+
+Consider the sequence of spectra
+\[X\to X\vee Y\to Y\]
+given by inclusion and then projection.  The sequence
+\[[W,X]\to [W, X\vee Y]\to [W,Y]\]
+is clearly a short exact sequence, naturally split by the map induced from the inclusion $Y\to X\vee Y$.  
+Thus we have, for any space $W$
+\[[W,X\vee Y]\cong [W,X]\oplus [W,Y]\]
+This is the universal property of products, so $X\vee Y$ is a product as well as a coproduct.  
+
+Finally, since $\{*\}$ has the property that $\Sigma\{*\}=\{*\}$ (again, recall we have been using reduced suspension), there is a zero spectrum $\{*\}=\Sigma^\infty\{*\}$.  
+
+
+\subsection{Fibrations and Cofibrations}
+
+Let $i:A\to X$ be an inclusion of subcomplexes for (unstable) spaces.  
+We can then form the mapping cylinder and cofibration sequence
+\[A\xrightarrow{i} X\xrightarrow{j} CA\cup_i X\]
+Let $W$ be any space, and consider
+\[[CA\cup_i X,W]\xrightarrow{j^*} [X,W]\xrightarrow{i^*}[A,W]\]
+Obviously $(ij)^*=0$, since it includes $A$ into its contractible cone.  
+Also, if a map $g:X\to W$ has $i^*(g)=0$, then $g$ restricted to $A$ is nullhomotopic, but a nullhomotopy is just a map $CA\to W$ extending $g$, so $g$ can be extended to $CA\cup_i X$.  
+Thus the sequence above is exact.  
+
+Now, $j$ is an inclusion of a subcomplex, thus we can continue the sequence 
+\[A\xrightarrow{i} X\xrightarrow{j} CA\cup_i X\xrightarrow{k} CX\cup_j CA\cup_i X\cong \Sigma A\]
+if we continued the sequence we would get a map homotopic to $-\Sigma(i)$ going to $\Sigma X$, and so on.  
+Each three terms is the inclusion of a subcomplex and a mapping cone, so is exact.  
+Finally, there is a natural homotopy equivalence $CA\cup_i X\to X/A$ and isomorphism $[\Sigma X,Y]_n\cong [X,Y]_{n-1}$
+We summarize in a lemma
+\begin{Lemma}[Cofibration Sequence of Spaces]
+  \label{sec:cofibspace}
+  If $A\to X$ is an inclusion of a subcomplex of (unstable) spaces.  Then there is a long exact sequence for any space $W$
+  \[...\to [X/A,W]_n\to [X,W]_n\to [A,W]_n\to [X/A,W]_{n+1}\to ...\]
+\end{Lemma}
+
+Quotients by subcomplexes commute with suspenison, so given spectra $A\subset X$ which is an inclusion of subcomplexes, we can form $X/A$ in the obvious way,
+and of course this is equivalent to a spectra $X\cup CA$ with $(X\cup CA)_n=C_n\cup CA_n$.  
+Now, Once again, a nullhomotpy from $g:X\to Y$ is a map $CX\to Y$ with which restricts to $g$.  
+Thus, the argument above yields 
+
+\begin{Lemma}[Cofibration Sequence of Spectra]
+  If $A\to X$ is an inclusion of a spectrum which is an inclusion of subcomplexes on each space, then Lemma \ref{sec:cofibspace} holds.  
+\end{Lemma}
+
+\begin{Lemma}[Fibration Sequences of Spectra]
+  If $A\to X$ is a cofibration, then 
+  \[...\to [W,A]_n\to [W,X]_n\to [W,X/A]_n\to [W,A]_{n-1}\to ...\]
+\end{Lemma}
+
+\begin{proof}
+  Obviously $A\to A/X$ is null homotopic, so let $g:W\to X$ be a map which becomes nullhomotopic in $X/A$.  
+  We get the following diagram
+  Consider the following diagram
+  \begin{diagram}
+    A & \rTo^i & X & \rTo^j & CA\cup X&\rTo^k &\Sigma A&\rTo^{-\Sigma i}&\Sigma X\\
+    \uDashto^{l'} &     &\uTo^g & &    \uTo^h          &     & \uTo^l  &   &   \uTo^{\Sigma g}\\
+    W        & \rTo^1 & W       & \rTo& CW  & \rTo & \Sigma W & \rTo^{-1} & \Sigma W
+  \end{diagram}
+  We get $h$ from the nullhomotpy $ig$ and $l$ from attaching another copy of $h$.  
+  Let $l=\Sigma l'$.  Then we have $\Sigma (il')=\Sigma g$, so $il'=g$, so the $g$ can be compressed to $A$ and the first point is exact.  
+  The other exactness points follow from the symmetry in the sequence.  
+\end{proof}
+
+\subsection{Smash Products}
+
+Our category is equipped with a smash product.
+The construction is notorious for being as confusing as it is unnecessary.  Frank Adams himself said of them,  
+``In order to operate the machine, it is not necessary to raise the bonnet'', and we will take this approach as well.  
+A construction can be found in \cite[Ch~4]{AdamsStable}
+The smash product should be seen as a generalization of the smash product of spaces and similar to a tensor product on modules.  
+
+\begin{Theorem}
+  Let $X,Y$ be topological spaces.  Then there is a topological space $X\wedge Y$ with the properties that
+  \begin{enumerate}
+    \item $S\wedge X=X$
+    \item If $X$ and $Y$ are spaces, $\Sigma^\infty(X\wedge Y)=(\Sigma^\infty X)\wedge (\Sigma^\infty Y)$
+    \item $(X\wedge Y)\wedge Z\cong X\wedge (Y\wedge Z)$.  
+      Thus we just write $X\wedge Y\wedge Z$
+    \item  $X\wedge Y\cong Y\wedge X$
+    \item  $\Sigma(X\wedge Y)\cong(\Sigma X)\wedge Y\cong X\wedge (\Sigma Y)$
+    \item $[W,Y\wedge Z]=[W,Y]\otimes [W,Z]$
+    \item $[Y\wedge Z,W]=[Y,W]\otimes [Z,W]$
+  \end{enumerate}
+\end{Theorem}
+
+
+This completes our brief tour of spectra, as these are all of the results and constructions we will need to construct the Adams Spectral Sequence.  
+
+
