@@ -1,7 +1,7 @@
 \section{Setting up the Adams Spectral Sequence}
 
 The Adams Spectral Sequence is a rather heavy-duty machine for computing $2$-component of the homotopy groups $[Y,X]_*$ for spectra $X$ and $Y$.  
-If $X=S$, this is the 2-component of the stable homotopy groups $\pi^s_*(X)\otimes \F_2$.  
+If $Y=S$, this is the 2-component of the stable homotopy groups $\pi^s_*(X)$, which, if you'd like, can be written $\pi^s(X)\otimes \Z_2$, where $\Z_2$ is the 2-adic integers.  
 While this is twice removed from the original goal of computing $\pi_*(X)$, but at least in this case we have a fighting chance at doing the computations.
 Since there are $p$-component analogues, these methods can be combined to compute all of $\pi_*^s(X)$.  
 However, as we are about to find, even once the Adam's Spectral Sequence is set up, actually using it is not so easy.  
@@ -44,8 +44,9 @@ Call those generators $u_i\in [X,H\F_2]_{n_i}$.
 We can then form 
 \[\bigvee_i u_i:X\to \bigvee_i \Sigma^{n_i}H\F_2\] 
 to be a degree 0 map to a wedge sum of suspensions of Eilenberg-Maclane spaces.  
+Call the codomain above $K_0$.  
 We can then take the fiber of this map and call it $X_1$.  
-Repeating this process, we get the following diagram.
+Repeating this process, we get the following diagram. 
 
 \begin{diagram}
   X & \lTo & X_1 & \lTo & X_2 & \lTo & X_3 & \lTo &...\\ 
@@ -53,8 +54,15 @@ Repeating this process, we get the following diagram.
   K_0 && K_1 && K_2 && K_3
 \end{diagram}
 
+This is one specific construction of the following definition:
+\begin{Def}
+    An Adams Complex of a spectrum $X$ is a diagram, as above, where $K_0$ is a wedge sum of suspensions of $H\F_2$'s, $X_{i+1}$ is the fiber of $X_i\to K_i$.   
 
-We call this the Adams Resolution of $X$.  
+    An Adams Resolution of a spectrum $X$ is an Adams Complex of $X$ with $X_{i}\to K_i$ inducing a surjection in cohomology.  
+\end{Def}
+
+
+Consider an Adams Resolution of $X$.  
 Now, notice that the fiber of $X_i \to X_{i-1}$ is $\Sigma^{-1}K_{i-1}$.  
 Thus we get a diagram of spaces
 \begin{diagram}
@@ -74,6 +82,8 @@ In cohomology we get:
 By exactness of 
 \[H^*\Sigma^i X_i\to H^*\Sigma^{i-1}K_{i-1}\to H^*\Sigma^{i-1}X_{i-1}\]
 this gives an $\A$-free resolution of $H^*(X)$.  
+
+(Notice that if this was just a complex, the sequence of maps in cohomology would still be a complex).   
 
 Next, we construct what is known in the world of spectral sequences as an ``exact couple''.  
 Let $Y$ be a spectra and 
@@ -106,9 +116,23 @@ It is an easy exercise to check that this all makes sense, is well defined and t
 \end{diagram}
 is exact at each point.  This is done in, for instance \cite[Ch~1]{HatcherSS}.
 
-Thus we can iterate this construction and get a sequence of modules $E_r$ and $A_r$.  
+Thus we can iterate this construction and get a sequence of modules $E_r$ and $A_r$ (when $X$ and $Y$ are ambiguous, we write $E_r(Y,X)$ and $A_r(Y,X)$)
+\begin{Def}
+  We call the sequence of groups $E_r$ the Adams Spectral Sequence
+\end{Def}
 We will see later that the limit, which we call $E_\infty$, is closely related to $[Y,X]\otimes \F_2$
-We denote
+
+
+This construction, at first, can be rather disorienting.  
+The issue is that $E_{r+1}$ is a sub-quotient (a quotient of a subgroup) of $E_r$.
+That means when going from $E_r$ to $E_{r+1}$, some elements will become equal to others, while some elements will cease to exist.
+If $x\in E_r$ has $d_r(x)=0$, then $x$ has some image in $E_{r+1}$, so we say that $x$ survives to the $r+1$ page, and we use the same symbol to denote it on the $E_{r+1}$ page.  
+This is not as confusing as it might sound, because geometrically $x$ is represented by the same map on the $E_r$ page and the $E_{r+1}$ page.  
+If $d_r(x)\ne 0$, we say the differential kills $x$.  
+Notice that we say the $x$ survives even if there is some other element $y$ with $d_r(y)=x$, that is, even if $x$ is a boundary and the image of $x=0$ in $E_{r+1}$.
+
+
+We recall
 \[E_1^{s,t}=[Y,K_s]_t\cong Hom_\A^t(H^*(K_s),H^*(Y))\]
 where the second equivalence comes from the argument in the introduction.  
 Since the $H^*(K_s)$ make an $\A$-free resolution of $H^*(X)$, we have
@@ -118,6 +142,7 @@ Since the $H^*(K_s)$ make an $\A$-free resolution of $H^*(X)$, we have
 Let us unravel what this means.  
 Our exact couple unravels into the following diagram where the ``staircases'' are exact
 \begin{diagram}
+  \label{fig:exactCouple}
   \vdots &&&& \vdots  &&&& \vdots \\
   \dTo & &&& \dTo  & &&& \dTo &&& &  \\
   [Y,X_s]_{t-s+1} & \rTo & [Y,K_{s}]_{t-s+1} & \rTo & [Y,X_{s+1}]_{t-s} & \rTo & [Y,K_{s+1}]_{t-s} & \rTo & [Y,X_{s+2}]_{t-s-1}\\
@@ -138,6 +163,16 @@ To calculate $d_2$, move your pencil to $\partial_1(x)\in [Y,X_s]_{t-s}$.
 By exactness, since $x$ is zero in $[Y,K_s]_{t-s}$, there is a preimage of $x$ above in $[Y,X_{s+1}]_{t-s}$.  
 Applying $p_1$ to this will give an element of $[Y,K_{s+1}]_{t-s}$, and this is $d_2([x])$.  
 In general, a differential is calculated by pushing $\partial_1(x)$ ``up'' as far as you can before applying $p_1$.  
+
+Notice that if $f\in [Y,X]$ is detected by an element in filtration $s$, we can factor it as the composite of $s$ maps which induce 0 in cohomology.  
+To see this, see that $f$ is detected by a map $[K_s,X]$, which can be pushed to a map $[Y,X_s]$ which is a lift of $f$.  
+Thus $f$ factors as the $s-1$ maps in $[X_{l}, X_{l-1}]$ for $l<s$ (these are 0 in cohomology) and the composite of $Y\to X_s\to X_{s-1}$.
+We state this easy fact as a lemma.
+\begin{Lemma}
+  \label{sec:filtlemma}
+  If $f\in [Y,X]$ is detected by an element in filtration $s$, then it can factor as the composite of $s$ maps, each of which induce the zero map in cohomology.
+\end{Lemma}
+
 
 For spheres, we can do a bit better.  
 Exactly like with spaces (you should check this), there is a relative homotopy group
@@ -171,12 +206,202 @@ This is the strategy we will use to compute the vast majority of the differentia
 Before we go any further in discussing how to calculate $E_\infty$, let us prove the following result
 \begin{Theorem}
   Use the notation of above.  Let 
-  \[F^{s,t}=Im([Y,X_s]_{t-s}\to [Y,X]_{t-s}\]
+  \[F^{s,t}=Im\left([Y,X_s]_{t-s}\to [Y,X]_{t-s}\right)\]
   Then 
-  \[\bigcap_n F^{s+n,t+n}=[Y,X]_{t-s}\otimes \F_2\]
-  and for each $(s,t)$ there is an $R$ such that
+  \[\bigcap_n F^{s+n,t+n}=\mbox{Torsion}_{p>2}[Y,X]_{t-s}\]
+  where $\mbox{Torsion}_{p>2}$ means the set of all elements annihilated by a power of an odd prime.  
+  Finally, for each $(s,t)$ there is an $R$ such that for all $r\ge R$
   \[E_R^{s,t}=\frac{F^{s,t}}{F^{s+1,t+1}}\]
-  We call $E_R^{s,t}$ by $E_\infty^{s,t}$.  
+  We call $E_r^{s,t}$ by $E_\infty^{s,t}$.  
+  We can write this compactly as
+  \[E_2=Ext^{s,t}_\A(H^*(X),H^*(Y))\implies [Y,X]_{t-s}\otimes \Z_2\]
 \end{Theorem}
+
+
+
+We need a lemma to prove the rest.  
+First of all.
+\begin{Lemma}
+  Adams Resolutions are ``comparable'', that is, given spectra $X$ and $Y$, $f:X\to Y$ and Adams Resolutions $X_i$ and a complex $Y_i$, you can find $f_i:X_i\to Y_i$ making the following diagram commutative
+  \begin{diagram}
+    X & \lTo & X_1 & \lTo & X_2 & \lTo & ...\\
+    \dTo^f & & \dTo^{f_1} && \dTo^{f_2}\\
+    Y & \lTo & Y_1 & \lTo & Y_2 & \lTo & ...
+  \end{diagram}
+\end{Lemma}
+
+\begin{proof}
+  Let $K_i$ be the cofiber of $X_{i+1}\to X_i$, $L_i$ the cofiber of $Y_{i+1}\to Y_i$, and recall that the suspensions of the $K_i$ and $L_i$ give free resolutions of $X$ and $Y$ in cohomology.  
+By the comparison theorem for cohomology, we can find $\hat{f}^*_i$ in cohomology such that the following diagram commutes
+  \begin{diagram}
+    H^*X & \lTo & H^*K_0 & \lTo & H^*\Sigma K_1 & \lTo & ...\\
+    \uTo^{f^*} & & \uTo^{\hat{f}^*_1} && \uTo^{\hat{f}^*_2}\\
+    H^*Y & \lTo & H^*L_0 & \lTo & H^*\Sigma L_1 & \lTo & ...
+  \end{diagram}
+But recall that that
+\[[?,K_i]\cong Hom_\A(H^*(K_i),H^*(?))\]
+And thus $\hat{f}^*_i$ is induced by $\hat{f}_i:K_i\to L_i$.  
+But $K_i$, $K_{i+1}$ and $X_i$ form one distinguished triangle, $L_i$, $L_{i+1}$ and $Y_i$ form another, and we have maps from the $K$'s to the $L$'s, so we automatically get a map $f_i:X_i\to Y_i$ so that everything commutes. 
+\end{proof}
+
+The proof from here on out will proceed much like in \cite[Ch~2]{HatcherSS}.
+
+Now, let us focus our attention of $\bigcap_i F^{s+i,t+i}$.  
+Recall in \ref{fig:exactCouple} that $[Y,K_i]_{l}$ is a $\F_2$ vector space, and thus has no odd prime torsion.
+The staircase is exact, so the vertical maps must be isomorphisms on the odd prime torsion. 
+Thus the odd prime torsion in $[X,Y]_{t-s}$ is passed all the way down from $[Y,X_s]_{t-s}$ to $[Y,X]_{t-s}$ and so $F^{s,t}$ contains it for each $(s,t)$.
+
+For the other direction, pick some integer $k$.  
+Since $[X,X]$ is an abelian group, we can take the identity and multiply it by $2^k$, which we will let denote a map.
+Let $Q$ be the cofiber of this map, so that we have the long exact sequence
+\[...\to [Y,X]_i\xrightarrow{(*2^k)} [Y,X]_i \to [Y,Q]_i\to ...\]
+and note by exactness that the image of the map $[Y,Q]_i\to [Y,X]_{i-1}$ is all $2$-torsion, as is the kernel of $[Y,X]_i\to [Y,Q]_i$, and thus $[Y,Q]_i$ is all 2-torsion.
+If $\alpha\in [Y,X]_i$ is either odd prime torsion or non-torsion, then, by our connective and finite-type hypothesis implies $[Y,X]_i$ is finitely generated, there is a $k$ such that $\alpha$ is not divisible by $2^k$.  
+Thus $\alpha$ is not in the image of $(*2^k)$, and so has nonzero image in $[Y,Q]_i$.  
+By the comparison theorem, if $\alpha$ has a preimage in $[Y,X_j]_i$ for all $j$, then the image of $\alpha$ in $[Y,Q]_i$ will have a similar property for the Adams resolution of $Q$.  
+Thus it is sufficient to prove that if $[Y,X]_i$ is all 2-torsion then the Adams resolution eventually becomes has $[Y,X]_i=0$.  
+
+To show this, assume $X=Z_0$ is all 2-torsion.
+Note that all the $[Y,X]_i$ are finite.  
+We inductively build an Adams Complex
+\begin{diagram}
+  Z_0 & \lTo & Z_1 & \lTo & Z_2 & \lTo & Z_3 & \lTo &...\\ 
+  \dTo & & \dTo && \dTo && \dTo\\
+  L_0 && L_1 && L_2 && L_3
+\end{diagram}
+let $n_i$ be the smallest number with $[Y,Z_i]_{n_i}\ne 0$, and let $L_i$ be a wedge sum of $H\F_2$ on a basis for $H^{n_i}(Z_i)$.  
+Let the map from $X_i\to L_i$ be the obvious one and let $Z_{i+1}$ be the cofiber.  
+Notice that in $H^{n_i}$ the map $Z_i\to L_i$ is an isomorphism, so also in $H_{n_i}$, so in $[Y,?]_k$ for $k< n_i$ it is an isomorphism and we have
+\[[Y,L_i]_{n_i}=[Y,Z_i]_{n_i}\otimes \F_2\]
+This is a surjection, so by the cofiber sequence we have for $k<n_i$ the group $[Y,Z_{i+1}]_k=0$ and $[Y,Z_{i+1}]_{n_i}$ is smaller than $[Y,Z_{i}]_{n_i}$.  
+Since these groups are finite, we must eventually get $[Y,Z_{i+1}]_{n_i}=0$.  
+This means for each $i$, there is an $n$ such that $[Y,Z_{i+1}]_i=0$ for $i\ge n$.  
+Applying the comparison theorem over the identity map $X\to X$, 
+we find if any element in $[Y,X]_{t-s}$ has preimage in $[Y,X_s]_{t-s}$ for all $s$ (recall to make this sequence we take suspensions, which is equivalent to a grating shift), that element would have nonzero image in $[Y,Z_s]_{t-s}$ for all $s$, which we just said is impossible.  
+Thus the intersection of the $F^{s+n,t+n}$ must be only odd prime torsion.  
+
+
+We can finally prove the convergence result.
+Recall that $A_r^{s,t}$ is all the elements of $[Y,X_s]_{t-s}$ with vertical preimages in $[Y,X_{s+r}]_{t-s}$.  
+By that which has been proved thus far, for sufficiently large $r$ this contains no 2-torsion.  
+Also, the map $A_r^{s,t}\to A_r^{s-1,t-1}$ is an isomorphism on the non torsion and odd prime torsion, so this map is injective.
+Thus, recalling the definition of the differential $d_r$, since the map $E_r^{s,t}\to A_r^{s,t}$ is 0 by exactness of the staircase, for large $r$ the differentials originating at $E_r^{s,t}$ are zero.
+Also for large enough $r$ there are no differentials into $E_r^{s,t}$, since such differentials would come from $E_r^{s-r,t-r-1}$, which is nothing for $r>s$.  
+Thus for all $r$ greater than some $R$, we have that projection $E_r^{s,t}\cong E_{r+1}^{s,t}$.
+Notice that in fact $E_\infty^{s,t}$, by exactness of the staircase, is isomorphic to the cokernel of the previous vertical maps, which for large $r$ is exactly the inclusion $F^{s+1,t+1}\to F^{s,t}$, which is the theorem.  
+
+
+\subsection{Some Remarks}
+
+There are a few ways to generalize this process or just make it a bit nicer.
+First of all, we can use homology instead of cohomology.  
+The difference here is that we end up using smash products instead of wedge products of $H\F_2$, but in the end we get a spectral sequence
+\[E_2 = Ext_{A_*}(H_*(Y),H_*(X))\implies [Y,X]\otimes \Z_2\]
+where the $\implies$ symbol means that there is an $E_\infty$ page and it is isomorphic successive quotients of the right hand of the $\implies$ arrow, and
+\[A_*=Hom(A,\F_2)=(H\F_2)_*(H\F_2)\]
+We can also replace $H\F_2$ with any generalized cohomology theory $E$, like cohomology mod odd primes, 
+you're favorite flavor of K-Theory (for instance $E=BU,BO,KO$) or cobordism ($E=MU,MSU,BP)$).  
+The zoo of spectra and cohomology theories are discussed in great detail in Ravenel's famous ``Green Book'' \cite{RavenelGreen}.
+In this case, under certain hypothesis about $E,X$ and $Y$, we have
+\[E_2 = Ext_{E_*E}(E_*(Y),E_*(X))\implies [Y,X]^{E}\]
+where $[Y,X]^{E}$ is, roughly, maps $f$ whose equivalence is detected by the induced map $E_*(f)$.  
+More details on this can be found in, for instance \cite{RavenelGreen}, \cite[Ch~IV]{H00RingSpectra}.  
+When $E=BP$, the spectral sequence is has many many fewer nonzero differentials, and earns the name ``Adams-Novikov Spectral Sequence''.  
+
+
+\subsection{Hopf Invariant One Maps in $Ext_\A(\F_2,\F_2)$}
+
+Let $f\in \pi_{4n-1}(S^{2n})$ have odd Hopf Invariant.  
+Since the group $\pi_{4n}(S^{2n+1})$ is stable and the Fruedenthal map is a surjection on $\pi_{4n-1}(S^{2n})\to \pi_{4n}(S^{2n+1})$, there is an $\hat{f}=\Sigma f\in\pi_{2n-1}^s(S)$ coming from $f$.  
+Notice that $\hat{f}\ne 0$, since the Steenrod Squares commute with suspensions, so in the cohomology ring $S^{2n+1}\cup_{\Sigma f} D^{4n+1}$ the Steenrod Square $S^{2n}$ is not zero.  
+Notice also that in $S^{2n+1}\cup_{f} D^{4n+1}$ for some $g\in \pi_{4n}(S^{2n+1})$, we cannot ask what the cup product square on the $2n+1$ cohomology class is.
+However, we can still apply $Sq^{2n}$ and ask if it is zero or not.  
+If $g$ is the suspension of a map with a Hopf invariant, this will detect the parity of the Hopf Invariant.
+Since Hopf Invariant is a homomorphism and nullhomotpic maps have Hopf Invariant 0, we know that $\Sigma f$ has even order.  
+This means that $\hat{f}$ is detected by an element in the Adams Spectral Sequence.  
+
+
+We can do better however.  We are able to say exactly what elements of $Ext_\A(\F_2,\F_2)$ correspond to possible maps of Hopf Invariant One.  
+We need the following lemma
+\begin{Lemma}
+  Suppose that $\hat{f}:S^{2n-1}\to S$ comes from an element of odd Hopf Invariant.  
+  Suppose there is a spectrum $X$ such that the following diagram commutes
+  \begin{diagram}
+    S^{2n-1} & \rTo^{f_1} & X\\
+             & \rdTo_{\hat{f}} & \dTo^{f_2}\\
+             &            &   S
+  \end{diagram}
+  Then either $f_1^*$ or $f^*_2$ is nonzero.
+\end{Lemma}
+
+\begin{proof}
+  Suppose both maps are zero in cohomology.  
+  We have the following diagram of spectra
+  \begin{diagram}
+      &            & S^{2n-1}\\
+      &            & \dTo^{f_1}\\
+    S & \lTo^{f_2} & X \\
+    \dTo &  & \dTo^j\\
+    S\cup_{\hat{f}} D^{2n} & \lTo^i & X\cup_{f_1} D^{2n}\\
+    \dTo & & \dTo\\
+    S^{2n} & \lEq & S^{2n}
+  \end{diagram}
+where the two columns are cofibrations.  
+Applying cohomology, we have that the two columns are exact.  
+In fact, since $f_1^*=0$, the right column is short-exact.  
+  \begin{diagram}
+    \F_2 & \rTo^{0} & H^*X\\
+    \uTo &  & \uOnto_{j^*}\\
+    \F_2\oplus \Sigma^{2n}\F_2 & \rTo^{i^*} & H^*(X\cup_{f_1} D^{2n})\\
+    \uTo & & \uInto\\
+    \Sigma^{2n}\F_2 & \lEq & \Sigma^{2n}\F_2\\
+  \end{diagram}
+  Let $\alpha$ be the generator of $H^0( S\cup_{\hat{f}} D^{2n})$ and $\beta$ be the generator of $H^{2n}( S\cup_{\hat{f}} D^{2n})$.  
+  Since we know $\beta$ has a preimage in $H^*(S^{2n})$ and since the bottom right vertical map is an injection (by exactness), $i^*\beta$ generate the kernel of $j^*$ and is nonzero.  
+  But $\beta=Sq^{2n}\alpha$, so $Sq^{2n}i^*\alpha=i^*\beta$, so $i^*\alpha\ne 0$ and thus is not in the kernel of $j^*$.  
+  This means $j^*i^*\alpha\ne 0$.  But by commutativity of the square, it should be, so we get a contradiction.  
+\end{proof}
+
+\begin{Cor}
+  If there is a map of odd Hopf Invariant in $\pi_{4n-1}(S^{2n})$, there is an element of $Ext^{1,2n}_\A(\F_2,\F_2)$ which survives to the $E_\infty$ page.  
+\end{Cor}
+\begin{proof}
+  By Lemma \ref{sec:filtlemma}.
+\end{proof}
+
+
+Since the kernel of $\A\to \F_2$ is generated over $\F_2$ by the indecomposable elements, we can conclude that $Ext^{1,t}(\F_2,\F_2)$ is nonzero when and only when $t$ is a power of 2.  
+We will refer to the generator of $Ext^{1,2^i}(\F_2,\F_2)$ as $h_i$.  
+The element $h_0$ detects twice the identity map in $\pi_0(S)$, $h_1$ detects the Hopf Fibration and $h_2$ and $h_3$ detect similar maps for the Quaternions and Octonions.  
+
+
+
+\subsection{Calculating $Ext_\A(H^*(X),\Z/2)$}
+
+In the special case of stable homotopy groups, there is a relatively straightforward way to calculate $Ext$.  
+Simply use a ``minimal'' resolution of $\A$, that is, a resolution constructed inductively with the least number of generators in each degree in each dimension and a preferred generator set.  
+Let me describe the algorithm.
+We want a resolution
+\[H^*(X)\from F_1\from F_2\from F_3\from ...\]
+The generators of $H^*(X)$ as an $\A$ module are the generators of $F_1$, mapping in the obvious way into $H^*(X)$.  
+Construct $F_i$ inductively as follows.  Let $F_i^j$ be the degree $j$ elements in $F_i$, and $\A^i$ be elements of $\A$ of degree $i$.  
+The algorithm will work by adding generators where needed, so let $G_i^j$ be the generators added in $F_i^j$.  
+\[{F_i^j}'=\langle sg|g\in G^k_i, k<j, s\in \A^{j-k} \rangle\]
+\[I=d({F_i^j}')\subseteq F_{i-1}^{j+1}\]
+\[K=ker(d:{F_{i-1}^{j+1}}'\to {f_{i-2}^{j+2}}')\]
+\[F_i^j= {F_i^j}'\oplus \langle G_i^j\rangle\]
+Where $G_i^j$ is formed by adding generators to ${F_i^j}'$ until $d|_I:I\to K$ is an isomorphism.
+Notice that we can use ${F_{i-1}^{j+1}}'$ instead of $F_{i-1}^{j+1}$ since the kernel of $d$ is the same on both modules.  
+A computer can easily be made to do these computations, and it is easy to see that, by construction, these are free-$\A$ modules and the differentials are exact.  
+
+Let $\sum_i s_ig_i$ be a homogeneous boundary, with the $g_i\in G_*^*$ and $s_i\in \A$.  
+Then all the $s_i$ are homogeneous, and cannot $Sq^0$ by the construction.  
+But any $\phi\in Hom_\A(F_*,\Z/2)$ will have 
+\[\phi(\sum s_ig_i)=s_i(\sum \phi(g_i))=0\]
+since $s_i\cdot 1=0$ fir $s_i$ is homogeneous and not $Sq^0$, so $d^*\phi=\phi\circ d=0$.  
+Thus all differentials are zero, so
+\[Ext_\A(H^*(X),\Z/2)=Hom_\A(F_*,\Z/2)\]
+This is isomorphic to the $\F_2$ vector space on the same basis as $F_*$.  
+I have implemented this algorithm.  
 
 
