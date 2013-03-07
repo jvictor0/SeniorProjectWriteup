@@ -183,11 +183,11 @@ Rewriting our diagram like this for $Y=S$, we have
 \begin{diagram}
   \vdots &&&& \vdots  &&&& \vdots \\
   \dTo & &&& \dTo  & &&& \dTo &&& &  \\
-  \pi_{t-s+1}X_s & \rTo & \pi_{t-s+1}(X_s,X_{s+1}) & \rTo & \pi_{t-s}X_{s+1} & \rTo & \pi_{t-s}(X_{s},X_{s+1}) & \rTo & \pi_{t-s-1}X_{s+2}\\
+  \pi_{t-s+1}X_s & \rTo & \pi_{t-s+1}(X_s,X_{s+1}) & \rTo & \pi_{t-s}X_{s+1} & \rTo & \pi_{t-s}(X_{s+1},X_{s+2}) & \rTo & \pi_{t-s-1}X_{s+2}\\
   \dTo & &&& \dTo  & &&& \dTo &&& &  \\
-  \pi_{t-s+1}X_{s-1} & \rTo & \pi_{t-s+1}(X_{s-1},X_{s}) & \rTo & \pi_{t-s}X_{s} & \rTo & \pi_{t-s}(X_{s-1},X_{s}) & \rTo & \pi_{t-s-1}X_{s+1}\\
+  \pi_{t-s+1}X_{s-1} & \rTo & \pi_{t-s+1}(X_{s-1},X_{s}) & \rTo & \pi_{t-s}X_{s} & \rTo & \pi_{t-s}(X_{s},X_{s+1}) & \rTo & \pi_{t-s-1}X_{s+1}\\
   \dTo & &&& \dTo  & &&& \dTo &&& &  \\
-  \pi_{t-s+1}X_{s-2} & \rTo & \pi_{t-s+1}(X_{s-2},X_{s-1}) & \rTo & \pi_{t-s}X_{s-1} & \rTo & \pi_{t-s}(X_{s-2},X_{s-1}) & \rTo & \pi_{t-s-1}X_{s}\\
+  \pi_{t-s+1}X_{s-2} & \rTo & \pi_{t-s+1}(X_{s-2},X_{s-1}) & \rTo & \pi_{t-s}X_{s-1} & \rTo & \pi_{t-s}(X_{s-1},X_{s}) & \rTo & \pi_{t-s-1}X_{s}\\
   \dTo & &&& \dTo  & &&& \dTo &&& &  \\
   \vdots &&&& \vdots  &&&& \vdots 
 \end{diagram}

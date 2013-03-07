@@ -185,6 +185,106 @@ We now introduce cohomology operations.
 
 This fact will become very important later.  
 
+\subsection{The Hopf Invariant}
+
+\label{sec:HopfInvariant}
+
+The Hopf Invariant is a somewhat mysterious invariant of maps between spheres of certain sizes, however, the existence of maps whose Hopf Invariant is equal to 1 is closely related to beautiful and elementary algebraic facts, in particular, the existence of finite dimensional division algebras over $\R$.  
+We can define the invariant as follows.  
+Let $n$ be an integer
+\[f:S^{4n-1}\to S^{2n}\]
+Letting $f$ be the attaching map of a $4n$ cell, we can form the complex
+\[S^{2n}\cup_f D^{4n}\]
+It is easy to see, by cellular cohomology, that the reduced cohomology group is
+\[H^*(S^{2n}\cup_f D^{4n})=\Sigma^{2n}\Z\oplus \Sigma^{4n}\Z\]
+If we let $\alpha$ be the cohomology class in dimension $2n$ and $\beta$ be the dimension of the cohomology class in $4n$, we have that there is an integer $h$ with
+\[\alpha\smile\alpha=h\beta\]
+\begin{Def}
+  Way say that $h$ is the Hopf Invariant of the (unstable) map $f\in \pi_{4n-1}(S^{2n})$.  This is only well defined up to sign, or choice of generator.  
+\end{Def}
+
+It is worth trying to describe a map of Hopf Invariant One.
+Let
+\[\eta : S^3\to S^2\]
+be given as follows by considering $S^2=\C P^2=S^3/S^1$, also written as a fibration
+\[S^1\to S^3\to S^2\]
+This is known as the Hopf Fibration.  
+Notice that 
+\[S^2\cup_\eta D^4=\C P^3\]
+ and since 
+\[H^*(\C P^3) = \Z[\alpha]/(\alpha^3)\]
+we have that the Hopf Invariant of $\eta$ is one.  
+
+Because the preimage of any point is a circle, the preimage of a circle is a torus, though the preimage of a line is a mobius strip.  This is described in detail in \cite[Example~4.45]{HatcherAT}, and there are numerous visualizations which can be found.  
+
+We will state an easy lemma.  
+\begin{Lemma}
+  The Hopf Invariant is a map of groups 
+  \[H:\pi_{4n-1}(S^{2n})\to \Z\]
+\end{Lemma}
+
+
+As promised, there is a fantastic equivalence
+\begin{Theorem}
+  When $n$ is even, the following are equivalent:
+  \begin{enumerate}
+    \item There is an element of Hopf Invariant 1 in $\pi_{2n-1}(S^n)$.
+    \item There is an $n$-dimensional division algebra over $\R$ (not necessarily commutative or associative).
+    \item There is a map $\mu:S^{n-1}\times S^{n-1}\to S^{n-1}$ an a point $e\in S^{n-1}$ with $\mu(e,x)=\mu(x,e)=x$ for all $x\in S^{n-1}$.  We say that $S^{n-1}$ is an H-space in this case. 
+  \end{enumerate}
+\end{Theorem}
+Note that when $n$ is odd, the hairy ball theorem makes (2) and (3) false.  
+
+\begin{proof}
+  To see that (2) implies (3), set
+  \[\mu(x,y) = xy/||xy||\]
+  where $||.||$ is the Euclidean norm in $\R^n$.  
+  Since $\R^n$ is a division algebra, we know $xy\ne 0$ when $x\ne 0$ and $y\ne 0$, so this is well defined and continuous if $x$ and $y$ are on $S^{n-1}$.
+  Also, we can assume that $1=(1,0,...,0)$ is the identity of the division algebra structure on $\R^n$, so $\mu$ has an identity element $e=1$.  
+
+  To see that (3) implies (1), suppose we have a $\mu$ and write
+  \[S^{n}=D^{n}_+\cup D^{n}_-\]
+  where we identify the boundaries and
+  \[S^{2n-1}=\partial(D^{n}\times D^{n})=(\partial D^{n})\times D^{n}\cup D^{n}\times(\partial D^{n}) \]
+  And define
+  \[f(x,y) = \left\{\begin{array}{cc} ||x||\mu(\frac{x}{||x||},y)\in D^n_+ & (x,y)\in (\partial D^{n})\times D^{n}\\
+  ||y||\mu(x,\frac{y}{||y||})\in D^n_- & (x,y)\in D^n\times (\partial D^{n})\end{array}\right.\]
+  Once can check that this is well defined and continuous.  
+  We claim that the Hopf invariant of $f$ is $\pm 1$, or equivalently, that the cup product
+  \[H^n(S^n\cup_f D^{2n})\otimes H^n(S^n\cup_f D^{2n}) \to H^{2n}(S^n\cup_f D^{2n})\]
+  is surjective.  
+
+  Let $\Phi:D^{2n}\to S^n\cup_f D^{2n}$ be the characteristic map of the $2n$ cell.  I claim we have the following diagram
+  \begin{diagram}
+    H^n(S^n\cup_f D^{2n})\otimes H^n(S^n\cup_f D^{2n}) & \rTo & H^{2n}(S^n\cup_f D^{2n})\\
+    \uTo^\approx                                       &     &   \uTo^\approx\\
+    H^n(S^n\cup_f D^{2n},D^n_+)\otimes H^n(S^n\cup_f D^{2n},D^n_-) & \rTo & H^{2n}(S^n\cup_f D^{2n},S^n)\\
+    \dOnto^{\Phi^*\otimes\Phi^*}                                      &     &   \dTo^{\Phi^*}_\approx\\
+    H^n(D^{n}\times D^{n},(\partial D^{n})\times D^{n})\otimes H^n(D^{n}\times D^{n},D^{n}\times(\partial D^{n})) & \rTo & 
+    H^{2n}(D^{n}\times D^n,\partial(D^n\times D^n))\\
+    \dTo^\approx & & \uTo^\approx\\
+    H^n(D^n\times \{e\},(\partial D^{n})\times \{e\})\otimes H^n(\{e\}\times D^{n},\{e\}\times(\partial D^{n})) & \rTo^\approx &
+    H^{2n}(D^n\wedge D^n,\partial(D^n\times D^n))
+  \end{diagram}
+
+
+  The top row is the cup product, which we want to show is a surjection.
+  The second row is the relative cup product.  
+  Since the left subcomplexes are both contractible, the left map is an isomorphism.
+  The right map is an isomorphism because $S^n$ has no effect on $H^{2n}$
+  The next row is a obtained by applying the characteristic map $\Phi$.  
+  The right vertical map is an isomorphism because of the short exact sequence from the cofibration (the connecting maps must be zero!) 
+  \[0\to H^*(S^{2n})\to H^*(S^{n}\cup_f D^{2n})\to H^*(S^{2n})\to 0 \]
+  which implies that
+  \[\Phi^*:H^*(S^{n}\cup_f D^{2n},S^{2})\to H^*(S^{2n})\]
+  is an isomorphism.
+  Finally, the bottom row is Kunneth, the bottom left vertical map is an isomorphism because it is a deformation retract and the bottom right vertical map is induced by a homeomorphism.  
+
+
+Finally, to see that (1) implies (2), first prove that there only exists elements of Hopf Invariant One in $\pi_3(S^2),\pi_7(S^4)$ and $\pi_{15}(S^8)$, corresponding to the complex numbers, quaternions and octonions.  
+
+\end{proof}
+
 
 \subsection{The Steenrod Operations}
 
@@ -225,7 +325,7 @@ The Steenrod Algebra is also, importantly, a Hopf Algebra, with comultiplication
 \[Sq^i\mapsto \sum_{i=j+k} Sq^j\otimes Sq^k\]
 One can check that this, with the obvious unit and counit (sending $Sq^0$ to 1, other squares to 0 and 1 to $Sq^0$) is a Hopf Algebra.  
 
-An easy application of the definition is to show the nonexistence of elements of Hopf Invariant 1 (see \ref{sec:HopfInvariant}).
+An easy application of the definition is to show the nonexistence of elements of Hopf Invariant 1.
 For a space to have Hopf Invariant 1, it must have Hopf Invariant 1 (mod 2).  
 Let $X=S^{2n}\cup_f e^{4n}$ be a space with Hopf Invariant, and let $\eta$ and $\mu$ be the two generators of cohomology.  
 Then if the Hopf Invariant of $f$ is 1 (mod 2), $Sq^{2n}(\eta)=\mu$.

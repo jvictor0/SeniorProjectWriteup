@@ -4,14 +4,17 @@ The Adams Spectral Sequence has a ton of structure, inherited from the structure
 For instance it is easy to see that the Adams Spectral Sequence is functorial in $Y$, and by the comparison theorem in is functorial in $X$ as well,
 and maps between spectral sequences commute with the differentials, that is, a map $f:X\to Z$ induces, for each $r$, a map $f_r :E_r(Y,X)\to E_r(Y,Z)$ and $d_rf_r=f_rd_r$, and a similar contravariant thing for $X$ (this is easy to see, but it requires some thinking about it.  Simply use the comparison theorem to draw maps between exact couples and trace the differentials).  
 
-\subsection{The Smash Product Paring}
+\subsection{The Smash Product Pairing}
 
 Consider this product
 \[[X_1,X_2]_i\otimes[Y_1,Y_2]\to [X_1\wedge Y_1,X_2\wedge Y_2]_{i+j}\]
 Coming from the functoriality of the wedge sum.  
-Consider Adams Resolutions $X_2^{i}$ of $X_2$ and $Y_1^i$ of $Y_2$.  Define
-\[Z_k=\bigvee_{i+j=k} X_2^i\wedge Y_2^j\]
-with the evident maps between them, and notice that the cofibers are wedge sums of $H\F_2$ inducing surjections on cohomology, so this is an Adams resolution for $Z_0=X_2\wedge Y_2$ (Note that this is not true for any cohomology theory.  For a general proof, see \cite[Ch~2.3]{RavenelGreen} or \cite[Ch~IV]{H00RingSpectra}).   
+Consider Adams Resolutions $X_2^{i}$ of $X_2$ and $Y_1^i$ of $Y_2$.  
+Notice that we can replace the first $k$ maps in the Adams resolutions with injections, and define,
+\[Z_k=\bigcup_{i+j=k} X_2^i\wedge Y_2^j\]
+with the evident maps between them, and notice that the cofibers are wedge sums of $H\F_2$ inducing surjections on cohomology, so this is an Adams resolution for $Z_0=X_2\wedge Y_2$ (Note that this is not true for any cohomology theory. For a general proof, see \cite[Ch~2.3]{RavenelGreen} or \cite[Ch~IV]{H00RingSpectra}).   
+This follows directly from the easy to show isomorphism of spectra
+\[\frac{X}{A}\wedge \frac{Y}{B}\cong\frac{X\wedge Y}{X\wedge B\cup A\wedge Y}\]
 Let $L_i$ be the cofibers $Z_{i+1}\to Z_i$, $K_i$ the cofibers of $X_2^{i+1}\to X_2^i$ and $J_i$ the cofibers of  $Y_2^{i+1}\to Y_2^i$
 Note that elements in the $E_1$ page of the Adams Spectral Sequence is represented by maps $x\in [X_1,K_{s_x}]_{s_x-t_x}$, $y\in [Y_1,J_{s_y}]_{s_y-t_y}$ and $z\in [X_1\wedge Y_1,L_s]_{s-t}$ where $s=s_x+x_y$ and $t=t_x+t_y$.  Setting $z=x\wedge y$, we have defined a product
 \[E_1(X_1,X_2)\otimes E_1(Y_1,Y_2)\to E_1(X_1\wedge Y_1,X_2\wedge Y_2)\]
@@ -72,11 +75,11 @@ To see this, let $f\in [X,Y]_i$ and $g\in [Y,Z]_j$.  Then $g\circ f$ can be comp
 \[X\wedge S^{i+j}\to X\wedge S^i\wedge S^j\xrightarrow{f\wedge1} Y\wedge S^j\xrightarrow{g} Z\]
 For $X=Y=S$, this is the smash product paring on $[S,S]\otimes [S,Z]$ (for odd primes there are rather annoying sign issue, but we have enough to worry about).  
 This means that we can compute the products using the readily computable Yoneda Product without having to pay the memory cost of tensoring our resolution with itself to compute the tensor product pairing.  
-On a computer this is the difference between easily computing products and choking with an out-of-memory exception.  
+On a computer this is the difference between easily computing products and choking on an out-of-memory exception.  
 
 \subsection{Steenrod Squares in the Adams Spectral Sequence}
 
-Through pure homological algebra, if $M$ is an coalgebra and $N$ is a algebra over a cocommutative Hopf algebra $A$, then $\A$ acts on $Ext_A(M,N)$.  
+Through pure homological algebra, if $M$ is an coalgebra and $N$ is a algebra over a cocommutative Hopf algebra $A$, then $\A$ acts on $Ext_A(M,N)$, and this action is computable (see \ref{sec:SteenrodConstruction}).  
 Luckily, $\A$ is a cocommutative Hopf Algebra itself, so if $X$ is a ring spectrum then $H^*Y$ is an $\A$-coalgebra and if, say, $Y$ is a suspension spectrum then $H^*X$ is an $\A$-algebra, then we can define these operations on the $E_2$ page.  
 However, if we force $Y=S$, we have a geometric way of realizing these operations, first published by Kahn \cite{kahnCupi}.  
 The idea is that, given geometric ways of realizing the algebraic operations, we can use the geometric description of the differentials construct algebraic laws constraining the interaction of the Steenrod Squares and the differentials.  
@@ -89,6 +92,8 @@ The other extreme is \cite[Ch~IV.4]{H00RingSpectra}, in which Bruner works in fa
 I will work in only slightly greater generality than Kahn and Milgram, but using the language of spectra developed earlier.  
 
 \subsubsection{The Quadratic Construction}
+
+\label{sec:quadConst}
 
 Let $A$ and $B$ be topological spaces with basepoints $a_0$ and $b_0$.  
 We define the half smash product
@@ -108,43 +113,51 @@ Also notice that, as spaces (and thus as suspension spectra)
 This will become important, so we define
 \[P_m^{m+n} = \frac{\R P^{m+n}}{\R P^{m-1}}\]
 
+
 More generally, if $X$ is a spectrum with $\Z/2$-action and $A$ is a space with $\Z/2$ action (such as $S^n$), then $A\ltimes X$ has $\Z/2$-action, so define
 \[A\ltimes_{\Z/2}X = \frac{A\ltimes X}{\Z/2}\]
 
 
+Other properties that May's pragmatist would take for granted include (although on the space level one can see these work), are
+\[\frac{S^n\ltimes_{\Z/2} X}{S^{n-1}\ltimes_{\Z/2} X} = P^{n}_n\wedge X\]
+and for $A\subset X$
+\[\frac{S^n\ltimes_{\Z/2} X}{S^{n-1}\ltimes_{\Z/2} X\cup S^{n}\ltimes_{\Z/2} A}= P_n^n\wedge \frac{X}{A}\]
+and finally
+\[W\ltimes_{\Z/2}(A\wedge B)\cong (W\ltimes_{\Z/2}A)\wedge B\]
+
+
 \subsubsection{Geometric Realization of the Steenrod Squares}
 
-Let $X$ be a commutative ring spectrum equipped with a map $\theta:Q^\infty(X)\to X$ which extends the ring map $X\wedge X\to X$ (this is known as $H_\infty$ structure, but that is not important).  
-
-SHOW SPHERES ARE $H_\infty$!!!!, MENTION THE COREDUCTIONS KAHN USES!!!
+Let $X$ be a commutative ring spectrum equipped with a map $\Theta:Q^\infty(X)\to X$ which extends the ring map $X\wedge X\to X$ (this is known as $H_\infty$ structure, but that is not important).  For spheres, $Q(S)=(\R P^\infty)^+$, that is $\R P^\infty$ with a disjoint basepoint, and the map $Q(S)\to S$ is given by collapsing the $\R P^\infty$ component to a point.  
 
 
 Let $X\from \{X_i\}$ be an Adams Resolution.  
 Then if 
-\[Z_i = \bigcup_{i=j+k} X_j\smash X_k\]
-We have that $\Z/2$ acts on $Z_0=X\smash X$ by twisting, and that action is inherited by the $Z_i$.  
+\[Z_i = \bigcup_{i=j+k} X_j\wedge X_k\]
+We have that $\Z/2$ acts on $Z_0=X\wedge X$ by twisting, and that action is inherited by the $Z_i$.  
 Then $S^n\ltimes_{\Z/2} Z_{i+1}$ is a subspectrum of $S^n\ltimes_{\Z/2} Z_{i}$ and $S^{n-1}\ltimes_{\Z/2} Z_i$ is a subspectrum of $S^n\ltimes_{\Z/2} Z_i$.  
 
 Here is the construction of Kahn which allows for a geometric realization of the Steenrod Squares.
 \begin{Theorem}
+  \label{sec:thetathm}
   There exist maps
-  \[\theta_{n,s}:S^n\ltimes_{\Z/2} Z_s\to X_{s-i}\]
+  \[\Theta_{n,s}:S^n\ltimes_{\Z/2} Z_s\to X_{s-i}\]
   coming from a lift of
-  \[\theta : Q(X)\to X\]
+  \[\Theta : Q(X)\to X\]
   In other words, the following diagrams need to commute for all $n,s$:
   \begin{diagram}
     Q(X) & \lTo & S^n\ltimes_{\Z/2}Z_s & &&& S^n\ltimes_{\Z/2}Z_{s-1} & \lTo & S^n\ltimes_{\Z/2}Z_s & \lTo & S^{n-1}\ltimes_{\Z/2}Z_s\\
-    \dTo^\theta & & \dTo^{\theta_{n,s}} & &&&  \dTo^{\theta_{n,s-1}} & & \dTo^{\theta_{n,s}} & & \dTo^{\theta_{n-1,s}}\\
+    \dTo^\Theta & & \dTo^{\Theta_{n,s}} & &&&  \dTo^{\Theta_{n,s-1}} & & \dTo^{\Theta_{n,s}} & & \dTo^{\Theta_{n-1,s}}\\
     X & \lTo & X_{s-n}                 & &   &&  X_{s-n-1} & \lTo &  X_{s-n} & \lTo &  X_{s-n+1}
   \end{diagram}
 \end{Theorem}
 
 \begin{proof}
-  Obviously $\theta_{0,s}$ exists, since $S^0\ltimes Z_s=Z_s$ and so $\theta_{0,s}$ is just the map of Adams Resolutions $Z_s\to X_s$ coming from the ring spectrum map $X\wedge X\to X$, so the leftmost square commutes.  
+  Obviously $\Theta_{0,s}$ exists, since $S^0\ltimes Z_s=Z_s$ and so $\Theta_{0,s}$ is just the map of Adams Resolutions $Z_s\to X_s$ coming from the ring spectrum map $X\wedge X\to X$, so the leftmost square commutes.  
   By the definition of $H^\infty$ structure, the right square commutes as well.  
-  By induction, assume we have defined $\theta_{l,s}$ for $l<n$ and $\theta_{n,t}$ for $t<s$.  
+  By induction, assume we have defined $\Theta_{l,s}$ for $l<n$ and $\Theta_{n,t}$ for $t<s$.  
   
-  We want to lift $\theta_{k,s-1}$ to get $\theta_{k,s}$, and the obstruction to doing so is a map in
+  We want to lift $\Theta_{k,s-1}$ to get $\Theta_{k,s}$, and the obstruction to doing so is a map in
   \[\left[\frac{S^n\ltimes_{\Z/2} Z_s}{S^{n-1}\ltimes_{\Z/2} Z_s},\frac{X_{s-k-1}}{X_{s-k}}\right] \cong 
   Hom_\A\left(F,H^*\left(\frac{S^n\ltimes_{\Z/2} Z_s}{S^{n-1}\ltimes_{\Z/2} Z_s}\right)\right)\]
   where we used that the $X_*$ is an Adams Resolution so the cofiber is a wedge sum of Elienberg Maclane spaces whose cohomology, which we call $F$ above, is $\A$-free.
@@ -171,12 +184,13 @@ To geometrically define the squaring operations, notice the following fact about
 Thus the cohomology is $(C\otimes C)_n$ by Kunneth.
 Also, note that the action of $\Z/2$ on the above space induces the tensor product switching map in cohomology.  
 Letting $D_+^n$ and $D_-^n$ be the two caps of $S^n$, there are two inclusions
-\[\psi_\pm^n\frac{D^n_\pm\ltimes Z_s}{S^{n-1}\ltimes Z_s\cup D^n_\pm\ltimes Z_{s+1}} \to \frac{S^n\ltimes Z_s}{S^{n-1}\ltimes Z_s\cup S^n\ltimes Z_{s+1}}\]
+\[\psi_\pm^n:\frac{D^n_\pm\ltimes Z_s}{S^{n-1}\ltimes Z_s\cup D^n_\pm\ltimes Z_{s+1}} \to \frac{S^n\ltimes Z_s}{S^{n-1}\ltimes Z_s\cup S^n\ltimes Z_{s+1}}\]
 The two spaces in the denominator of the left hand side pull back to map to $X_{s-n+1}$, while the numerator pulls back to map to $X_{s-n}$.  
 Thus, if we fix $n$ we get two coherent systems of maps $n$ maps
-\[\varphi_\pm^{n,s}=\frac{\theta_{n,s}}{\theta_{n,s+1}\cup \theta_{n-1,s}}\circ\psi_\pm^n :  S^n\wedge \frac{Z_s}{Z_{s+1}} \to K_{s-n}\]
+\[\varphi_\pm^{n,s}=\frac{\Theta_{n,s}}{\Theta_{n,s+1}\cup \Theta_{n-1,s}}\circ\overline{\psi}_\pm^n :  S^n\wedge \frac{Z_s}{Z_{s+1}} \to K_{s-n}\]
+where $\overline{\psi}_\pm^n$ is $\psi_\pm^n$ composed with the projection to orbits mod $\Z/2$.  
 If $\rho$ is the $\Z/2$ action, then $\varphi_+^{n,s}\rho=\varphi_-^{n,s}$.  
-Finally, when splicing the sequences together, everything must commute with everything else, in the sense that the following will work out  
+Finally, when splicing the sequences together, everything must commute with everything else, in the sense that the following will work out. 
 Define chain maps of degree $n$
 \[\Delta_n : C\to C\otimes C\]
 by
@@ -186,15 +200,58 @@ by
   \[\Delta_n\partial+\partial\Delta_n = \Delta_{n-1}+\rho\Delta_{n-1}\]
 \end{Theorem}
 The proof is long and boring, but straightforward.  
-Simply splice together the suspensions of the spaces $Z_s/Z_{s+1}$ and use the diagrams relating the $\theta$'s to check that $\varphi$'s obey the right laws.  
+Simply splice together the suspensions of the spaces $Z_s/Z_{s+1}$ and use the diagrams relating the $\Theta$'s to check that $\varphi$'s obey the right laws.  
+
 
 \begin{Cor}
+  \label{sec:geomsteen}
   Let $Y$ be a spectrum with a diagonal $d:Y\to Y\wedge Y$ (for instance, a suspension spectrum).  
   If $u\in [Y,K_s]_{t-s}$ then the following diagram commutes (and thus we can calculate $Sq^{2s-i}u$)
   \begin{diagram}
-    \Sigma^{2t-2s+i}Y & \rTo^{Sq^{2s-i}u} &  &  & K_{2s-i}\\
-    \dTo^d       &                  &  &  & \uTo^{\varphi_+^{i,2s}}\\
-    \Sigma^{2t-2s+i}(Y\wedge Y) & \rTo & S^i\wedge \Sigma^{t-s}Y\wedge\Sigma^{t-s}Y & \rTo^{1\wedge u\wedge u} & S^i\wedge K_s\wedge K_s
+    \Sigma^{2t-2s+i}Y & \rTo^{Sq^{2s-i}u} &  K_{2s-i}\\
+    \dTo^d       &                  & \uTo^{\varphi_+^{i,2s}}\\
+     S^i\wedge \Sigma^{t-s}Y\wedge\Sigma^{t-s}Y & \rTo^{\Sigma^i(u\wedge u)} & S^i\wedge K_s\wedge K_s
   \end{diagram}
   where the right map makes sense since $K_s\wedge K_s\subset \frac{Z_{2s}}{Z_{2s+1}}$  
 \end{Cor}
+
+\begin{proof}
+  As a map in cohomology, this basically asserts the definition of $Sq^{2s-i}u$.  
+  \[Sq^{2s-i}u= d^* \circ (u\otimes u)\circ \Delta_i\]
+  where we abuse notation by using the same symbols for maps between spaces and maps between cohomology modules.  
+\end{proof}
+
+
+Now assume $Y=S$, so that we can discuss relative homotopy groups.  
+The above construction can be made relative as follows:  Define for spaces
+\[(X,A)\ltimes (Y,B) = \left(X\ltimes Y,A\ltimes Y \cup X\ltimes B\right)\]
+Then $\Theta_{n,s}$ becomes
+\[\Theta_{n,s}: (S^n,S^{n-1})\ltimes_{\Z/2} (Z_s,Z_{s+1})\to (X_{s-i},X_{s-i+1})\]
+and $\psi_\pm^n$ is a
+\[\psi_\pm^n : (D^n,S^{n-1})\ltimes (Z_{2s},Z_{2s+1})\to (S^n,S^{n-1})\ltimes (Z_{2s},Z_{2s+1})\]
+and $\Delta_n$ is
+\[\Delta_n=(\Theta_{n,s}\psi_\pm^n)^*\]
+
+Thus we have the following
+\begin{Cor}
+  \label{sec:relgeomsteen}
+  If $u\in \pi_{t-s}(X_s,X_{s+1})$ then the following diagram commutes
+  \begin{diagram}
+    (D^{2t-2s+i},S^{2t-2s+i-1}) && \rTo^{Sq^{2s-i}u} & & (X_{2s-i},X_{2s-i+1})\\
+     \dTo^\approx   &           &    &    & \uTo_{\Theta_{i,s}}\\ 
+      (D^i,S^{i-1})\ltimes(D^{2t-2s},S^{2t-2s-1}) & \rTo^{1\ltimes u \wedge u} & 
+     (D^i,S^{i-1})\ltimes(Z_{2s},Z_{2s+1})  & \rTo^{\overline{\psi}_+^i} &  (S^i,S^{i-1})\ltimes_{\Z/2}(Z_{2s},Z_{2s+1})\\
+     \dTo^{i_+} & & & & \uTo^{1\ltimes u\wedge u}\\
+     (S^i,S^{i-1})\ltimes (D^{2t-2s},S^{2t-2s-1}) && \rTo &&    (S^i,S^{i-1})\ltimes_{\Z/2} (D^{2t-2s},S^{2t-2s-1})
+  \end{diagram}
+  where we consider $D^{2t-2s}=D^{t-s}\wedge D^{t-s}$, $i_+$ is induced by the inclusion of the upper hemisphere $D^i\to S^i$ and the unlabeled map is passage to orbits mod $\Z/2$.  
+\end{Cor}
+
+\begin{proof}
+  The top cycle is exact the relative version of Corollary \ref{sec:geomsteen} with $\Theta_{i,s}\overline{\phi}_+^i$ factored.  It is clear that the bottom cycle commutes.  
+\end{proof}
+
+Now that we have a geometric realization of the Steenrod Squares, we can reason about the differentials $d_rSq^i x$ for some $x\in E_2$.  
+This will be our main source of differential computations in the Adams Spectral Sequence.  
+
+

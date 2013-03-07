@@ -8,6 +8,7 @@
 \usepackage{fge}
 \usepackage[small,nohug,heads=LaTeX]{diagrams}
 \diagramstyle[labelstyle=\scriptstyle]
+\usepackage{sseq}
 \usepackage{appendix}
 \usepackage{graphicx}
 
@@ -24,12 +25,12 @@
 \newcommand{\F}[0]{\mathbb{F}}
 \newcommand{\binomial}[2]{\left(\begin{array}{c}#1\\#2\end{array}\right)}
 \newcommand{\from}[0]{\longleftarrow}
+\newcommand{\Ext}[0]{\mbox{Ext}}
 
-
-\newtheorem{Def}{Definition}
-\newtheorem{Theorem}{Theorem}
-\newtheorem{Lemma}{Lemma}
-\newtheorem{Cor}{Corralary}
+\newtheorem{Def}{Definition}[subsection]
+\newtheorem{Theorem}[Def]{Theorem}[subsection]
+\newtheorem{Lemma}[Def]{Lemma}[subsection]
+\newtheorem{Cor}[Def]{Corollary}[subsection]
 
 
 
@@ -43,18 +44,20 @@
 \newpage
 
 
+
 \input{Intro}
 \input{Spectra}
 \input{ASSSetup}
 \input{ProdsSteenrodASS}
-\input{StubSections}
+\input{SteenrodDifferentials}
+
 
 
 \appendix
 \appendixpage
 \addappheadtotoc
 \input{AppendixSteenrodOps}
-\input{AppendixHopfInv}
+\input{AppendixSSEQ}
 \input{Todo}
 
 \newpage

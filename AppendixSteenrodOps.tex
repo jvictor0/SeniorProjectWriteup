@@ -2,75 +2,75 @@
 
 \section{Homological Algebra and Steenrod Operations}
 
-\subsection{Cup products in Ext}
+\subsection{Tensor and Yoneda Products in Ext}
 \label{sec:ExtStructure}
 
-The $Ext$ functos have quite a bit of structure, which we will explore in this section.  
-
+The $Ext$ functors have quite a bit of structure, which we will discuss briefly in this section.  A fuller treatment can be found in \cite{cartan}
 Fix some field $k$. 
-Let $A$ be a $k$-algebra and $X$,$Y$ and $Z$ be $A$-modules.
-Then there is a product, which we will call the cup product, 
-\[Ext_A(X,Z)\otimes Ext_A(Y,Z)\to Ext_{A\otimes A}(X\otimes Y,Z)\]
+Let $A$ be a $k$-algebra and $X$,$Y$ and $Z$ and $W$ be $A$-modules.
+Then there is a product, which we will call the tensor product, 
+\[Ext^s_A(X,Z)\otimes Ext^t_A(Y,W)\to Ext^{s+t}_{A\otimes A}(X\otimes Y,Z\otimes W)\]
 
-Formally, the computation of this product will be very similar to cup products in topological cohomology.  
 To construct the product, let $K$ be an  $A$-resolution of $X$ and $L$ be an  $A$-resolution of $Y$.  
 Then $K\otimes L$ is an $A\otimes A$-resolution of $X\otimes Y$.  
-If $[x],[y]$ are cocycles in $Ext_A(X,Z)$ and $Ext_A(Y,Z)$ respectively, define
+If $[x],[y]$ are cocycles in $Ext^s_A(X,Z)$ and $Ext^t_A(Y,W)$ respectively, then consider
+\[x\otimes y : K\otimes L \to Z\otimes W\]
+This is clearly a cocycle, so represents a class in $Ext^{s+t}_{A\otimes A}(X\otimes Y,Z\otimes W)$, and the class represented depends only in $[x]$ and $[y]$, not on choice of representatives. If $A$ is a Hopf algebra, there is a map $A\to A\otimes A$, making $X\otimes Y$ an $A$-resolution.  In this case, this tensor product becomes
+\[Ext^s_A(X,Z)\otimes Ext^t_A(Y,W)\to Ext^{s+t}_{A}(X\otimes Y,Z\otimes W)\]
+In the case that $X$ is a co-algebra, we can pull back by the co-multiplication, and in the case that $Y$ is an algebra, we can compose with the multiplication, yielding.  
+\[Ext^s_A(X,Y)\otimes Ext^t_A(X,Y)\to Ext^{s+t}_{A}(X,Y)\]
+These are sometimes referred to as cup products.  
 
-NEED TWO WORK OUT THERE ARE TWO DIFFERENT COFFEES ON EXT, ETC
+We also have Yoneda products in Ext, which are often much easier to compute because you do not need to construct the resolution $K\otimes L$.  
+The Yoneda product is a map
+\[Ext^s_A(X,Y)\otimes Ext^t_A(Y,Z)\to Ext^{s+t}_{A\otimes A}(X,Z)\]
+extending the composition product
+\[Hom_A(X,Y)\otimes Hom_A(Y,Z)\to Hom_{A\otimes A}(X,Z)\]
+It is computed by considering $Ext^s_A(X,Y)$ as homotopy classes of degree $s$ chain-maps between resolutions $K\to X$ and $L\to Y$.  
+This can be done by the comparison theorem for projective resolutions.  
+Since a cocycle in $Ext^s_A(X,Y)$ is represented by a map $K_s\to Y$, we can extend that map to a chain map with component maps $K_{s+i}\to L_i$, and this is unique up to homotopy.  
+Likewise, given a degree $s$ chain map $x$ between resolutions $K$ and $L$, taking the map from $K_s\to L_0=Y$ gives a chain $x_0$.  Since $x_0d=dx_{-1}=0$, $x_0$ is a cocycle, so indeed Ext is in bijection with homotopy classes of chain maps.  
+But chain maps can be composed yielding the desired map.
+In particular, this means $Ext_A(X,X)$ is a ring and $Ext_A(X,M)$ is a left module and $Ext_A(M,X)$ is a right module.  
+
+
 
 \subsection{Chain Level Construction of Steenrod Operations}
 \label{sec:SteenrodConstruction}
 
-
-OOPS, NEED TO REPLACE $\F_2$ WITH COALGEBRA $N$!!!
-
+This construction is found most clearly in \cite{kahnCupi}, but also in \cite{milgramGroupReps} and \cite{H00RingSpectra}.  
 
 \begin{Theorem}
-  Let $A$ be a cocommutative $\F_2$-Hopf Algebra, and $M$ a module over $A$.  
+  Let $A$ be a cocommutative $\F_2$-Hopf Algebra, $X$ an algebra over $A$ and $Y$ a coalgebra over $A$.  
   Then there is a map of graded modules
-  \[\A\otimes Ext_A(\F_2,M)\to Ext_A(\F_2,M)\]
+  \[\A\otimes Ext_A(Y,X)\to Ext_A(Y,X)\]
 \end{Theorem}
 
 \begin{proof}
-  Let $K$ be a projective resolution of $\F_2$.
-  We can view $K\otimes K$ as an $A$-module via the Hopf-comultiplication $A\to A\otimes A$.  
+  Let $K$ be a projective resolution of $Y$.
+  We can view $K\otimes K$ as an $A$-module via the Hopf-comultiplication $A\to A\otimes A$ and a resolution of $Y\otimes Y$.  
   We have an $\A$-map 
   \[\Delta_0:K\to K\otimes K\]
-  lifting the identity $\F_2\cong \F_2\otimes \F_2$, and this is good for computing cup products. 
-  Let $\rho$ be the switching endomorphism on $K\otimes K$.  
+  lifting the comultiplication $Y\to Y\otimes Y$, and this is good for computing cup products. 
+  Let $\rho$ be the switching map on $K\otimes K$, that is
+  \[\rho (x\otimes y) = y\otimes x\]
   We have
   \[\rho\Delta_0 : K\to K\otimes K\]
-  is another such map.  
-  Because $K$ has a contracting homotopy, we can compute $\Delta_1$ which satisfies
+  is another map lifting the comultiplication, and thus $rho\Delta_0$ is homotopic to $\Delta_0$.  
+  Because $K$ has a contracting homotopy since it is a resolution, we can compute $\Delta_1$ which satisfies
   \[\Delta_1\partial + \partial\Delta_1 = \rho\Delta_0+\Delta_0\]
   Likewise, $\Delta_1$ and $\rho\Delta_1$ are homotopic, and so on, so we can find chain of degree $n$
   \[\Delta_n :K\to K\otimes K\]
   \[\Delta_n\partial + \partial\Delta_n = \rho\Delta_{n-1}+\Delta_{n-1}\]
-  Letting $\sigma$ be our contracting homotopy, we can write an explicit recursive formula
+  Letting $\sigma$ be our contracting homotopy on $K\otimes K\to Y\otimes Y$, we can write an explicit recursive formula
   \[\Delta_n = \sigma(\partial\Delta_n + \rho\Delta_{n-1}+\Delta_{n-1})\]
   
   Finally, define for $[u]\in Ext_A^{s,t-s}(\F_2,M)$
   \[Sq^i(u)(\sigma) = (u\otimes u)(\Delta_{2s-i}\sigma)\]
 
-  Now we just need to show that these operations obey the Adem relationship, that is, that this is actually an action of the Steenrod Algebra.  TODO
+  Once can check that these operation obey the Cartan and Adem formulas, as in \cite{May_ageneral}.  
+  
+\end{proof}
 
-  \end{proof}
-
-This gives a finite time algorithm for computing the Steenrod action on Ext, but it has a major flaw.  The issue is that $\Delta_i$ encodes information about every possibile decomposition of chains, and these compositions live in $K\otimes K$.  
-Recall that the grating on $K$ is given
-\[K_i=\bigoplus_{j+k=i} K_j\otimes K_k\]
-Thus, roughly speaking, $K\otimes K$ is about the size of $K$ cubed in each degree.  
-In our case, $K$ is already bigraded and gets pretty large for large internal degrees, making $K\otimes K$ more-or-less impossible to compute with. 
-
-However, there is hope, due to Nassau.  
-A cocycle in $x\in Ext^s$ can be represented by a long exact sequence $\mathcal{X}$ given
-\[M\to M_s\to ..\to M_1\to k\]
-and a chain map $K\to \mathcal{X}$ with the identity on one side and the cocycle from $K_s\to k$ on the other.  
-If $\mathcal{X}$ is small enough, we can consider constructing chain maps
-\[\Delta_n : K\to \mathcal{X}\otimes\mathcal{X}\]
-as above, and it is easy to see that this computes $Sq^{2s-n}(x)$.  
-
-Of course, $\mathcal{X}$ is not so easy to pick small, since if you use pushouts, as in the proof that you can represent cocycles with extensions, you find that $\mathcal{X}$ is almost as big as $K$.  
 
 

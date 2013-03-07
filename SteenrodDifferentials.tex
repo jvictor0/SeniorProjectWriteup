@@ -1,0 +1,358 @@
+\section{Some Differentials on Steenrod Squares in the Adams Spectral Sequence}
+
+For the rest of this paper we will set $Y=S$, so that the spectral sequence in question will converge to the 2-component of $\pi_*$ (for $X$ a suspension spectrum, this is $\pi_*^s$).  In this special case, we have that if $X\from \{X_i\}$ is an Adams Resolution with $K_i$ the cofibers, then 
+\[\pi_{t-s}(K_s)\cong \pi_{t-s}(X_s,X_{s+1}) = [(D^{t-s},S^{t-s-1}),(X_s,X_{s+1})]_0\]
+The differential is of a map $f\in \pi_{t-s}(K_s)$ is given by restricting 
+\[f|_{S^{t-s-1}}:S^{t-s-1}\to X_{s+1}\]
+ and compressing the image to $X_{s+r-1}$, and consider this as an element of $\pi_{t-s-1}(X_{i+r-1},X_{i+r})$. 
+
+
+
+\subsection{Topology of Stunted Projective Spaces}
+
+
+blah blah blah
+
+\subsection{Setting Up The Cells}
+\label{sec:setup}
+
+Fix $n,s,k,r$ and an element $x\in E_r^{s,n}(S,X)$, represented by a map
+\[x: (D^n,S^{n-1})\to (X_s,X_{s+r})\]
+We are now ready to begin the long hard computation of $d_rSq^{k+n}x$.  
+
+Give $D^n$ the cell structure of one $(n-1)$-cell and one $n$-cell, respectively called $dx$ and $x$.
+Let the following spaces inherit this cell structure
+\[\Gamma_0:=D^{2n}=D^n\wedge D^n\]
+\[\Gamma_1:=S^{2n-1}=D^n\wedge S^n\cup S^n\wedge D^n\]
+\[\Gamma_2:=S^{2n-2}=S^{n-1}\wedge S^{n-1}\]
+$\Z/2$ acts on this cell complex and its subcomplex by swapping the wedge factors.  
+
+The cellular chains in each of these spaces are the obvious subspaces of
+\[C_*D^{2n} = \langle x\otimes x,x\otimes dx,dx\otimes x,dx\otimes dx\rangle\]
+
+Give $S^\infty$ the cell structure with two $k$-cells in dimension $k$, called $e_k$ and $\rho e_k$.
+Let $\Z/2=\langle \rho \rangle$ act on this CW complex antipodally, by swapping the cells in each dimension.  
+
+Similar to $Q$, we define the functor $R^j$ as
+\[P^j(X)=S^j\ltimes_{\Z/2}X\]
+so that
+\[P^j\Gamma_0=Q^jD^n\]
+We define this so that we can more easily refer to $P^j\Gamma_1$ as a subset of $Q^jD^n$.  
+
+
+
+Consider the inclusion
+\[P^{k-1}\Gamma_1 \to P^k\Gamma_1\]
+The cofiber is
+\[P^k\Gamma_1\cup C(P^{k-1}\Gamma_1)
+\cong P^k\Gamma_1\cup P^{k-1}\Gamma_0\]
+Where we recall the reduced cone of a spectrum $X$ is $CX=I\wedge X$ and use the properties mentioned in \ref{sec:quadConst}.  
+However, the inclusion is equivalent to the inclusion of the $2n+k-2$ skeleton (that is, all but the top dimension cell) of 
+\[\Sigma^{n-1}P^{n+k-2}_{n-1}\to \Sigma^{n-1}P^{n+k-1}_{n-1}\]
+and so the cofiber is isomorphic to $S^{2n+k-1}$.  
+Of course, $P^k\Gamma_0\cong D^{2n+k}$ with boundary $P^k\Gamma_1\cup P^{k-1}\Gamma_0$.  
+Thus we have that maps in $\pi_{t-s}(Z_s,Z_{s+1})$ (for some Adams resolution $Z_*$) are represented by maps of pairs
+\[(P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0)\to (Z_s,Z_{s+1})\]
+
+
+\subsection{Identification of the Boundary and some Chain Calculations}
+
+Recall the diagram in Corollary \ref{sec:relgeomsteen} constructing $Sq^{k+n}x$.  
+Using the notation of this section, it looks like
+
+\begin{diagram}
+  \label{fig:steengam}
+  (D^{2n+k},S^{2n+k-1}) && \rTo^{Sq^{n+k}x} & & (X_{2s-k},X_{2s-k+1})\\
+  \dTo^\approx   &           &    &    & \uTo_{\Theta_{k,s}}\\ 
+  (D^k,S^{k-1})\ltimes(\Gamma_0,\Gamma_1) & \rTo^{1\ltimes x\wedge x} & 
+  (D^k,S^{k-1})\ltimes(Z_{2s},Z_{2s+1})  & \rTo^{\overline{\psi}_+^k} &  (P^kZ_{2s},P^{k-1}Z_{2s}\cup P^kZ_{2s+r})\\
+  \dTo^{i_+} & & & & \uTo^{1\ltimes x\wedge x}\\
+  (S^k,S^{k-1})\ltimes (\Gamma_0,\Gamma_1) && \rTo &&    (P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0)
+\end{diagram}
+
+There are a few things to note.  
+First note that we lifted the boundary of $x$, which by abuse of notation we call $dx$, to $X_{s+r}$, so $d(1\ltimes x\wedge x)$ is lifted to $P^{k-1}Z_{2s}\cup P^kZ_{2s+r}$.
+Second, note that the outside composite
+\[(D^{2n+k},S^{2n+k-1})\to   (P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0)\]
+is a homotopy equivalence, by the argument in Section \ref{sec:setup}.
+Finally, call the right side vertical composite 
+\[\xi : (P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0) \to (X_{2s-k},X_{2s-k+1})\]
+More generally, we will use $\xi$ to represent any composite of $\Theta_{*,*}$ and $1\ltimes x\wedge x$, that is, $\xi$ is a map
+\[\xi : D^k\Gamma_i\to X_{2s+ir-k}\]
+This indexing makes sense if we recall the definition of $\Gamma_i$ and that $dx$ lands in $X_{s+r}$, so 
+\[x\wedge x: (\Gamma_0,\Gamma_1,\Gamma_2)\to (Z_{2s},Z_{2s+r},Z_{2s+2r})\]
+
+If $f\in \pi_{k+2n}(P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0)$ is the inclusion of the top cell, then clearly $\xi_*f$ represents $Sq^{k+n}x$, and the Hurewicz image of $f$ is $e_k\otimes x\otimes x$.
+
+
+
+Let 
+\[\partial:S^{2n+k-1}\cong P^k\Gamma_1\cup P^{k-1}\Gamma_0 \to X_{2s-k+1}\]
+denote the boundary.  
+We want to find conditions on an element in $\pi_{2n+k-1}X_{2n-k+1}$ to recognize it.  
+
+Recall that
+\[C^*(P^k\Gamma_i)=C^*(P^k)\otimes_{\Z/2} C^*\Gamma_i\]
+Here is an easy but important calculation
+\begin{Lemma}
+  \label{sec:elemma}
+  In $H_*(P^{i+1}\Gamma_1)$, if $n\not\equiv i$ (mod 2), then
+  \[e_{i+1}\otimes dx\otimes dx = (-1)^ie_i\otimes d(x\otimes x)\]
+  and if $n\equiv i$ (mod 2)
+  \[e_{i+1}\otimes dx\otimes dx = (-1)^ie_i\otimes d(x\otimes x)-2e_i\otimes x\otimes dx\]
+\end{Lemma}
+
+\begin{proof}
+  \begin{eqnarray*}
+    d(e_{i+1}\otimes x\otimes dx)  &=& 
+    (\rho+(-1)^{i+1})e_i\otimes x\otimes dx + (-1)^{i+1}e_{i+1}\otimes dx\otimes dx
+  \end{eqnarray*}
+  But since the tensor product is over $\Z/2$, we have that this is equal to
+  \[e_i\otimes dx \otimes x + (-1)^{i+1}e_i\otimes x\otimes dx + (-1)^{i+1}e_{i+1}\otimes dx\otimes dx\]
+  Using that $d(x\otimes x)=dx\otimes x + (-1)^n x\otimes dx$, we have in homology that
+  \[e_{i+1}\otimes dx\otimes dx = (-1)^ie_i\otimes d(x\otimes x) - (1+(-1)^{i+n}e_i\otimes x\otimes dx\]
+\end{proof}
+
+Consider the inclusion
+\[P^{i+1}\Gamma_2\to P^{i+1}\Gamma_1\]
+Since  $P^{i+1}\Gamma_1=\Sigma^{n-1}P^{n+i}_{n-1}$ is $2n+i-1$ dimensional and 
+$P^{i+1}\Gamma_1/P^{i}\Gamma_1\cong S^{2n+i}$ is $2n+i$ dimensional, the inclusion factors through $P^i\Gamma_1$.  
+Define that map to be 
+\[e:P^{i+1}\Gamma_2\to P^i\Gamma_1\]
+\begin{Lemma}
+  \label{sec:e_hom_lem}
+  if $i\not\equiv n$ (mod 2), then
+  \[e_*(e_{i+1}\otimes dx\otimes dx) = (-1)^ie_i\otimes d(x\otimes x)\]
+\end{Lemma}
+
+\begin{proof}
+  blah blah
+\end{proof}
+
+We can now recognize $\partial$.
+\begin{Lemma}
+  \label{sec:ilem}
+  Let $\mathfrak{i}\in \pi_{2n+k-1}(P^k\Gamma_1\cup P^{k-1}\Gamma_0)$ be the Hurewicz preimage of the homology class
+
+  \[(-1)^ke_k\otimes d(x\otimes x) + \left\{\begin{array}{cc} 
+  0 & k\not\equiv n\mbox{ (mod 2)}\\
+  (-1)^k2e_{k-1}\otimes x\otimes x & k\equiv n\mbox{ (mod 2)}\end{array}\right.\]
+
+  Since Hurewicz is an isomorphism in this dimension, this defines $\mathfrak{i}$.  We have
+
+  \[\xi_*(\mathfrak{i}) = \partial\]
+\end{Lemma}
+
+\begin{proof}
+  Hurewicz is an isomorphism in this dimension since $P^k\Gamma_1\cup P^{k-1}\Gamma_0\cong S^{2n+k-1}$, so we need only notice that this is the boundary of $e_k\otimes x\otimes x$, which is the Hurewicz image of that which $\xi_*$ sends to $Sq^{k+n}x$.  
+\end{proof}
+
+
+\subsection{Differentials When $v$ is Large}
+
+\begin{Theorem}
+  If $v(k+n)>k+1$ then 
+  \[d_{2r-1}Sq^{k+n}x=Sq^{k+n}d_r x\]
+\end{Theorem}
+
+\begin{proof}
+  Consider the diagram
+  \begin{diagram}
+                    &        &             &      &        S^{2n+k-1}\\
+                    &        &      & \ldDashto(4,2)^\alpha & \dTo^{\mathfrak{i}}\\
+    P^{k+1}\Gamma_2 & \rTo^e & P^k\Gamma_1 & \rTo^i & P^k\Gamma_1\cup P^{k-1}\Gamma_0\\
+    \dTo_\xi       &         & \dTo^\xi    &        & \dTo^\xi\\
+    X_{2s+2r-k+1}  & \rTo    & X_{2s+r-k+1}& \rTo   & X_{2s-k+1} 
+  \end{diagram}
+  Note that the middle $\xi$ technically has codomain $X_{2s+r-k}$, but we want to diagram to still make sense when $r=2$, so we include $X_{2s+r-k}\subset X_{2s+r-k+1}$.  
+  We have
+  \[P^{k+1}\Gamma_2\cong \Sigma^{n-1}P^{n+k}_{n-1}\cong S^{2n+k-1}\vee \Sigma^{n-1}P^{n+k-1}_{n-1}\]
+  where the second equivalence comes from the fact that $P^{n+k}_{n+k-m+1}$ is reducible for $m\le k+2 \le v(k+n)$.  
+  Thus the homology of $P^{k+1}\Gamma_2$ is generated by $e_{k+1}\otimes dx\otimes dx$, so there is an $\alpha\in \pi_{2n+k-1}(P^{k+1}\Gamma_2)$ (for instance the inclusion of the top cell) which has this as Hurewicz image.  
+  If the diagram commutes, $\xi\alpha$ is a lift of $\xi\mathfrak{i}=\partial$ and we are done, since of course
+  \[\xi\alpha=Sq^{k+n}d_rx\]
+  By CITATION NEEDED, $k+n$ is odd, 
+  so $ie\alpha$ into has, by Lemma \ref{sec:e_hom_lem}, Hurewicz image $(-1)^ke_k\otimes d(x\otimes x)$, which is the Hurewicz image of $\mathfrak{i}$, and since Hurewicz is an isomorphism the relevant dimensions, this means $ie\alpha=\mathfrak{i}$, so the diagram commutes and we are done.
+\end{proof}
+
+\begin{Theorem}
+  Let $v(k+n)=k+1$ and let $f$ be the (readily computable) filtration of the image of $J$ in $\pi_{k}S$.  Let $a$ detect the generator of $im(J)$ in $\pi_k$.  Then
+
+  \[  \begin{array}{llccr}
+    d_{2r-1}Sq^{n+k}x &=& Sq^{n+k}d_rx & \mbox{if } & 2r-1 < r + f + k\\
+    d_{2r-1}Sq^{n+k}x &=& Sq^{n+k}d_rx + \overline{a}xd_rx & \mbox{if } &2r-1 = r + f + k\\
+    d_{r + f + k}Sq^{n+k}x &=& \overline{a}xd_rx & \mbox{if }& 2r-1 > r + f + k
+  \end{array}\]
+  
+  where $\overline{a}$ is the detector of $a$ in the Ext.  
+
+\end{Theorem}
+
+\begin{proof}
+
+  Let $C\in \pi_{2n+k-1}(P^{k+1}\Gamma_2)$ be the attaching map of the top cell.  
+  Since $v(k+n)=k+1$, $\partial C$ can be compressed into the $(2n-2)$-skeleton of $P^{k+1}\Gamma_2$, which is equivalent to $P^0\Gamma_2\cong \Gamma_2$.  
+  By CITATION $a=\partial C$, and $C$ has Hurewicz image $e_{k+1}\otimes dx\otimes dx$.  
+  Let
+  \[R:(D^{2n-1},S^{2n-2})\to (P^0\Gamma_1,P^0\Gamma_2)\cong (\Gamma_1,\Gamma_2)\]
+  bet the inclusion of the upper hemisphere of $\Gamma_1$, with Hurewicz image $x\otimes dx$ (which we can call $e_0\otimes x\otimes dx$).  
+  Of course, $\partial R$ has Hurewicz image $e_0\otimes dx\otimes dx$ and is an isomorphism.  
+  
+  With this notation, there are two cases we need to check: $k=0$ and $k\ne 0$.  Let $Ca$ be the cone on $a$.  Assume first that $k\ne 0$ and get the following diagram:
+  \begin{diagram}
+    S^{2n+k-2} & & \rTo & & D^{2n+k-1} & & \\
+    & \rdTo^{(\partial R)a} & & & \vLine & \rdTo^{R(Ca)} & \\
+    \dTo&&\Gamma_2 & & \rTo & & \Gamma_1 & & \\
+    &&&  &\dTo & & & \rdTo_i & \\
+    D^{2n+k-1}&\hLine&\dTo &\rTo & S^{2n+k-1} &  & \dTo  &&  P^{k-1}\Gamma_0\\
+    &\rdTo_C&& &  &\rdTo_{R(Ca)\cup C} &  & & \\
+    &&P^{k+1}\Gamma_2 & \rTo &  & & \Gamma_1\cup P^{k+1}\Gamma_2 & & \dTo \\
+    &&& \rdTo_{e} & & & & \rdTo^{i\cup e} & \\
+    &&& & P^k\Gamma_1 & & \rTo & &  P^{k-1}\Gamma_0\cup P^k\Gamma_1
+  \end{diagram}
+  
+  Recall that $P^{k-1}\Gamma_0$ is the cone on $P^{k-1}\Gamma_1$, so there is a homotopy equivalence
+  \[\pi : P^{k-1}\Gamma_0\cup P^k\Gamma_1\to P^k\Gamma_1/P^{k-1}\Gamma_1\]
+  and, since $[eC\cap iR(Ca)]=[a]=[0]$ mod $P^{k-1}\Gamma_1$, we have
+  \[\pi(iR(Ca)\cup eC) = [eC]-[iR(Ca)]\]
+  where $[\alpha]$ denote the equivalence class of such a map mod $P^{k-1}\Gamma_1$.  
+  Of course, by the diagram, $iR(Ca)\equiv 0$ mod $P^{k-1}\Gamma_1$.
+  Thus the Hurewicz image of $iR(Ca)\cup eC$ is the Hurewicz image of $eC$, which by \ref{sec:e_hom_lem} is 
+  \[(-1)^ke_k\otimes d(x\otimes x)\]
+  and so, by CITATION NEEDED
+  \[iR(Ca)\cup eC=\mathfrak{i}\]
+  
+  Of course, we have, by \ref{fig:steengam}, we have
+  \[\xi C = Sq^{n+k}d_r x\in \pi_*(X_{2s-k+2r-1},X_{2s+2r})\]
+  for $r$ small enough for this to make sense.  
+  Of course, recalling from  (Theorem \ref{sec:thetathm}) the base case in the inductive definition of
+  \[\xi_*:\pi_*(\Gamma_0,\Gamma_1)\to \pi_*(X_{2s+r},X_{2s+2r})\]
+  we see that $\xi_*$ sends the Hurewicz preimage of $x\otimes dx (= e_0\otimes x\otimes dx)$ to $xd_rx$.  
+  We thus have in $pi_*(X_{2s-k+1},X_{2s+2r})$, using that $\xi$ commutes with $e$ and $i$, 
+  \begin{eqnarray*}
+    \partial &=& \xi(eC\cup iR(Ca))\\
+    &=& \xi(eC)-\xi(iR(Ca))\\
+    &=& \xi(C)-\overline{a}\xi(R)
+  \end{eqnarray*}
+  Noting that this represents $d_{2r-1}x$ and sorting through the filtrations, the theorem is proved for $k>0$
+  
+  
+  If $k=0$, one gets the diagram
+  \begin{diagram}
+    S^{2n-2} & & \rTo & & D^{2n-1} & & \\
+    & \rdTo^{(\partial R)a} & & & \vLine & \rdTo^{R(Ca)} & \\
+    \dTo&&\Gamma_2 & & \rTo & & \Gamma_1 & & \\
+    &&&  &\dTo & & & \rdTo & \\
+    D^{2n-1}&\hLine&\dTo &\rTo & S^{2n-1} &  & \dTo  &&  \Gamma_1\\
+    &\rdTo_C&& &  &\rdTo_{R(Ca)\cup C} &  & & \\
+    &&P^1\Gamma_2 & \rTo &  & & \Gamma_1\cup P^{1}\Gamma_2 & & \dTo \\
+    &&& \rdTo_{e} & & & & \rdTo^{1\cup e} & \\
+    &&& & \Gamma_1 & & \rTo & &  \Gamma_1
+  \end{diagram}
+  Note that $\pi: \Gamma_1\to \Gamma_1/\Gamma_2$ is an injection on cohomology (this is just a quotient of $S^{2n-1}$ by the equator, so the map in $H_{2n-1}$ is the diagonal $\F_2\to \F_2^2$).  The intersection $eC\cap R(Ca)$ is zero mod $\Gamma_2$, so the Hurewicz image of $\pi(eC\cap R(Ca))=[eC]-[R(Ca)]$ is, using $k+n=n$ is even,
+  \begin{eqnarray*}
+    e_*(e_1\otimes dx\otimes dx + 2e_0\otimes x\otimes dx 
+    &=& e_0\otimes dx\otimes x -e_0\otimes x\otimes dx + 2e_0\otimes x\otimes dx \\
+    &=& e_0\otimes dx\otimes x +e_0\otimes x\otimes dx \\
+    &=& e_0\otimes d(x\otimes x)
+  \end{eqnarray*}
+  and thus 
+  \[eC\cap R(Ca)=\mathfrak{i}\]
+
+  Like above, we have
+  \begin{eqnarray*}
+    \partial &=& \xi(eC\cup R(Ca))\\
+    &=& \xi(eC)-\xi(R(Ca))\\
+    &=& \xi(C)-\overline{a}\xi(R)
+  \end{eqnarray*}
+  and the theorem is proved.  
+
+\end{proof}
+
+\subsection{Differentials on the Hopf Invariant One Elements}
+
+We would now like to give a differential formula which puts the Hopf Invariant question to rest once and for all.
+\begin{Theorem}
+  \label{sec:hdiffthm}
+  If $k>0$ and $k+n$ is even (so $v(k+n)=1$)
+  \[d_{2}Sq^{k+n}x = h_0Sq^{n+k-1}x\]
+\end{Theorem}
+
+
+\begin{proof}
+  Like before, let $C$ be the top cell in $\pi_{k+2n-1}(P^k\Gamma_1,P^{k-1}\Gamma_1)$, so that it has Hurewicz image $(-1)^ke_k\otimes d(x\otimes x)$ (we can pick either sign, so pick this one).  
+  Since $P^{k-1}\Gamma_0$ is contractible, there is an isomorphism 
+  \[\partial : \pi_{2n+k-1}(P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)\to \pi_{2n+k-2}(P^{k-1}\Gamma_1)\]
+  Of course the boundary of $C$, abusively denoted $\partial C$, is in the codomain, so define $A\in \pi_{2n+k-1}(P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)$ by 
+  \[A=\partial^{i-1}(\partial C)\]
+  and once can easily check, using the corresponding isomorphism in integral homology and the fact that the Hurewicz map on $\pi_{k+2n-1}(P^k\Gamma_1,P^{k-1}\Gamma_1)$ is an isomorphism, that the Hurewicz image of $A$ is
+  \[(-1)^{k-1}2e_{k-1}\otimes x\otimes x\]
+  
+  Consider now the map 
+  \[C\cup A \in \pi_{2n+k-1}(P^k\Gamma_1\cup P^{k-1}\Gamma_0)\]
+  Since the boundary is only $2n+k-2$ dimensional (and thus has zero $2n+k-1$ homology),
+  we can use the same trick as before to see that this map actually splits as 
+  \[(-1)^k(e_k\otimes d(x\otimes x) + 2e_{k-1}\otimes x \otimes x)\in H_{2n+k-1}(P^k\Gamma_1\cup P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)\]
+  Thus we have that, by (Lemma \ref{sec:ilem}), 
+  \[\mathfrak{i} \equiv C\cup A \mbox{ (mod $P^{k-1}\Gamma_1$)}\]
+  However, since $H_{2n+k-1}P^{k-1}\Gamma_1$ is zero for dimension reasons, the long exact sequence in homology says that the inclusion
+  \[H_{2n+k-1}(P^k\Gamma_1\cup P^{k-1}\Gamma_0)\to H_{2n+k-1}(P^k\Gamma_1\cup P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)\]
+  is an injection so in fact, 
+  \[\mathfrak{i} = C\cup A\]
+  
+  Now, $A$ is divisible by 2, since it is divisible by 2 in homology.
+  We have
+  \[\xi_*\left(\frac{(-1)^{k-1}}{2}A\right) = Sq^{n+k-1}x \in \pi_*(X_{2s-k+1},X_{2s+2r-k+1})\]
+  Since multiplying by 2 in homology is the same as pre-composing with the map detected by $h_0$, we have
+  \[\xi_*A = (-1)^{k-1}h_0Sq^{n+k-1}x \in \pi_*(X_{2s-k+2},X_{2s+2r-k+1})\]
+  Note that we can push the image of $A$ from $X_{2s-k+1}$ to $X_{2s-k+2}$ since it is twice a map into $(X_{2s-k+1},X_{2s+2r-k+1})$.
+  Thus we have, mod $X_{2s+2r-k+1}$ (where $\xi$ sends $P^{k-1}\Gamma_1$, the domain of $C\cap A$), that
+  \[\partial = \xi(C\cup A) = \xi C - \xi A = \xi C - (-1)^{k-1}h_0Sq^{n+k-1}x\]
+  so if we can just push $\xi C$ up farther than $X_{2s-k+2}$, we will be done.  
+
+
+  We have the following relative diagram
+  \begin{diagram}
+    (X_{2s-k+2},X_{2s+r-k+1}) & \lTo & (X_{2s-k+1},X_{2s+r-k+1}) & \lTo^\xi & (P^k\Gamma_1\cup P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)\\
+    \uTo & & &\ruTo \\
+    (X_{2s+r-k},X_{2s+r-k+1}) & \lTo^\xi & (P^k\Gamma_1,P^{k-1}\Gamma_1) & \rTo & (P^{k+1}\Gamma_1,P^{k-1}\Gamma_1\cup P^{k+1}\Gamma_2)\\
+    \dTo^\approx& &   \dTo                          &      \ruTo\\
+    (X_{2s+r-k},X_{2s+r-k+1}) & \lTo^\xi & (P^k\Gamma_1,P^{k-1}\Gamma_1\cup P^k\Gamma_2) 
+  \end{diagram}
+  Now, consider the image of $C$ in $\pi_{2n+k-1}(P^{k+1}\Gamma_1,P^{k-1}\Gamma_1\cup P^{k+1}\Gamma_2)$.
+  By Lemma \ref{sec:elemma}, $C$ has Hurewicz image $2e_k\otimes x\otimes dx$ here.  
+  Since Hurewicz is still an isomorphism, this means there is an element 
+  \[\frac{1}{2}C\in \pi_{2n+k-1}(P^{k+1}\Gamma_1,P^{k-1}\Gamma_1\cup P^{k+1}\Gamma_2)\]
+  We can uniquely (Hurewicz is an isomorphism) pull this back to 
+  \[\frac{1}{2}C\in \pi_{2n+k-1}(P^{k}\Gamma_1,P^{k-1}\Gamma_1\cup P^{k}\Gamma_2)\]
+  since $\partial( e_k\otimes x\otimes dx)\in H_{2n+k-2}(P^{k-1}\Gamma_1\cup P^{k}\Gamma_2)$, making $\frac{1}{2}C$ still a cycle here.
+  Thus $2\cdot\frac{1}{2}C$ is the image of $C$ in $\pi_{2n+k-1}(P^k\Gamma_1,P^{k-1}\Gamma_1\cup P^k\Gamma_2)$.  
+  But $\pi_*(X_{2s+r-k},X_{2s+r-k+1})$ is an $\F_2$-vector space, so since $\xi C$ is divisible by 2 there, it must be zero, and so zero in 
+  $\pi_*(X_{2s-k+2},X_{2s+r-k+1})$.  
+  Thus, in the actual Adams Spectral Sequence, we get
+  \[\partial = h_0Sq^{n+k-1}x\]
+  
+\end{proof}
+
+To see that this answers the Hopf Invariant question, consider this formula when $x=h_i$ and $k=1$, so that $n=2^i-1$ and $k+n=2^i$.
+Since $Sq^{2^i}h_i=h_{i+1}$, this formula says
+\[d_2h_{i+1} = h_0Sq^{2^i-1}h_i = h_0h_i^2\]
+Thus the formula says that whenever $h_0h_i^2\ne 0$ in $E_2$, there is no element of Hopf Invariant 1 in $\pi_{2^i-1}^s(S^{2^{i-1}})$.  
+
+\begin{Lemma}[\cite{Wang}]
+  In $Ext^3_{\A}(\Z/2,\Z/2)$, the only relationships in elements of the form $h_ih_jh_k$ are
+  \[\begin{array}{lcr} h_ih_{i+1}=0 & h_1h_{i+2}^2=0 & h_i^2h_{i+2}=h_{i+1}^3\end{array}\]
+  In particular, for $i\ge 3$,
+  \[h_0h_i\ne 0\]
+\end{Lemma}
+Thus $h_i$ does not make it past $E_2$ for $i>3$.  
+
+\begin{Cor}
+  The only $n$ such that $\pi_{2n-1}(S^n)$ contains a map of Hopf Invariant One are $n=1,2,4$ and $8$.  
+\end{Cor}
+
+\begin{Cor}
+  The only finite dimensional division algebras over $\R$ are the complex numbers, quaternions and octonions.  
+\end{Cor}
+
+
