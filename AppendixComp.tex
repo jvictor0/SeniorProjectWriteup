@@ -1,0 +1,355 @@
+\section{Computational Methods}
+
+We implemented computer algorithms in the programming language Haskell to do the computations described in this paper.
+The computations include computing free resolutions, $\Ext_\A$ modules, Yoneda Products and Steenrod Operations on $\Ext_\A$.  
+Many of the algorithms in this section are similar, if not identical, to the ones in \cite{brunext}, although the author discovered them independently.  
+
+
+\subsection{Representing Modules}
+
+All modules in this program are free.
+For a ring $R$ and (possibly infinite) totally ordered set $B$, let $R(B)$ be the free $R$-module with basis $B$.
+Any vector in this module can be written uniquely in the form
+\[\sum_{i=1}^n r_ib_i\]
+where the $b_i$ are unique and the $r_i\ne 0$ for all $i$.
+We represent this vector as a map data structure built on a balanced binary search tree, with keys $b_i$ and values $r_i$.
+It is apparent, then, that we can efficiently do scalar multiplication, addition and coefficient look-up.
+While operations are never destructive in Haskell, much memory can be shared between vectors involved in the same computations; if $x+y=z$, then $z$ may share internal pointers with $x$ and $y$.  
+Tricks are used to prevent unnecessary copying of vector data-structures, for instance, $1\cdot x$ returns $x$ in $O(1)$ time and memory.
+We found this to be a substantial bonus, especially in the case of interest $R=\F_2$.
+
+Suppose that $R=k(B)$ is itself a ring, which is true if there is a specified map of sets from $B\times B \to R$.
+Consider the free $R$-module $R(C)$.  
+This is represented by a binary search tree whose nodes are labeled with binary search trees.
+However, it is often convenient to consider $R(C)$ as a $k$-vector space.
+We use the isomorphism
+\[R(C)\cong R\otimes_R R(C) \cong k(C\times B)\]
+We denote the tuples in the basis $C\times B$ by $c\otimes b$, and switch between these two representations when necessary.  
+
+\subsection{Representing Subspaces}
+\label{sec:ss}
+\begin{Def}
+  Let  $v_1,...,v_n\in R(B)$, all nonzero, and write
+  \[v_{i,j} = \sum_{j=1}^{n_i} r_{i,j}b_{i,j}\]
+  ordered so that for all $i$, if $j<j'$ then $b_{i,j}<b_{i,j'}$ and with all $r_{i,j}\ne 0$.   
+  We say the set is lower triangular if, $i<i'$ implies
+  \[b_{i,1}<b_{i',1}\]
+  It is clear that the $v_i$ are linearly independent.  
+\end{Def}
+
+We represent $n$-dimensional subspaces of $R(B)$ by a set of $n$ lower triangular vectors, 
+where these vectors are stored in a set data structure built on a balanced binary search tree.  
+
+Let $S=\langle v_1,..,v_n\rangle\subset k(B)$ be a subspace represented in this way, with $k$ a field.  
+Any vector $v$ can be written as
+\[v=u+\sum a_i v_i\]
+with $u\notin S$.  
+Recovering the $r_i$ is as easy as solving an over-constrained lower-triangular system of linear equations.  
+If the $v_i$ and $v$ are dense, this can be expensive, but if they are sparse (as is often the case), this is relatively cheap.
+If the $v_i$ have on average $l$ nonzero coefficients then the run time of this operation is $O(nl)$. 
+\begin{Def}
+  We say we have reduced $v$ by $S$ if we have written it in the form above
+\end{Def}
+
+This has many applications.  
+One application is to see if $x=y$ in $k(B)/S$, which specializes to seeing if $x\in S$ when $y=0$.
+Another is creating the subspace $S + \langle x\rangle$: simply let $x'$ be $x$ reduced by $S$ and, if $x'\ne 0$, insert it into to the set.
+Notice that $x'$ has minimal nonzero entry distinct from any such in $S$, so this algorithm allows us to build $S$ from the zero subspace by adding one vector at a time.
+
+Finally, let $X\oplus Y\subset k(B)$ with $X$ and $Y$ subspaces (in the mathematical sense) and consider a map
+\[f: X\to Y\]
+Let $x_1,...,x_n$ be vectors in $X$ with $f(x_1),...,f(x_n)$ linearly independent in $Y$, and let $y\in \langle f(x_1),...,f(x_n)\rangle$.
+To compute a preimage of $y$ in $X$, reduce 
+\[y=\sum a_i f(x_i)\]
+and conclude that
+\[f^{-1}(y)=\sum a_i x_i\]
+is a preimage.
+Better yet, this process is linear in $y$, which is algebraically convenient.  
+
+
+\subsection{Calculating $\Ext_A(X,k)$}
+
+There is a relatively straightforward way to calculate $\Ext_A(X,k)$ if $A$ is a graded $k$-algebra with the property that $A^0=k$ (we say in this case that $A$ is connective).  
+To do this, we use a ``minimal'' resolution of $A$, that is, a resolution constructed inductively with the least number of generators in each degree in each dimension and a preferred generator set.  
+Let me describe the algorithm.
+We want a resolution
+\[X\from F_1\from F_2\from F_3\from ...\]
+The generators of $X$ as an $A$ module are the generators of $F_1$, mapping in the obvious way into $A$.  
+Construct $F_i$ inductively as follows.  Let $F_i^j$ be the degree $j$ elements in $F_i$, and $A^i$ be elements of $A$ of degree $i$.  
+The algorithm will work by adding generators where needed, so let $G_i^j$ be the generators added in $F_i^j$.  Define
+\[(F_i^j)'=\langle sg|g\in G^k_i, k<j, s\in A^{j-k} \rangle\]
+\[I=d((F_i^j)')\subseteq F_{i-1}^{j}\]
+\[K=\ker(d:(F_{i-1}^{j})'\to (F_{i-2}^{j})')\]
+\[F_i^j= (F_i^j)'\oplus \langle G_i^j\rangle\]
+The set $G_i^j$ is formed by adding generators to ${F_i^j}'$ until $d|_I:I\to K$ is an isomorphism.  
+Notice that we can use $(F_{i-1}^{j})'$ instead of $F_{i-1}^{j}$ since the kernel of $d$ is the same on both modules.  
+It is easy to see that, by construction, these are free-$A$ modules and the differentials are exact.  
+
+To make this explicit, when computing $F^j_i$, we compute $K$ and $I$, stored as $k$-subspaces as described in Section \ref{sec:ss}.
+Then we simply reduce the basis vectors in $u\in K$ against $I$ and, if we find a $u\notin I$, we add an element to $G_i^j$ whose differential is the reduction of $u$ and add $u$ to $I$.  
+What was $I$ during the computation of $F_i^j$ is reused as $K$ during the computation of $F_{i+1}^j$, and $K$ is freed.  
+
+\begin{Lemma}
+  \[\Ext^s_A(X,k)\cong k(G_s^*)\]
+  That is, $\Ext^*_A(X,k)$ is $k$-free on the $A$-generators of a minimal resolution $F_*$.  
+\end{Lemma}
+\begin{proof}
+  Let $\sum_i s_ig_i$ be a homogeneous boundary, with the $g_i\in G_*^*$ and $s_i\in A$.  
+  Then all the $s_i$ are homogeneous, and cannot be $1$ by the construction.  
+  But any $\phi\in \Hom_A(F_*,k)$ will have 
+  \[\phi\left(\sum s_ig_i\right)=s_i\left(\sum \phi(g_i)\right)=0\]
+  since $s_i\cdot 1=0$ for $s_i\in A^j$, for $j>0$, for grading reasons.
+  Thus  $d^*\phi=\phi\circ d=0$.  
+  Thus all differentials are zero, so
+  \[\Ext_A(X,k)=\Hom_A(F_*,k)\]
+  This is isomorphic to the $k$-vector space on the same basis as $F_*$.  
+\end{proof}
+
+\subsection{Yoneda Products}
+
+We want to compute the module structure
+\[\Ext_A(M,k)\otimes \Ext_A(k,k)\to \Ext_A(M,k)\]
+given by Yoneda products (see \ref{sec:ExtStructure}).
+It is clear that, to do this, we need only compute the isomorphism  between $\Ext_A(M,k)$ and the homotopy classes of chain maps between $A$-free resolutions of of $M$ and $k$.
+Let $F_*\to M$ and $K_*\to k$ be minimal $A$-resolutions, computed as above (in particular, with specified $A$-basis), and $g$ a $A$-basis vector of $F_s$. 
+Let $g^*$ denote the cocycle which sends $g\mapsto 1$ and all other basis vectors of $F_*$ to zero.
+Let $g^*_i:F_{s+t}\to K_i$ be the a chain map associated to $g^*$ and the object of our computation.
+Then $g^*_0$ sends $g$ to $1\in F_0=A$ and the rest of the  $A$-basis of $F_s$ to 0.  
+We can compute $g^*_i$ inductively.  
+We have the law that for each basis vector $u\in F_{s+i}$ for $i> 0$,
+\[dg^*_iu=g^*_{i-1}du\]
+So to compute $g^*_iu$, merely pick a preimage of the differential on $g^*_{i-1}du$ by reducing it against an easily computable $k$-basis for the image of the differential in the proper grading.  
+
+Once the cocycles are extended to chain maps, it is easy to compute $g^*\times h^*$ for $h^*$ dual to an $A$-basis vector of $K_{s'}$.  
+The formula is
+\[g^*\times h^* = \sum_l h^*(g^*(l)) l^*\]
+where $l$ runs over all $A$-basis vectors in the appropriate grading of $F_{s+s'}$.  
+
+\subsection{Steenrod Operations}
+
+While the Steenrod Operations give us much information about the differentials, it turns out they are massively difficult to compute.
+The formula
+\[\Delta_n\partial + \partial\Delta_n = \rho\Delta_{n-1}+\Delta_{n-1}\]
+from Appendix \ref{sec:SteenrodConstruction} gives (using the same trick to invert differentials as above) an algorithm for computing Steenrod Operations, but it requires tensoring already huge resolutions together, which is computationally infeasible.  
+Instead, there is a trick, communicated to me by Bob Bruner, who claimed it was due to Christian Nassau.
+
+Recall that the classes in $\Ext_A^s(k,k)$ are in bijection with equivalences classes of extensions of length $s$ from $k$ to $k$.
+Let $F_*$ be an $A$-free resolution of $k$ and let
+\[\mathcal{X}_*=0\to k \to X_{s-1}\to ...\to X_0\to k\to 0\]
+ be such an extension.
+If there is a chain map $F_*\to \mathcal{X}_*$ such that in dimension $s$ the map $F_s\to k$ is a cocycle $u$ and in dimension -1 is identity $k\to k$, then this extension represents $u$.
+Tensoring this extension with itself, we get a length $2s$ extension, and using the free resolution comparison lemma we can find a chain map 
+\[\Delta_0:F_*\to \mathcal{X}_*\otimes \mathcal{X}_*\]
+over the isomorphism $k\to k\otimes k$, and this cocycle will represent $u^2$.
+Of course, the switching map $\rho$ is realizable in $\mathcal{X}_*\otimes \mathcal{X}_*$, so we can inductively compute
+\[\Delta_n : F_*\to \mathcal{X}_*\otimes \mathcal{X}_*\]
+by the formula
+\[\Delta_n\partial + \partial\Delta_n = \rho\Delta_{n-1}+\Delta_{n-1}\]
+And use this to compute Steenrod Operations.
+
+The reason this helps is that the size of $\mathcal{X}_*$ can be, in principle, much smaller than $F_*$, since it need not be $A$-free.
+However, finding small extensions algorithmically is quite difficult.  
+The obvious extension, given a nonzero cocycle $u:F_s\to k$, is to set $X_{s-1}=F_{s-1}/d_s(\ker u)$ and $X_i=F_i$ for $0 \le i < s-1$.  
+Clearly this is just as big as $F_*$ itself, and of little use in and of itself.
+It does however provide a starting point.
+
+Suppose we already have an extension $\mathcal{X}_*$ representing $u$, but we feel it is too big.
+If we can find a subcomplex $L_*\subset \mathcal{X}_*$ with $\mathcal{X}_*/L_*$ exact and the $k$ at either end preserved, we will have succeeded in finding a smaller extension.
+Notice that property of $\mathcal{X}_*/L_*$ being exact is equivalent to, for each $i$
+\[d_i(L_i) = \im(d_i)\cap L_{i-1}\]
+which is itself equivalent to
+\[\frac{L_{i-1}\cap \im(d_i)}{L_{i-1}\cap d_i(L_i)} = 0 \subset \frac{X_{i-1}}{d_i(L_i)}\]
+\begin{Def}
+  Finding $L_*\subset \mathcal{X}_*$ satisfying the properties above with $L_*$ as large as possible is called the ``extension slimming problem''.  
+\end{Def}
+
+One strategy for solving this problem is to use a greedy algorithm.
+That is, start with $X_{s-1}$ and find $L_{s-1}\subset X_{s-1}$ away from the image of $\im(d_s)=k$.  Then, for each $i$ from $s-2$ to $1$, set
+\[X_i'=X_i/d_{i+1}(L_{i+1})\]
+And find $L_i'\subset X_i'$ such that
+\[L_i'\cap \im(\overline{d}_{i+1}) = 0\]
+where 
+\[\overline{d}_{i+1}:X_{i+1}'\to X'\]
+is the induced differential.  
+Clearly $L_i$ can be constructed by lifting the $L_i'$.
+To find the $L_i'$, we need to solve the following problem.  
+\begin{Def}
+  Let $X$ be an $R$-module and $I\subset X$ a submodule.
+  The ``Submodule Avoidance Problem'' is to find a submodule $L\subset X$ as large as possible with $I\cap L=0$
+\end{Def}
+
+We will reduce this to the following problem, which we will show is NP-hard.
+
+\begin{Def}
+  Let $V$ be a $k$-vector space, and let $S_1,...,S_n\subset V$ be subspaces.
+  The ``Subspace Union Avoidance Problem'' is to find a subspace $W\subset V$ with $W\cap S_i=0$ for each $i$
+\end{Def}
+
+\begin{Lemma}
+  The submodule avoidance problem is at least as hard as the subspace union avoidance problem if $R$ is a $k$-algebra.
+\end{Lemma}
+
+\begin{proof}
+  Let $V, S_1,...,S_n$ be a subspace union avoidance problem.
+  Let $V_i$ be a copy of $V$ for each $i$.  Adopt the notation that if $v\in V$, then $v_i$ is the copy of the vector $v$ in $V_i$.  
+  Let
+  \[R=k[x_1,...,x_n]\]
+  be a polynomial ring 
+  Let   
+  \[X=V\oplus \left(\bigoplus_{i=1}^n V_i\right)\]
+  and let $R$ act on $X$ by
+  \[x_jv_i = v_j\]
+  Let
+  \[\Phi : X \to V\]
+  be defined by $v_i\mapsto v$.
+  Finally, denote the copy of $S_i\subset V_i$ as $T_i$, and let 
+  \[I=\bigoplus_i T_i\subset X\]
+  
+  It is clear that $W\subset V$ is a solution to the original subspace union avoidance problem if and only if the $R$-module generated by $W$ is a solution to the submodule avoidance problem.
+  Likewise, $L$ is a solution to the submodule avoidance problem we created if and only if $\Phi(L)$ is a solution to the original subspace union avoidance problem, since if $v^{(0)},v^{(1)},...,v^{(n)}\subset V$ and $v=\sum_{i=0}^n(v^{(i)})_i\in X$, then $\Phi(v) =\sum_{i=0}^n v^{(i)}$ is in some $S_j$ if and only if $x_jv\in T_j$.  
+  Since both ways of going between solutions preserve relative $k$-dimensions, the optimal $L$ has $\Phi(L)$ optimal as a solution to the original problem.  
+Thus the submodule avoidance problem is at least as hard as the subspace union avoidance problem.
+ 
+\end{proof}
+
+\begin{Lemma}
+  \label{sec:npcomplem}
+  If $k=\F_p$, deciding if there is a solution to the subspace union avoidance problem of codimension $l$ is NP-hard, even if the $S_i$ are 1-dimensional, unless $l=1$ and $p=2$.  
+\end{Lemma}
+
+\begin{Cor}
+  The submodule avoidance problem is NP-hard.
+\end{Cor}
+
+\begin{proof}[Proof of \ref{sec:npcomplem}:]
+  Let $(G,E)$ be a graph and $V=k(G)$ be the free $k$-space on $G$.
+  For each edge $uv\in E$, let 
+  \[S_i=\langle u-v\rangle\subset V\]
+  If there is a $W\subset V$ of codimension $l$, then there are $l$ linearly independent functionals $f_i:V\to \F_p$ such that the kernel of $f_i$ contains $W$ and furthermore $W$ is the intersection of these kernels.
+  Notice that this means that for each edge $uv$ there is an $i$ with $f_i(u-v)\ne 0$, so $f_i(u)\ne f_i(v)$.
+  Let
+  \[f=\bigoplus f_i : V \to \F_p^l\]
+  For each edge $uv\in E$, $f(u)\ne f(v)$, so, $f|_{G}$ is a $|\F_p^l|=p^l$-coloring on $(G,V)$.
+  To decide if such a thing exists is NP-complete for $l>1$ for all $p$ and when $l>0$ for $p>2$.
+\end{proof}
+  
+
+\subsection{Automated Differential Propagation}
+
+We automatically propagate information about known differentials using propositional logic.
+Consider the following context free grammar
+\[
+{\setlength\tabcolsep{4pt}
+\begin{tabular}{>{$}l<{$}>{$}r<{$}>{$}l<{$}}
+  \mbox{BoolNode} &\coloneqq& \mbox{True}\\
+  & | & \mbox{False}\\
+  & | & \mbox{BoolVar String}\\
+  & | & \mbox{And (Set BoolNode)}\\
+  & | & \mbox{Or (Set BoolNode)}\\
+  & | & \mbox{XOr (XOrSet BoolNode)}\\
+  & | & \mbox{Not BoolNode}\\
+  & | & \mbox{EqZero SSNode}\\
+  \mbox{SSNode}_r^{s,t} &\coloneqq& \mbox{SSConst}_r^{s,t}\\
+  & | & \mbox{Differential}_r \mbox{ SSNode}_r^{s-r,t-r+1}\\
+  & | & \mbox{Projection}_r\mbox{ SSNode}_2^{s,t}\\
+  & | & \mbox{Sum (XOrSet SSNode}_r^{s,t})\\
+  & | & \mbox{ScalerMult BoolNode SSNode}_r^{s,t}
+\end{tabular}}
+  \]
+The notation ``And (Set BoolNode)'' means an And node which contains as its data an unordered set of BoolNodes.  An XOrSet is a Set in which insertion is defined by the rule
+\begin{verbatim}
+insert x set = if set contains x then remove x set else insert x set
+\end{verbatim}
+A BoolNode represents, equally, a Boolean value True or False or an element of $\F_2$.
+A BoolVar node represents a Boolean valued indeterminate.  
+An $\mbox{SSNode}_r^{s,t}$ represents an element of $E_r^{s,t}$.  
+An $\mbox{SSConst}_r^{s,t}$ represents a known literal element of the group $E_r^{s,t}$.  
+A $\mbox{Projection}_r$ node represents the projection of a node to the $r$ page, and is not necessarily defined.  
+A ScalerMult node represents ``scalar'' multiplication of an SSNode by a BoolNode, seen as an element of $\F_2$.  
+A node ``EqZero $s$'' is true if the value of $s$ is zero and false otherwise.
+
+
+Our algorithm for computing differentials in $E_r^{s,t}(S,X)$ is as follows.  
+We start out knowing the $E_2$ page of the Adams Spectral Sequence, the module structure over the spectral sequence for $X=S$, and the Steenrod Operations.
+If $X\ne S$, we also know the differentials in $E_r^{s,t}(S,S)$, meaning we must run this algorithm with $X=S$ first.  
+We will maintain a BoolNode which is a quantifier free propositional formula representing all known constraints on the Adams Spectral Sequence.
+We will maintain a table of preferred bases for all known groups $E_r^{s,t}$, a table of all known differentials and all known projections, called the page, differential and projection table.  
+Finally, we maintain a table of BoolVar substitutions, which we will populate as we learn more about the indeterminates we create, called the variable table.
+Our work-loop will run as follows
+\begin{enumerate}
+\item Simplify constraint formula using rewrite rules, and reduce linear systems using Gaussian Elimination
+\item Populate projection and page table using new information learned
+\item Add new constraints using updated tables.  
+\item Repeat if any tables modified.  
+\end{enumerate}
+
+\subsubsection{Rewriting and Simplification}
+
+The rewrite rules we use are mostly standard: things like associativity, identity, nilpotence, etc.
+One important thing is the way we treat ScalarMult nodes.
+We have obvious rules like
+\[\mbox{ScalarMult $b$ (Sum $x_1$ ... $x_n$)}\mapsto 
+\mbox{Sum (ScalarMult $b$ $x_1$) ... (ScalarMult $b$ $x_n$)}\]
+but also less obvious rules, like, if $x$ is an SSConst, then
+\[\mbox{Sum (ScalarMult $b_1$ $x$) ... (ScalarMult $b_n$ $x$)} \mapsto
+\mbox{ScalarMult (XOr $b_1$ ... $b_n$) $x$}\]
+that is, we gather in the scalar and distribute in the module.  
+The reason for this is so we can solve.  
+If each $x_i$ is a distinct SSConst, we add the rule
+\[\mbox{EqZero (Sum (ScalarMult $b_1$ $x_1$) ... (ScalarMult $b_n$ $x_n$))}
+\mapsto \mbox{And (Not $b_1$) ... (Not $b_n$))}\]
+and if $x$ is an SSConst,
+\[\mbox{EqZero (ScalarMult $b$ $x$)} \mapsto \mbox{Not $b$}\]
+For technical reasons, we add, 
+\[\mbox{EqZero (Sum ... $x$ ...)}\mapsto \mbox{EqZero (Sum ... (ScalarMult True $x$)...)}\]
+so that if $b\cdot x=x$, we can infer $b=True$.  
+
+
+When building rewriting systems, one must chose how to deal with negations in XOr.
+For us, a negated XOr node is an XOr node with True as a child.
+To that end, we have the following rules
+\[\mbox{Not (Xor ...)} \mapsto \mbox{XOr True ...}\]
+\[\mbox{XOr ... (Not $b$) ...} \mapsto\mbox{XOr True ... $b$ ...}\]
+And, for ``negated singletons''
+\[\mbox{Xor True $b$}\mapsto \mbox{Not $b$}\]
+We find this is helpful when we get to the solving phase.  
+
+More interesting are our rules regarding BoolVars.  
+As mentioned above, we maintain a variable table, which assigns a BoolVar $b$ to an arbitrary simplified BoolNode $x$ which does not contain $b$ as a descendant.  
+In addition, each entry in this table has a ``timestamp'', which says the last time that entry was simplified.  
+When the simplification algorithm reaches a $b$, it checks to see if $b$ is in the table.
+If there is some $x$ associated to $b$, we check the timestamp to see if $x$ has been simplified since the last time something has changed, and if not we simplify it and update the timestamp.
+Either way we rewrite $b$ to $x$.
+
+BoolVars are created in various ways.
+For instance, consider the node $\mbox{Differential}_r x$ for some SSConst $x\in E_r^{s,t}$, and suppose nothing is known about this differential.
+If we know a basis of $E_r^{s+r,t+r-1}$, say $y_1,...,y_n$, we have
+\[d_rx = \sum_i c_iy_i\]
+for some $c_i\in \F_2$.  
+We then rewrite this to 
+\[\mbox{Sum (ScalarMult (BoolVar $c_1$) $y_1$) ... (ScalarMult (BoolVar $c_n$) $y_n$)}\]
+Like the variable table, the differential table associates an SSConst $x$ to arbitrary SSNode $y$, and we add the above to the differential table upon its discovery.
+Like the variable table, the differential table has timestamps and the entries within are simplified when they become out-of-date.
+Thus if later we find more information about the $c_i$, our differential table will be updated accordingly.  
+
+Often, our root is an And node, since it represents a conjunction of constraints.  
+We say a BoolNode is ``toplevel'' if it is a direct child of the root And node, or if it is the root and not an And node.
+If either a BoolVar $b$ is toplevel and not already in the variable table, we add an entry to the variable table simply associating $b$ to True.
+Likewise for the negated situation, Not (BoolVar $b$), where we associate $b$ to False.
+
+
+\subsubsection{Linear Solving}
+
+When no more simplification is possible using the strategies above, we attempt linear solving.
+This entails gathering all the toplevel XOr nodes.  Let $\mathcal{V}$ be the free $\F_2$-vector space on the set of all possible BoolNodes.
+These XOr nodes together determine a system of $\F_2$-linear equations over $\mathcal{V}$.
+We use Tarski's principle component algorithm to split this system up into a direct sum of often many much smaller system, and use Gaussian Elimination to simplify.  
+The resulting system is equivalent to the first, but simpler.
+When doing the Gaussian Elimination, we order the basis vectors so that BoolVars come first, since they are preferred as pivots.  
+For each equation of the form $b+x_1+...+x_n=0$ in the simplified system where the pivot $b$ is a BoolVar, add an entry to the variable table sending $b$ to the BoolNode representing $x_1+...+x_n$.
+For the remaining nontrivial equations in the simplified system, simply put them back to the original formula.  
+If anything is accomplished during this step (that is, anything is added to the variable table), we start the simplification step over.
+Otherwise, we go on to the next step.  
+
+\subsubsection{Updating $E_r$ Tables}
+

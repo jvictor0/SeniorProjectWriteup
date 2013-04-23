@@ -5,33 +5,33 @@
 \subsection{Tensor and Yoneda Products in Ext}
 \label{sec:ExtStructure}
 
-The $Ext$ functors have quite a bit of structure, which we will discuss briefly in this section.  A fuller treatment can be found in \cite{cartan}
+The $\Ext$ functors have quite a bit of structure, which we will discuss briefly in this section.  A fuller treatment can be found in \cite{cartan}.
 Fix some field $k$. 
-Let $A$ be a $k$-algebra and $X$,$Y$ and $Z$ and $W$ be $A$-modules.
+Let $A$ be a $k$-algebra and $X$,$Y$, $Z$ and $W$ be $A$-modules.
 Then there is a product, which we will call the tensor product, 
-\[Ext^s_A(X,Z)\otimes Ext^t_A(Y,W)\to Ext^{s+t}_{A\otimes A}(X\otimes Y,Z\otimes W)\]
+\[\Ext^s_A(X,Z)\otimes \Ext^t_A(Y,W)\to \Ext^{s+t}_{A\otimes A}(X\otimes Y,Z\otimes W)\]
 
 To construct the product, let $K$ be an  $A$-resolution of $X$ and $L$ be an  $A$-resolution of $Y$.  
 Then $K\otimes L$ is an $A\otimes A$-resolution of $X\otimes Y$.  
-If $[x],[y]$ are cocycles in $Ext^s_A(X,Z)$ and $Ext^t_A(Y,W)$ respectively, then consider
+If $[x],[y]$ are cocycles in $\Ext^s_A(X,Z)$ and $\Ext^t_A(Y,W)$ respectively, then consider
 \[x\otimes y : K\otimes L \to Z\otimes W\]
-This is clearly a cocycle, so represents a class in $Ext^{s+t}_{A\otimes A}(X\otimes Y,Z\otimes W)$, and the class represented depends only in $[x]$ and $[y]$, not on choice of representatives. If $A$ is a Hopf algebra, there is a map $A\to A\otimes A$, making $X\otimes Y$ an $A$-resolution.  In this case, this tensor product becomes
-\[Ext^s_A(X,Z)\otimes Ext^t_A(Y,W)\to Ext^{s+t}_{A}(X\otimes Y,Z\otimes W)\]
+This is clearly a cocycle, so represents a class in $\Ext^{s+t}_{A\otimes A}(X\otimes Y,Z\otimes W)$, and the class represented depends only in $[x]$ and $[y]$, not on choice of representatives. If $A$ is a Hopf algebra, there is a map $A\to A\otimes A$, making $X\otimes Y$ an $A$-resolution.  In this case, this tensor product becomes
+\[\Ext^s_A(X,Z)\otimes \Ext^t_A(Y,W)\to \Ext^{s+t}_{A}(X\otimes Y,Z\otimes W)\]
 In the case that $X$ is a co-algebra, we can pull back by the co-multiplication, and in the case that $Y$ is an algebra, we can compose with the multiplication, yielding.  
-\[Ext^s_A(X,Y)\otimes Ext^t_A(X,Y)\to Ext^{s+t}_{A}(X,Y)\]
+\[\Ext^s_A(X,Y)\otimes \Ext^t_A(X,Y)\to \Ext^{s+t}_{A}(X,Y)\]
 These are sometimes referred to as cup products.  
 
 We also have Yoneda products in Ext, which are often much easier to compute because you do not need to construct the resolution $K\otimes L$.  
 The Yoneda product is a map
-\[Ext^s_A(X,Y)\otimes Ext^t_A(Y,Z)\to Ext^{s+t}_{A\otimes A}(X,Z)\]
+\[\Ext^s_A(X,Y)\otimes \Ext^t_A(Y,Z)\to \Ext^{s+t}_{A\otimes A}(X,Z)\]
 extending the composition product
-\[Hom_A(X,Y)\otimes Hom_A(Y,Z)\to Hom_{A\otimes A}(X,Z)\]
-It is computed by considering $Ext^s_A(X,Y)$ as homotopy classes of degree $s$ chain-maps between resolutions $K\to X$ and $L\to Y$.  
+\[\Hom_A(X,Y)\otimes \Hom_A(Y,Z)\to \Hom_{A\otimes A}(X,Z)\]
+It is computed by considering $\Ext^s_A(X,Y)$ as homotopy classes of degree $s$ chain-maps between resolutions $K\to X$ and $L\to Y$.  
 This can be done by the comparison theorem for projective resolutions.  
-Since a cocycle in $Ext^s_A(X,Y)$ is represented by a map $K_s\to Y$, we can extend that map to a chain map with component maps $K_{s+i}\to L_i$, and this is unique up to homotopy.  
-Likewise, given a degree $s$ chain map $x$ between resolutions $K$ and $L$, taking the map from $K_s\to L_0=Y$ gives a chain $x_0$.  Since $x_0d=dx_{-1}=0$, $x_0$ is a cocycle, so indeed Ext is in bijection with homotopy classes of chain maps.  
+Since a cocycle in $\Ext^s_A(X,Y)$ is represented by a map $K_s\to Y$, we can extend that map to a chain map with component maps $K_{s+i}\to L_i$, and this is unique up to homotopy.  
+Likewise, given a degree $s$ chain map $x$ between resolutions $K$ and $L$, taking the map from $K_s\to L_0\to Y$ gives a chain $x_0$.  Since $x_0d=d_{-1}x=0$, $x_0$ is a cocycle, so indeed Ext is in bijection with homotopy classes of chain maps.  
 But chain maps can be composed yielding the desired map.
-In particular, this means $Ext_A(X,X)$ is a ring and $Ext_A(X,M)$ is a left module and $Ext_A(M,X)$ is a right module.  
+In particular, this means $\Ext_A(X,X)$ is a ring and $\Ext_A(X,M)$ is a left module and $\Ext_A(M,X)$ is a right module.  
 
 
 
@@ -43,7 +43,7 @@ This construction is found most clearly in \cite{kahnCupi}, but also in \cite{mi
 \begin{Theorem}
   Let $A$ be a cocommutative $\F_2$-Hopf Algebra, $X$ an algebra over $A$ and $Y$ a coalgebra over $A$.  
   Then there is a map of graded modules
-  \[\A\otimes Ext_A(Y,X)\to Ext_A(Y,X)\]
+  \[\A\otimes \Ext_A(Y,X)\to \Ext_A(Y,X)\]
 \end{Theorem}
 
 \begin{proof}
@@ -65,10 +65,10 @@ This construction is found most clearly in \cite{kahnCupi}, but also in \cite{mi
   Letting $\sigma$ be our contracting homotopy on $K\otimes K\to Y\otimes Y$, we can write an explicit recursive formula
   \[\Delta_n = \sigma(\partial\Delta_n + \rho\Delta_{n-1}+\Delta_{n-1})\]
   
-  Finally, define for $[u]\in Ext_A^{s,t-s}(\F_2,M)$
+  Finally, define for $[u]\in \Ext_A^{s,t-s}(\F_2,M)$
   \[Sq^i(u)(\sigma) = (u\otimes u)(\Delta_{2s-i}\sigma)\]
 
-  Once can check that these operation obey the Cartan and Adem formulas, as in \cite{May_ageneral}.  
+  Once can check that these operation obey the Cartan formula and Adem relations, as in \cite{May_ageneral}.  
   
 \end{proof}
 

@@ -1,0 +1,81 @@
+\section{Introduction}
+
+In algebraic topology, computing homotopy invariants of spaces is of fundamental importance.  
+While cohomology tells much of the story and is relatively easy to compute, there is another, dual, story, told by another invariant.
+This set of invariants, called homotopy groups, so called because they completely classify a CW complex up to homotopy, are denoted $\pi_i$.  
+In addition to this incredibly power, they are also easy to define: the group $\pi_i(X)$ is just the set of basepoint-preserving homotopy classes of maps between the $i$ dimensional sphere $S^i$ and the space $X$.
+The homotopy groups measure the ``spheriness'' of spaces in various dimensions and this measurement gives complete homotopic information.
+However, this classifying power comes at a cost.  The homotopy groups are notoriously difficult to compute, even when $X$ is itself is a sphere.  
+
+Luckily, there is a small miracle.
+When a space $X$ is ``connected'' through a high enough dimension, there is an isomorphism
+\[\pi_{n}(X)\to \pi_{n+1}(\Sigma X)\]
+where $\Sigma$ is the suspension function which ``raises the connectedness'' of $X$ by one.  For spheres this says
+\[\pi_{n+k}(S^n)\to \pi_{n+k+1}(S^{n+1})\]
+is an isomorphism for large enough $n$.  
+Using this, one can control the problem by noting that, as long as the spheres in question are large enough, the homotopy group depends only on the relative dimension $k$.
+The notion of $X$ being ``connected enough'' is encoded by an object called a spectrum.
+Spectra are a generalization of topological spaces which, in an appropriate sense, behave ``the same in each dimension''.
+Surprisingly enough, cohomology functors are, in an appropriate sence, themselves spectra.  
+Spectra have extremely nice formal properties, and they can be used to give information about certain homotopy groups of spaces, known as the ``stable'' homotopy groups.
+
+To actually compute homotopy groups, we use a rather complicated gadget called the Adams Spectral Sequence.  
+The spectral sequence works by considering an inverse sequence of spectra analogous to a free resolution of a module.
+The homotopy groups of the spectra in this sequences give an over-approximation of the actual homotopy groups one would like to compute.
+Then, by analyzing relationships between homotopy classes of maps (called differentials), we can whittle away at the over-approximation bit-by-bit, successively reducing it by taking one sub-quotient at a time.
+Unfortunately, most of the relationships between homotopy classes of maps are not directly computable.  
+Indeed, the spectra in the resolution cannot, in general, be explicitly constructed.
+Instead, the geometric relations which we can reason about abstractly often become algebraic relations we can compute concretely.  
+In fact, the initial over-approximation is just a certain Ext group, and the geometric relations correspond to various products and operations on Ext, converging to products and operations in $\pi_*$.  
+
+One interesting and important side-plot to this story is the so-called Hopf Invariant One problem.  
+It turns out that the algebraic question of when can $\mathbb{R}^n$ be a division algebra is equivalent to a question about existence of certain elements in homotopy groups of spheres.
+Candidates for these elements are easily recognizable in the Adams Spectral Sequence, so if one can determine which of these candidates survive to become homotopy classes, one can answer this question.  
+
+This paper will be organized as follows.
+In Section 2, we will go over requisite notions from homotopy theory, state classical theorems, define the Hopf Invariant and prove the relation between it and division algebras over $\R$.
+
+
+In Section 3, we will construct the stable homotopy category and gives its basic properties.  
+Frank Adams said of spectra ``To use the machine, it is not necessary to raise the bonnet'', and in that spirit we will omit cumbersome and unnecessary proofs. 
+Luckily, the actual construction of the category will not be used again after this section; instead we will rely only on the formal properties from this chapter.  
+
+In Section 4, we set up the Adams Spectral Sequence and prove that it converges to the result we want.
+We will show how one can topologically calculate the differentials and identify elements in the Spectral Sequence related to the Hopf Invariant One problem.
+It is helpful, when thinking about the Adams Spectral Sequence, to have a picture in mind, so you know what kind of problems can arise.
+For this reason, the reader should from this point forward keep Appendix B handy, where diagrams of the Adams Spectral Sequence of spheres can be found.
+The reader is encouraged to annotate this picture by penciling in differentials as they come up throughout the paper.
+
+In Section 5, we prove additional structures on the Adams Spectral Sequence.
+These structures can be computed algebraically using Appendix A and Appendix C.
+We will show, topologically, that the structures on the Adams Spectral Sequence greatly restrict the possible differentials.  
+There is a product structure, converging to the composition product in stable homotopy, with the property that if you know the differentials on $a$ and $b$, then you know the differentials on $ab$.  
+This structure alone implies all differentials in the first 13 stable homotopy groups.
+Next we will show there is are a family of operations called Steenrod Operations on the Adams Spectral Sequence, which we will describe geometrically.
+
+The goal of Section 6 is to derive differential formulas for the Steenrod Operations described in Section 5.
+Proving these formulas will require reasoning about the cell structure of quotients of the skeleta of spectra corresponding to $\mathbb{R}P^\infty$, which can be very different depending on exactly skeleta involved.
+This will cause the differential formulas to take different forms depending on the dimensions in question.
+Lastly, one of the formulas proved in this section will apply to the elements corresponding to potential Hopf Invariant maps. 
+Thus formula will put to rest once and for all the classification of finite dimensional division algebras over $\R$.  
+
+The author is greatly indebted to Jos\'e Cantarero and Gunnar Carlsson for the time and guidance given and for detailed and helpful comments in drafting the paper, 
+and Bob Bruner for suggesting computational methods.  
+
+
+
+\subsection{Notation}
+
+We adopt the following notations.
+When we say a topological space, we always mean a CW-complex, to avoid unnecessary pathologies.  
+For functors, we will often use a $?$ to suppress the argument's name.
+For all standard functors on topological spaces, for instance the suspension $\Sigma$ and the cone $C$, we use the ``pointed'' or ``reduced'' version.
+The symbol $[?,?]$ should be taken to mean basepoint-preserving homotopy classes of maps, and all homology and cohomology functors are reduced.  
+We use $\F_p$ to be mean the field with $p$ elements, and $\Z/p=\langle \rho | \rho^p=1\rangle$ to emphasize that it is a multiplicative group on two elements.  
+Throughout this paper, we will only be considering the 2-primary component of the stable homotopy groups.  
+One can actually work $p$-primary for any prime, but for odd primes the statements of many theorems become vastly more complicated, so we restrict ourselves.  
+
+
+
+
+

@@ -7,11 +7,59 @@ The differential is of a map $f\in \pi_{t-s}(K_s)$ is given by restricting
  and compressing the image to $X_{s+r-1}$, and consider this as an element of $\pi_{t-s-1}(X_{i+r-1},X_{i+r})$. 
 
 
+\subsection{Topology of Stunted Projective Spectra and the J Homomorphism}
 
-\subsection{Topology of Stunted Projective Spaces}
+It will happen that the elements of the form $Sq^ix$ in the Adams Spectral Sequence will factor through various quadratic constructions, and these are stunted projective spectra, so we need to know a bit about their topology.
+A stunted projective spectra,  $\Sigma^nP^{n+k}_n$, has one cell in each dimension from $2n$ to $2n+k$.  
+We say that such a spectrum is reducible if
+\[\Sigma^n P^{n+k}_n \cong \Sigma^n(P^{n+k-1}_n\wedge S^{n+k})\]
+\begin{Def}
+  \[v(n) = \max\{v|P^n_{n-v+1}\mbox{ is reducible}\}\]
+  Let $a(n) \in \pi_{n-1}(S^{n-v(n)})=\pi_{v(n)-1}(S)$ be the composite
+  \[S^{n-1}\to P^{n-v(n)}_0\to P^{n-v(n)}_{n-v(n)}\cong S^{n-v(n)}\]
+  where the first map is the attaching map of the top cell of $P^n_0$.
+  By the definition of $v(n)$ the attaching map of this cell lies in $P_0^{n-v(n)}$, since $P^n_{n-v(n)+1}$ is reducible.  
+\end{Def}
+
+There is a map, known as $J:\pi_r(SO)\to \pi_r^s(S)$, from the unstable homotopy of the Lie Group $SO$ to the stable homotopy groups of spheres.  This map was studied by Mahowald in \cite{imJ}.  We state the following theorem without proof.
+\begin{Theorem}
+  \label{sec:jthm}
+  There is a map 
+  \[J:\pi_r(SO)\to \pi_r^s(S)\]
+  such that
+  \begin{enumerate}
+  \item The image of $J$ in $\pi_r(S)$ is a cyclic summand.
+  \item The image is trivial if $r\not\equiv$ 0,1 or 2 (mod 8).  
+  \item The order of the image is 2 if $r>0$ is 0 or 1 mod 8.  
+  \item If $r\equiv 3$ (mod 4), the order is given by the denominator of $B_{2n}/4n$, where $B_{2n}$ is a Bernoulli number.  If $r\equiv 3$ (mod 8), the two component of the image of $J$ is $2^3$, so this image is detected by three elements in the Adams Spectral Sequence of spheres.  
+  \item In the Adams Spectral Sequence in topological degree $t-s\equiv0,3$ or 7 (mod 8), the image of the $J$ is detected by the ``tower'' of the appropriate size ending in as high a filtration as possible.  In topological degree $t-s\equiv 1$, the image of $J$ is detected by $h_1$ times the image of $J$ when $t-s\equiv 0$ (mod 8).  
+    There is never any ambiguity in determining which elements detect the $\im J$. 
+  \end{enumerate}
+\end{Theorem}
 
 
-blah blah blah
+One might consider this cheating, but we can actually infer some differentials from this.
+In particular, we know that all differentials of elements detecting $\im J$ and no differential can hit them.  However, we can also infer some non-zero differentials in the Adams Spectral Sequence for spheres when $r\equiv 7$ (mod 8).  
+If $h_0x$ detects the image of $J$ but $x$ does not, we know $x$ must either not be a cycle or be a boundary.  Thus we can infer, for instance, in $t-s=15$, that
+\[d_3(h_0^2h_4) = h_0d_3(h_0h_4)\ne 0\]
+
+
+We will need he following theorem, which we will state without proof.  It can be found in \cite{milgramGroupReps} and \cite[V.2.14-V.2.17]{H00RingSpectra}.
+
+
+\begin{Theorem}
+  \label{sec:stuntthm}
+  Let $\varphi(k)$ be the number of integers congruent to $0,1,2$ or 4 mod 8 less than or equal to $k$.  
+  The following are true of $\Sigma^n P^{n+k}_n$
+  \begin{enumerate}
+  \item $P^{n+k}_n$ is reducible iff $n+k+1\equiv 0$ (mod $2^{\varphi(k)}$).
+    Equivalently, if $\epsilon$ is the number of factors of 2 in $n+1$ and $\epsilon = 4a+b$ for $0\le b < 4$, then
+    \[v(n)=8a+2^b\]
+  \item If $n\equiv n'$ (mod $2^{\varphi(k)}$), then $P^{n+k}_n\equiv \Sigma^{n-n'}P^{n'+k}_{n'}$
+  \item If $v(n)=1$, then $a(n)=2\in \pi_0(S)$, that is, $a(n)$ is a degree two map of spheres.  
+  \item If $v(n)>1$, then $a(n)$ generates $\im J$ in $\pi_{v-1}(S)$.  
+  \end{enumerate}
+\end{Theorem}
 
 \subsection{Setting Up The Cells}
 \label{sec:setup}
@@ -21,11 +69,12 @@ Fix $n,s,k,r$ and an element $x\in E_r^{s,n}(S,X)$, represented by a map
 We are now ready to begin the long hard computation of $d_rSq^{k+n}x$.  
 
 Give $D^n$ the cell structure of one $(n-1)$-cell and one $n$-cell, respectively called $dx$ and $x$.
+This should be suggestive: we want to mentally connect these cells with the map $x$ and its boundary.  
 Let the following spaces inherit this cell structure
 \[\Gamma_0:=D^{2n}=D^n\wedge D^n\]
-\[\Gamma_1:=S^{2n-1}=D^n\wedge S^n\cup S^n\wedge D^n\]
+\[\Gamma_1:=S^{2n-1}=D^n\wedge S^{n-1}\cup S^{n-1}\wedge D^n\]
 \[\Gamma_2:=S^{2n-2}=S^{n-1}\wedge S^{n-1}\]
-$\Z/2$ acts on this cell complex and its subcomplex by swapping the wedge factors.  
+$\Z/2$ acts on coherently on the $\Gamma_i$ by swapping the wedge factors.  
 
 The cellular chains in each of these spaces are the obvious subspaces of
 \[C_*D^{2n} = \langle x\otimes x,x\otimes dx,dx\otimes x,dx\otimes dx\rangle\]
@@ -33,12 +82,10 @@ The cellular chains in each of these spaces are the obvious subspaces of
 Give $S^\infty$ the cell structure with two $k$-cells in dimension $k$, called $e_k$ and $\rho e_k$.
 Let $\Z/2=\langle \rho \rangle$ act on this CW complex antipodally, by swapping the cells in each dimension.  
 
-Similar to $Q$, we define the functor $R^j$ as
-\[P^j(X)=S^j\ltimes_{\Z/2}X\]
+Similar to $Q$, we define the functor $P^j$ as
+\[P^j(\Gamma_i)=S^j\ltimes_{\Z/2}\Gamma_i\subset Q^jD^n=P^j\Gamma_0\]
 so that
-\[P^j\Gamma_0=Q^jD^n\]
-We define this so that we can more easily refer to $P^j\Gamma_1$ as a subset of $Q^jD^n$.  
-
+We define this so that we can more easily refer to $P^j\Gamma_i$ as a filtration of $Q^jD^n$.  
 
 
 Consider the inclusion
@@ -46,7 +93,7 @@ Consider the inclusion
 The cofiber is
 \[P^k\Gamma_1\cup C(P^{k-1}\Gamma_1)
 \cong P^k\Gamma_1\cup P^{k-1}\Gamma_0\]
-Where we recall the reduced cone of a spectrum $X$ is $CX=I\wedge X$ and use the properties mentioned in \ref{sec:quadConst}.  
+where we recall the reduced cone of a spectrum $X$ is $CX=I\wedge X$ and use the properties mentioned in \ref{sec:quadConst}.  
 However, the inclusion is equivalent to the inclusion of the $2n+k-2$ skeleton (that is, all but the top dimension cell) of 
 \[\Sigma^{n-1}P^{n+k-2}_{n-1}\to \Sigma^{n-1}P^{n+k-1}_{n-1}\]
 and so the cofiber is isomorphic to $S^{2n+k-1}$.  
@@ -55,20 +102,28 @@ Thus we have that maps in $\pi_{t-s}(Z_s,Z_{s+1})$ (for some Adams resolution $Z
 \[(P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0)\to (Z_s,Z_{s+1})\]
 
 
+Our strategy for computing $d_*Sq^jx$ will be as follows.
+We will show that the boundary of the map $Sq^{k+n}x$, as a relative homotopy class,
+factors through $P^{k}\Gamma_1\cup P^{k-1}\Gamma_0$, which are stunted projective spaces.
+This boundary can be recognized as the top cell of $P^{k+1}\Gamma_2$, which we shoehorn into $P^k\Gamma_1$, and glue together in $P^{k}\Gamma_1\cap P^{k-1}\Gamma_0$ with some other homotopy class which depends on $v(k+n)$.  
+
+
+
 \subsection{Identification of the Boundary and some Chain Calculations}
 
 Recall the diagram in Corollary \ref{sec:relgeomsteen} constructing $Sq^{k+n}x$.  
 Using the notation of this section, it looks like
-
-\begin{diagram}
-  \label{fig:steengam}
-  (D^{2n+k},S^{2n+k-1}) && \rTo^{Sq^{n+k}x} & & (X_{2s-k},X_{2s-k+1})\\
-  \dTo^\approx   &           &    &    & \uTo_{\Theta_{k,s}}\\ 
-  (D^k,S^{k-1})\ltimes(\Gamma_0,\Gamma_1) & \rTo^{1\ltimes x\wedge x} & 
-  (D^k,S^{k-1})\ltimes(Z_{2s},Z_{2s+1})  & \rTo^{\overline{\psi}_+^k} &  (P^kZ_{2s},P^{k-1}Z_{2s}\cup P^kZ_{2s+r})\\
-  \dTo^{i_+} & & & & \uTo^{1\ltimes x\wedge x}\\
-  (S^k,S^{k-1})\ltimes (\Gamma_0,\Gamma_1) && \rTo &&    (P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0)
-\end{diagram}
+\begin{RefDiagram}
+  \label{sec:steengam}
+  \begin{diagram}
+    (D^{2n+k},S^{2n+k-1}) && \rTo^{Sq^{n+k}x} & & (X_{2s-k},X_{2s-k+1})\\
+    \dTo^\approx   &           &    &    & \uTo_{\Theta_{k,s}}\\ 
+    (D^k,S^{k-1})\ltimes(\Gamma_0,\Gamma_1) & \rTo^{1\ltimes x\wedge x} & 
+    (D^k,S^{k-1})\ltimes(Z_{2s},Z_{2s+1})  & \rTo^{\overline{\psi}_+^k} &  (P^kZ_{2s},P^{k-1}Z_{2s}\cup P^kZ_{2s+r})\\
+    \dTo^{i_+} & & & & \uTo^{1\ltimes x\wedge x}\\
+    (S^k,S^{k-1})\ltimes (\Gamma_0,\Gamma_1) && \rTo &&    (P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0)
+  \end{diagram}
+\end{RefDiagram}
 
 There are a few things to note.  
 First note that we lifted the boundary of $x$, which by abuse of notation we call $dx$, to $X_{s+r}$, so $d(1\ltimes x\wedge x)$ is lifted to $P^{k-1}Z_{2s}\cup P^kZ_{2s+r}$.
@@ -78,25 +133,28 @@ is a homotopy equivalence, by the argument in Section \ref{sec:setup}.
 Finally, call the right side vertical composite 
 \[\xi : (P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0) \to (X_{2s-k},X_{2s-k+1})\]
 More generally, we will use $\xi$ to represent any composite of $\Theta_{*,*}$ and $1\ltimes x\wedge x$, that is, $\xi$ is a map
-\[\xi : D^k\Gamma_i\to X_{2s+ir-k}\]
+\[\xi : P^k\Gamma_i\to X_{2s+ir-k}\]
 This indexing makes sense if we recall the definition of $\Gamma_i$ and that $dx$ lands in $X_{s+r}$, so 
 \[x\wedge x: (\Gamma_0,\Gamma_1,\Gamma_2)\to (Z_{2s},Z_{2s+r},Z_{2s+2r})\]
 
-If $f\in \pi_{k+2n}(P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0)$ is the inclusion of the top cell, then clearly $\xi_*f$ represents $Sq^{k+n}x$, and the Hurewicz image of $f$ is $e_k\otimes x\otimes x$.
-
+\begin{Remark}
+  \label{sec:xirem}
+  Notice that $\xi$ depends on $x$.  The map induced on homotopy should be thought of as a conversion between the world of cells of stunted projective spectra and the world of homotopy classes in the Adams Spectral Sequence.  
+  For instance, if $f\in \pi_{k+2n}(P^k\Gamma_0,P^k\Gamma_1\cup P^{k-1}\Gamma_0)$ is the inclusion of the top cell, then clearly $\xi_*f$ represents $Sq^{k+n}x$, and the Hurewicz image of $f$ is $e_k\otimes x\otimes x$.  Similarly, the inclusion of the cell $e_{k}\otimes dx\otimes dx$ is sent to $Sq^{n+k-1}d_r x$.  The inclusion of $e_0\otimes x\otimes dx$ goes to $xd_r x$ for some $r$.  
+\end{Remark}
 
 
 Let 
 \[\partial:S^{2n+k-1}\cong P^k\Gamma_1\cup P^{k-1}\Gamma_0 \to X_{2s-k+1}\]
 denote the boundary.  
-We want to find conditions on an element in $\pi_{2n+k-1}X_{2n-k+1}$ to recognize it.  
+We want to find conditions on an element in $\pi_{2n+k-1}X_{2s-k+1}$ to recognize it.  
 
 Recall that
-\[C^*(P^k\Gamma_i)=C^*(P^k)\otimes_{\Z/2} C^*\Gamma_i\]
+\[C^*(P^k\Gamma_i)=C^*(S^k)\otimes_{\Z/2} C^*\Gamma_i\]
 Here is an easy but important calculation
 \begin{Lemma}
   \label{sec:elemma}
-  In $H_*(P^{i+1}\Gamma_1)$, if $n\not\equiv i$ (mod 2), then
+  In the integral homology group, $H_*(P^{i+1}\Gamma_1)$, if $n\not\equiv i$ (mod 2), then
   \[e_{i+1}\otimes dx\otimes dx = (-1)^ie_i\otimes d(x\otimes x)\]
   and if $n\equiv i$ (mod 2)
   \[e_{i+1}\otimes dx\otimes dx = (-1)^ie_i\otimes d(x\otimes x)-2e_i\otimes x\otimes dx\]
@@ -113,6 +171,13 @@ Here is an easy but important calculation
   \[e_{i+1}\otimes dx\otimes dx = (-1)^ie_i\otimes d(x\otimes x) - (1+(-1)^{i+n}e_i\otimes x\otimes dx\]
 \end{proof}
 
+\begin{Remark}
+  \label{sec:assgradrem}
+  The introduction of integral homology, non unit coefficients and signs may be confusing.
+  Just recall that the situation in the Adams Spectral Sequence is actually an associated-graded version of the situation in actual homotopy or homology.
+  Multiplication by 2 in homotopy corresponds to a filtration shift in the Adams Spectral Sequence.  
+\end{Remark}
+
 Consider the inclusion
 \[P^{i+1}\Gamma_2\to P^{i+1}\Gamma_1\]
 Since  $P^{i+1}\Gamma_1=\Sigma^{n-1}P^{n+i}_{n-1}$ is $2n+i-1$ dimensional and 
@@ -126,7 +191,7 @@ Define that map to be
 \end{Lemma}
 
 \begin{proof}
-  blah blah
+  The proof is given by chasing through the various homology groups and using the equivalences previously given.  
 \end{proof}
 
 We can now recognize $\partial$.
@@ -159,7 +224,7 @@ We can now recognize $\partial$.
   Consider the diagram
   \begin{diagram}
                     &        &             &      &        S^{2n+k-1}\\
-                    &        &      & \ldDashto(4,2)^\alpha & \dTo^{\mathfrak{i}}\\
+                    &        &      & \ldDashto(4,2)^C & \dTo^{\mathfrak{i}}\\
     P^{k+1}\Gamma_2 & \rTo^e & P^k\Gamma_1 & \rTo^i & P^k\Gamma_1\cup P^{k-1}\Gamma_0\\
     \dTo_\xi       &         & \dTo^\xi    &        & \dTo^\xi\\
     X_{2s+2r-k+1}  & \rTo    & X_{2s+r-k+1}& \rTo   & X_{2s-k+1} 
@@ -168,15 +233,15 @@ We can now recognize $\partial$.
   We have
   \[P^{k+1}\Gamma_2\cong \Sigma^{n-1}P^{n+k}_{n-1}\cong S^{2n+k-1}\vee \Sigma^{n-1}P^{n+k-1}_{n-1}\]
   where the second equivalence comes from the fact that $P^{n+k}_{n+k-m+1}$ is reducible for $m\le k+2 \le v(k+n)$.  
-  Thus the homology of $P^{k+1}\Gamma_2$ is generated by $e_{k+1}\otimes dx\otimes dx$, so there is an $\alpha\in \pi_{2n+k-1}(P^{k+1}\Gamma_2)$ (for instance the inclusion of the top cell) which has this as Hurewicz image.  
-  If the diagram commutes, $\xi\alpha$ is a lift of $\xi\mathfrak{i}=\partial$ and we are done, since of course
-  \[\xi\alpha=Sq^{k+n}d_rx\]
-  By CITATION NEEDED, $k+n$ is odd, 
-  so $ie\alpha$ into has, by Lemma \ref{sec:e_hom_lem}, Hurewicz image $(-1)^ke_k\otimes d(x\otimes x)$, which is the Hurewicz image of $\mathfrak{i}$, and since Hurewicz is an isomorphism the relevant dimensions, this means $ie\alpha=\mathfrak{i}$, so the diagram commutes and we are done.
+  Thus the homology of $P^{k+1}\Gamma_2$ is generated by $e_{k+1}\otimes dx\otimes dx$, so there is an $C\in \pi_{2n+k-1}(P^{k+1}\Gamma_2)$ (for instance the inclusion of the top cell) which has this as Hurewicz image.  
+  If the diagram commutes, $\xi C$ is a lift of $\xi\mathfrak{i}=\partial$ and we are done, since, by Diagram \ref{sec:steengam} and Remark \ref{sec:xirem}, 
+  \[\xi C =Sq^{k+n}d_rx\]
+  By Theorem \ref{sec:stuntthm}, $k+n$ is odd, 
+  so $ie C$ into has, by Lemma \ref{sec:e_hom_lem}, Hurewicz image $(-1)^ke_k\otimes d(x\otimes x)$, which is the Hurewicz image of $\mathfrak{i}$, and since Hurewicz is an isomorphism the relevant dimensions, this means $ieC=\mathfrak{i}$, so the diagram commutes and we are done.
 \end{proof}
 
 \begin{Theorem}
-  Let $v(k+n)=k+1$ and let $f$ be the (readily computable) filtration of the image of $J$ in $\pi_{k}S$.  Let $a$ detect the generator of $im(J)$ in $\pi_k$.  Then
+  Let $v(k+n)=k+1$ and let $f$ be the (readily computable by Theorem \ref{sec:stuntthm}) filtration of the image of $J$ in $\pi_{k}S$.  Let $a$ detect the generator of $im(J)$ in $\pi_k$.  Then
 
   \[  \begin{array}{llccr}
     d_{2r-1}Sq^{n+k}x &=& Sq^{n+k}d_rx & \mbox{if } & 2r-1 < r + f + k\\
@@ -192,7 +257,7 @@ We can now recognize $\partial$.
 
   Let $C\in \pi_{2n+k-1}(P^{k+1}\Gamma_2)$ be the attaching map of the top cell.  
   Since $v(k+n)=k+1$, $\partial C$ can be compressed into the $(2n-2)$-skeleton of $P^{k+1}\Gamma_2$, which is equivalent to $P^0\Gamma_2\cong \Gamma_2$.  
-  By CITATION $a=\partial C$, and $C$ has Hurewicz image $e_{k+1}\otimes dx\otimes dx$.  
+  By Theorem \ref{sec:stuntthm} $a=\partial C$, and $C$ has Hurewicz image $e_{k+1}\otimes dx\otimes dx$.  
   Let
   \[R:(D^{2n-1},S^{2n-2})\to (P^0\Gamma_1,P^0\Gamma_2)\cong (\Gamma_1,\Gamma_2)\]
   bet the inclusion of the upper hemisphere of $\Gamma_1$, with Hurewicz image $x\otimes dx$ (which we can call $e_0\otimes x\otimes dx$).  
@@ -213,26 +278,26 @@ We can now recognize $\partial$.
   
   Recall that $P^{k-1}\Gamma_0$ is the cone on $P^{k-1}\Gamma_1$, so there is a homotopy equivalence
   \[\pi : P^{k-1}\Gamma_0\cup P^k\Gamma_1\to P^k\Gamma_1/P^{k-1}\Gamma_1\]
-  and, since $[eC\cap iR(Ca)]=[a]=[0]$ mod $P^{k-1}\Gamma_1$, we have
+  and, since $[eC\cap iR(Ca)]=[a]=[0]$ mod $P^{k-1}\Gamma_1= P^{k-1}\Gamma_0\cap P^k\Gamma_1$, we have
   \[\pi(iR(Ca)\cup eC) = [eC]-[iR(Ca)]\]
-  where $[\alpha]$ denote the equivalence class of such a map mod $P^{k-1}\Gamma_1$.  
+  where $[\alpha]$ denote the equivalence class of such a map $\alpha$ mod $P^{k-1}\Gamma_1$.  
   Of course, by the diagram, $iR(Ca)\equiv 0$ mod $P^{k-1}\Gamma_1$.
-  Thus the Hurewicz image of $iR(Ca)\cup eC$ is the Hurewicz image of $eC$, which by \ref{sec:e_hom_lem} is 
+  Thus the Hurewicz image of $iR(Ca)\cup eC$ is the Hurewicz image of $eC$, which by Lemma \ref{sec:e_hom_lem} is
   \[(-1)^ke_k\otimes d(x\otimes x)\]
-  and so, by CITATION NEEDED
+  and so, by Lemma \ref{sec:ilem}
   \[iR(Ca)\cup eC=\mathfrak{i}\]
   
-  Of course, we have, by \ref{fig:steengam}, we have
+  Of course, we have, by Diagram \ref{sec:steengam}, we have
   \[\xi C = Sq^{n+k}d_r x\in \pi_*(X_{2s-k+2r-1},X_{2s+2r})\]
   for $r$ small enough for this to make sense.  
-  Of course, recalling from  (Theorem \ref{sec:thetathm}) the base case in the inductive definition of
+  Of course, recalling from  Theorem \ref{sec:thetathm} the base case in the inductive definition of
   \[\xi_*:\pi_*(\Gamma_0,\Gamma_1)\to \pi_*(X_{2s+r},X_{2s+2r})\]
   we see that $\xi_*$ sends the Hurewicz preimage of $x\otimes dx (= e_0\otimes x\otimes dx)$ to $xd_rx$.  
-  We thus have in $pi_*(X_{2s-k+1},X_{2s+2r})$, using that $\xi$ commutes with $e$ and $i$, 
+  We thus have in $\pi_*(X_{2s-k+1},X_{2s+2r})$, using that $\xi_*$ commutes with $e$ and $i$, 
   \begin{eqnarray*}
-    \partial &=& \xi(eC\cup iR(Ca))\\
-    &=& \xi(eC)-\xi(iR(Ca))\\
-    &=& \xi(C)-\overline{a}\xi(R)
+    \partial &=& \xi_*(eC\cup iR(Ca))\\
+    &=& \xi_*(eC)-\xi_*(iR(Ca))\\
+    &=& \xi_*(C)-\overline{a}\xi_*(R)
   \end{eqnarray*}
   Noting that this represents $d_{2r-1}x$ and sorting through the filtrations, the theorem is proved for $k>0$
   
@@ -251,12 +316,12 @@ We can now recognize $\partial$.
   \end{diagram}
   Note that $\pi: \Gamma_1\to \Gamma_1/\Gamma_2$ is an injection on cohomology (this is just a quotient of $S^{2n-1}$ by the equator, so the map in $H_{2n-1}$ is the diagonal $\F_2\to \F_2^2$).  The intersection $eC\cap R(Ca)$ is zero mod $\Gamma_2$, so the Hurewicz image of $\pi(eC\cap R(Ca))=[eC]-[R(Ca)]$ is, using $k+n=n$ is even,
   \begin{eqnarray*}
-    e_*(e_1\otimes dx\otimes dx + 2e_0\otimes x\otimes dx 
+    e_*(e_1\otimes dx\otimes dx + 2e_0\otimes x\otimes dx) 
     &=& e_0\otimes dx\otimes x -e_0\otimes x\otimes dx + 2e_0\otimes x\otimes dx \\
     &=& e_0\otimes dx\otimes x +e_0\otimes x\otimes dx \\
     &=& e_0\otimes d(x\otimes x)
   \end{eqnarray*}
-  and thus 
+  by Lemma \ref{sec:elemma}and thus 
   \[eC\cap R(Ca)=\mathfrak{i}\]
 
   Like above, we have
@@ -283,7 +348,7 @@ We would now like to give a differential formula which puts the Hopf Invariant q
   Like before, let $C$ be the top cell in $\pi_{k+2n-1}(P^k\Gamma_1,P^{k-1}\Gamma_1)$, so that it has Hurewicz image $(-1)^ke_k\otimes d(x\otimes x)$ (we can pick either sign, so pick this one).  
   Since $P^{k-1}\Gamma_0$ is contractible, there is an isomorphism 
   \[\partial : \pi_{2n+k-1}(P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)\to \pi_{2n+k-2}(P^{k-1}\Gamma_1)\]
-  Of course the boundary of $C$, abusively denoted $\partial C$, is in the codomain, so define $A\in \pi_{2n+k-1}(P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)$ by 
+  coming from the fibration long exact sequence.  Of course the boundary of $C$, abusively denoted $\partial C$, is in the codomain, so define $A\in \pi_{2n+k-1}(P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)$ by 
   \[A=\partial^{i-1}(\partial C)\]
   and once can easily check, using the corresponding isomorphism in integral homology and the fact that the Hurewicz map on $\pi_{k+2n-1}(P^k\Gamma_1,P^{k-1}\Gamma_1)$ is an isomorphism, that the Hurewicz image of $A$ is
   \[(-1)^{k-1}2e_{k-1}\otimes x\otimes x\]
@@ -293,14 +358,14 @@ We would now like to give a differential formula which puts the Hopf Invariant q
   Since the boundary is only $2n+k-2$ dimensional (and thus has zero $2n+k-1$ homology),
   we can use the same trick as before to see that this map actually splits as 
   \[(-1)^k(e_k\otimes d(x\otimes x) + 2e_{k-1}\otimes x \otimes x)\in H_{2n+k-1}(P^k\Gamma_1\cup P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)\]
-  Thus we have that, by (Lemma \ref{sec:ilem}), 
+  Thus we have that, by Lemma \ref{sec:ilem}, 
   \[\mathfrak{i} \equiv C\cup A \mbox{ (mod $P^{k-1}\Gamma_1$)}\]
   However, since $H_{2n+k-1}P^{k-1}\Gamma_1$ is zero for dimension reasons, the long exact sequence in homology says that the inclusion
   \[H_{2n+k-1}(P^k\Gamma_1\cup P^{k-1}\Gamma_0)\to H_{2n+k-1}(P^k\Gamma_1\cup P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)\]
   is an injection so in fact, 
   \[\mathfrak{i} = C\cup A\]
   
-  Now, $A$ is divisible by 2, since it is divisible by 2 in homology.
+  Now, $A$ is divisible by 2, since it is divisible by 2 in homology and Hurewicz is a surjection.
   We have
   \[\xi_*\left(\frac{(-1)^{k-1}}{2}A\right) = Sq^{n+k-1}x \in \pi_*(X_{2s-k+1},X_{2s+2r-k+1})\]
   Since multiplying by 2 in homology is the same as pre-composing with the map detected by $h_0$, we have
@@ -316,7 +381,7 @@ We would now like to give a differential formula which puts the Hopf Invariant q
     (X_{2s-k+2},X_{2s+r-k+1}) & \lTo & (X_{2s-k+1},X_{2s+r-k+1}) & \lTo^\xi & (P^k\Gamma_1\cup P^{k-1}\Gamma_0,P^{k-1}\Gamma_1)\\
     \uTo & & &\ruTo \\
     (X_{2s+r-k},X_{2s+r-k+1}) & \lTo^\xi & (P^k\Gamma_1,P^{k-1}\Gamma_1) & \rTo & (P^{k+1}\Gamma_1,P^{k-1}\Gamma_1\cup P^{k+1}\Gamma_2)\\
-    \dTo^\approx& &   \dTo                          &      \ruTo\\
+    \dEq& &   \dTo                          &      \ruTo\\
     (X_{2s+r-k},X_{2s+r-k+1}) & \lTo^\xi & (P^k\Gamma_1,P^{k-1}\Gamma_1\cup P^k\Gamma_2) 
   \end{diagram}
   Now, consider the image of $C$ in $\pi_{2n+k-1}(P^{k+1}\Gamma_1,P^{k-1}\Gamma_1\cup P^{k+1}\Gamma_2)$.
@@ -340,7 +405,7 @@ Since $Sq^{2^i}h_i=h_{i+1}$, this formula says
 Thus the formula says that whenever $h_0h_i^2\ne 0$ in $E_2$, there is no element of Hopf Invariant 1 in $\pi_{2^i-1}^s(S^{2^{i-1}})$.  
 
 \begin{Lemma}[\cite{Wang}]
-  In $Ext^3_{\A}(\Z/2,\Z/2)$, the only relationships in elements of the form $h_ih_jh_k$ are
+  In $\Ext^3_{\A}(\Z/2,\Z/2)$, the only relationships in elements of the form $h_ih_jh_k$ are
   \[\begin{array}{lcr} h_ih_{i+1}=0 & h_1h_{i+2}^2=0 & h_i^2h_{i+2}=h_{i+1}^3\end{array}\]
   In particular, for $i\ge 3$,
   \[h_0h_i\ne 0\]

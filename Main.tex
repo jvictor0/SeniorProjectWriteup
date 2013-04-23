@@ -1,5 +1,5 @@
 \documentclass[a4paper,12pt]{article}
-\usepackage{fullpage}
+\usepackage[margin=0.75in]{geometry}
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -11,7 +11,22 @@
 \usepackage{sseq}
 \usepackage{appendix}
 \usepackage{graphicx}
+\usepackage{array}
+\usepackage{txfonts}
 
+\newenvironment{dedication}
+{
+   \cleardoublepage
+   \thispagestyle{empty}
+   \vspace*{\stretch{1}}
+   \hfill\begin{minipage}[t]{0.66\textwidth}
+   \raggedright
+}%
+{
+   \end{minipage}
+   \vspace*{\stretch{3}}
+   \clearpage
+}
 
 
 \begin{document}
@@ -25,12 +40,20 @@
 \newcommand{\F}[0]{\mathbb{F}}
 \newcommand{\binomial}[2]{\left(\begin{array}{c}#1\\#2\end{array}\right)}
 \newcommand{\from}[0]{\longleftarrow}
-\newcommand{\Ext}[0]{\mbox{Ext}}
 
 \newtheorem{Def}{Definition}[subsection]
-\newtheorem{Theorem}[Def]{Theorem}[subsection]
-\newtheorem{Lemma}[Def]{Lemma}[subsection]
-\newtheorem{Cor}[Def]{Corollary}[subsection]
+\newtheorem{Theorem}[Def]{Theorem}
+\newtheorem{Lemma}[Def]{Lemma}
+\newtheorem{Cor}[Def]{Corrolary}
+\newtheorem{RefDiagram}[Def]{Diagram}
+\newtheorem{Remark}[Def]{Remark}
+
+\newcommand{\Hom}{\operatorname{Hom}\nolimits}
+\newcommand{\Ext}{\operatorname{Ext}\nolimits}
+\newcommand{\Torsion}{\operatorname{Torsion}\nolimits}
+\newcommand{\Cyl}{\operatorname{Cyl}\nolimits}
+\newcommand{\Ker}{\operatorname{Ker}\nolimits}
+\newcommand{\im}{\operatorname{Im}\nolimits}
 
 
 
@@ -38,27 +61,38 @@
 \author{Joseph Victor}
 \maketitle
 
+\begin{dedication}
+  To my grandfather
+\end{dedication}
+
 
 \newpage
 \tableofcontents
 \newpage
+ 
 
-
-
+\input{Introduction}
+\newpage
 \input{Intro}
+\newpage
 \input{Spectra}
+\newpage
 \input{ASSSetup}
+\newpage
 \input{ProdsSteenrodASS}
+\newpage
 \input{SteenrodDifferentials}
 
 
-
+\newpage
 \appendix
 \appendixpage
 \addappheadtotoc
 \input{AppendixSteenrodOps}
+\newpage
 \input{AppendixSSEQ}
-\input{Todo}
+\newpage
+\input{AppendixComp}
 
 \newpage
 \bibliographystyle{alpha}

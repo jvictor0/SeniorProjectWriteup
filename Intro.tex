@@ -1,49 +1,53 @@
-\section{Introduction and Prerequisites}
+\section{Definitions and Prerequisites}
+
 
 Before we can get started on this journey, we will need some preliminary results.  
-We will not present every proof and every detail, but rather list the necessary results and make some remarks on their consequences. 
-We will define homotopy groups, state some theorems about their consequences, define stable groups and introduce some important technical tools: the Steenrod Operations.
+We will not present every proof and every detail, but rather list the necessary results with references and make some remarks on their consequences. 
+We will define homotopy groups, state some theorems, define stable groups and introduce an important technical tool: the Steenrod Operations.
 
 \subsection{Homotopy Groups}
 
 \label{sec:HomotopyIntro}
 
 \begin{Def}[Homotopy Groups]
-  Let $S^n$ be the $n$-sphere and $X$ be a topological space with base-point.  
+  Let $S^n$ be the $n$-sphere and $X$ be a topological space with basepoint.  
   Define the set 
   \[\pi_n(X)=[S^n,X]\]
-  be the set of homotopy classes of base-point preserving maps.  
+  be the set of homotopy classes of basepoint-preserving maps.  
   Notice that $\pi_1(X)$ is the familiar fundamental group.  
 \end{Def}
 
-We need to define the group operation on these groups, which in fact we can do for the suspension of any space $Y$
+We need to define the group operation on these groups, which in fact we can do for maps from the suspension of any space $Y$.  
 Let $\Sigma$ be the reduced suspension functor, and 
 \[f,g:\Sigma Y\to X\]
 be pointed maps, so we can form
-\[f\vee g :S^n\vee S^n\to X\]
-Let $C$ be the cone functor.  
-Since $\Sigma Y\cong CY/Y$, we can write $\Sigma Y\vee \Sigma Y\cong \Sigma Y/Y$, where we identify $Y$ as the ``equator'' of $\Sigma Y$.  
+\[f\vee g :\Sigma X\vee \Sigma Y\to X\]
+
+By collapsing the ``equator'' of $\Sigma Y$, which we identity with $Y$, we can write $\Sigma Y\vee \Sigma Y\cong \Sigma Y/Y$.  
 Letting $p: \Sigma Y\to \Sigma Y\vee \Sigma Y$ be the projection, we define
 \[f+g=(f\vee g)\circ p : \Sigma Y\to X\]
-It isn't hard to see this sum is well-defined on homotopy classes of pointed maps, homotopy-associative, has null-homotopic maps as identity and 
+It is not  hard to see this sum is well-defined on homotopy classes of pointed maps, homotopy-associative, has null-homotopic maps as identity and 
 has inverses up to homotopy, given by ``swapping the cones'' in the suspension.
 This means that $[\Sigma Y,X]$ is a group.  
 Better yet, if $\Sigma^2Y=S^2\wedge Y$ is an iterated suspension, this is an abelian group, where the homotopy $f+g\sim g+f$ is given by ``rotating'' the $S^2$ smash-factor.  
-It is an easy exercise to make these constructions precise, and they can be found in \cite{HatcherAT}.  Since $S^n=\Sigma^n(S^0)$, we have that $\pi_n(X)$ is a group and if $n\ge 2$ then it is an abelian group.  
+It is an easy exercise to make these constructions precise, and they can be found in \cite{HatcherAT}.  Since $S^n=\Sigma^n(S^0)$, we have that $\pi_n(X)$ is a group and, if $n\ge 2$, it is an abelian group.  
 
 The calculation of these homotopy groups is notoriously difficult.  
-There is no analogy of Mayer-Vietoris or Siefert-Van Kampen, making it difficult to build homotopy groups of spaces from the homotopy groups of smaller spaces.
+There is no analogy of Mayer-Vietoris or Seifert-Van Kampen, making it difficult to compute homotopy groups of spaces from the homotopy groups of smaller spaces.
 Even for the simplest and most ubiquitous spaces, spheres, these computations are a long (but, in my opinion, quite beautiful) journey.  
 We can make a few quick computations, however.  
-First of all, if $k<n$, then a map $S^k\to S^n$ is not essentially surjective, this such a map factors through $S^n-\{*\}=\R^n$, which is contractible.  
-Thus $\pi_k(S^n)=0$.  
+First of all, if $k<n$, then a map $S^k\to S^n$ is null-homotopic by cellular approximation, making $\pi_k(S^n)=0$.  
 We also have that, since $S^n$ is simply-connected for $n>1$, we have that any map from $S^n\to S^1$ factors through the universal cover, $\R$, which again is contractible.  
-This $\pi_n(S^1)=0$.  
+Thus $\pi_n(S^1)=0$.  
 You might be inclined to hope the rest of the $\pi_k(S^n)$ will fall this easily, but in fact this is the last of the easy computations.  
 
-\subsection{The Hurewicz Map}
+\subsection{Some Classical Theorems of Homotopy Theory}
 
-Just like $H_1$ is the abelianization of the fundamental group, we can relate the first nontrivial homology group to the first nontrivial homotopy group.  
+We will present three classical and invaluable theorems.  
+
+\subsubsection{The Hurewicz Map}
+
+Just like $H_1$ is the abelianization of the fundamental group of connected spaces, we can relate the first nontrivial homology group to the first nontrivial homotopy group.  
 We make the following terminology:
 \begin{Def}
 We say a space $X$ is $n$-connected if $\pi_i(X)=0$ for $i\le n$.
@@ -55,21 +59,28 @@ There is a map
 called the Hurewicz Map, given as follows.  Let $[f]\in \pi_n(X)$, and let $\alpha$ generate $H_n(S^n)$.  
 Then $h([f])=f_*(\alpha)\in H_n(X)$.  
 \begin{Theorem}[Hurewicz Theorem]
+  \label{sec:hurthm}
   Let $X$ be $n-1$ connected for $n>1$.  
   Then $h_n$ is an isomorphism and $h_{n+1}$ is a surjection.  
 \end{Theorem}
 
 This is proved in \cite[Thm~4.32]{HatcherAT}.
 
-\subsection{The Whitehead Theorem}
+\begin{Cor}
+  For all $n>0$, 
+  \[\pi_n(S^n)=\Z\]
+\end{Cor}
+
+\subsubsection{The Whitehead Theorem}
 The homotopy groups, and induced maps between them, completely determine the homotopy type of a CW-complexes.  
 
 \begin{Theorem}[Whitehead Theorem]
-  Let $f:X\to Y$ be a map of base-pointed CW-complexes, such that $f_*:\pi_n(X)\to \pi_n(Y)$ is an isomorphism.  Then $f$ is a homotopy equivalence.  
+  \label{sec:whthm}
+  Let $f:X\to Y$ be a map of basepointed CW-complexes, such that $f_*:\pi_n(X)\to \pi_n(Y)$ is an isomorphism for all $n$.  Then $f$ is a homotopy equivalence.  
 \end{Theorem}
 
 This is proved in \cite[Thm~4.5]{HatcherAT}.  
-The proof comes from the so-called Compression Lemma, which we state for it's usefulness.  It is proved in \cite[Thm~4.6]{HatcherAT}.
+The proof comes from the so-called Compression Lemma, which we state for its usefulness.  It is proved in \cite[Thm~4.6]{HatcherAT}.
 
 \begin{Lemma}[Compression Lemma]
   Let $f:(X,A)\to (Y,B)$ be a map of CW-pairs.  Suppose that for each $n$ such that $X-A$ has an $n$-cell, $\pi_n(Y/B)=0$.  Then $f$ is homotopic, relative to $A$, to a map $X\to B$.  
@@ -79,19 +90,19 @@ The proof comes from the so-called Compression Lemma, which we state for it's us
   In the notation of the Lemma, we say that $f$ is ``compressed'' to a map into $B$.  If $\pi_n(Y/B)$ is nonzero, we call the nonzero elements obstructions to compression.  
 \end{Def}
 
-\subsection{The Freudenthal Suspension Theorem}
+\subsubsection{The Freudenthal Suspension Theorem}
 
 \label{sec:Freudenthal}
 
-The homotopy groups of spheres are difficult to compute, but there is little a miracle which makes it possible to compute certain homotopy groups in a stable range.  
-Let $\Omega$ be the loop functor, and recall the adjoint relationship
-\[[\Sigma X, Y]=[X, \Omega Y]\]
-The miracle is the Fruedenthal Suspension Theorem, which is stated as follows:
+The homotopy groups of spheres are difficult to compute, but there is a little miracle which makes it possible to compute certain homotopy groups in a stable range.  
+Let $\Omega$ be the loop functor, and recall the adjoint relationship between $\Sigma$ and $\Omega$, which gives a bijection:
+\[[\Sigma X, Y]\cong[X, \Omega Y]\]
+The miracle is the Freudenthal Suspension Theorem, which is stated as follows:
 \begin{Theorem}[Freudenthal Suspension Theorem]
   Let $X$ be an $n$-connected space.  
   Then the natural map $X\to \Omega\Sigma X$ induces a map 
   \[\pi_k(X)\to \pi_k(\Omega\Sigma X)\cong\pi_{k+1}(\Sigma X)\]
-  is an isomorphism for $k\le 2n$ and an epimorphism for $k=n2+1$.  
+  which is an isomorphism for $k\le 2n$ and an epimorphism for $k=n2+1$.  
 \end{Theorem}
 \begin{Cor}
   If $n>k+1$, $\pi_{k+n}(S^n)$ is independent of $n$.
@@ -119,19 +130,20 @@ The computation of these groups will be the goal of the rest of the paper.
 \begin{Def}[Eilenberg-Maclane Space]
   Let $G$ be an abelian group.  We say that a space $K(G,n)$ is an Eilenberg-Maclane Space if
   \[\pi_k(K(G,n))=\left\{\begin{array}{cc} G & n=k \\ 0 & n\ne k\end{array}\right.\]
+  The isomorphism between $\pi_n(K(G,n))$ and $G$ is fixed.  
 \end{Def}
-There is a construction of Eilenberg-Maclane spaces which has no $i$ cells for $i<n$, but unfortunately most are infinite-dimensional and complicated.  However, these spaces have enormous theoretic importance, for the reason we will see in a second  However, given any two, a map between them can be found inducing isomorphisms in homotopy groups, meaning $K(G,n)$ is unique up to $homotopy$. 
+There is a construction of Eilenberg-Maclane spaces which has no $i$ cells for $i<n$, but unfortunately most are infinite-dimensional and complicated.  However, these spaces have enormous theoretic importance, for reasons we will see in soon.  However, given any two, a map between them can be found inducing isomorphisms in homotopy groups, meaning $K(G,n)$ is unique up to homotopy. 
 
 Now, consider 
 \[H^n(K(G,n);G)\]
-By the universal coefficient theorem, this is the same as
-\[Hom(H_n(K(G,n)),G)\cong Hom(\pi_n(K(G,n)),G)\cong Hom(G,G)\]
-using the Hurewicz Theorem.  
-This means there is a cohomology class in $i\in H^n(K(G,n);G)$ corresponding to the identity in $Hom(G,G)$, which we will call the ``fundamental class''.  
+By the universal coefficient theorem and the Hurewicz Theorem, this is the same as
+\[\Hom(H_n(K(G,n)),G)\cong \Hom(\pi_n(K(G,n)),G)\cong \Hom(G,G)\]
+This means there is a unique cohomology class in $\iota_n\in H^n(K(G,n);G)$ corresponding to the identity in $\Hom(G,G)$, which we will call the ``fundamental class''.  
+Note that this is only well defined because the isomorphism $\pi_n(K(G,n))=G$ is fixed.  
 Define
 \[\Phi:[?,K(G,n)]\to H^n(?)\]
 be the natural transformation defined by
-\[\Phi([f]) = f^*(i)\]
+\[\Phi([f]) = f^*(\iota_n)\]
 
 \begin{Theorem}
   $\Phi$ is an isomorphism
@@ -139,19 +151,17 @@ be the natural transformation defined by
 
 \begin{proof}
   First we notice that this works for $S^n$, since 
-  \[H^n(S^n;G)\cong Hom(\Z,G)\cong G\]
+  \[H^n(S^n;G)\cong \Hom(\Z,G)\cong G\]
   Let $X_i$ be the $i$-skeleton of $X$.  
   Then by CW-approximation, any $f:X_n\to K(G,n)$ is homotopic to a map of pairs
   \[f: (X_n,X_{n-1}) \to (K(G,n),*)\]
   since $K(G,n)$ can be given a cell-structure with no $n-1$ cells.  
   This means $f$ factors through a wedge of spheres 
   \[\bigvee S^n\]
-  and so in homotopy, $f$ is essentially wedge sum of elements of $\pi_n(K(G,n))=G$, $\Phi$ surjects onto $C^*(X;G)$ at the cochain level, so also at the cohomology level.
-  Thus $\Phi$ is surjective.  
-  Since, at the cochain level, maps yielding the same cochain are homotopic, and since $\Phi$ is surely well-defined on cohomology, two maps yielding the same cohomology class are homotopic.  
-  Thus $\Phi$ is also injective.  
+  and so in homotopy, $f$ is essentially wedge sum of elements of $\pi_n(K(G,n))=G$.  Thus $\Phi$ surjects onto $C^*(X;G)$ at the cochain level, so also at the cohomology level.
+  Since, at the cochain level, maps yielding the same cochain are homotopic, and since $\Phi$ is surely well-defined on cohomology, two maps yielding the same cohomology class are homotopic, so $\Phi$ is also injective.  
   
-  Letting $i:X_{n+1}\to X$ and $j:X_n\to X{n+1}$ be the inclusions, we have a diagram
+  Letting $i:X_{n+1}\to X$ and $j:X_n\to X_{n+1}$ be the inclusions, we have a diagram
   \begin{diagram}
     [X,K(G,n)] & \rTo^{i^*} & [X_{n+1},K(G,n)] & \rTo^{j^*} & [X_n,K(G,n)]\\
      \dTo^\Phi &            &   \dTo^{\Phi}    &            & \dTo_\Phi\\
@@ -159,7 +169,7 @@ be the natural transformation defined by
   \end{diagram}
   Now, if a map $f:X_n\to K(G,n)$ can be extended to $X_{n+1}$, it can be extended all the way up to $X$, since $\pi_i(K(G,n))=0$ for $i>n$, 
   so the top $i^*$ is an isomorphism.  
-  The top $j^*$ is an injection, since obstructions to extending a homotopy lies in $\pi_{n+1}(K(G,n))$, so homotopic maps from $X_n$ are homotopic in $X_{n+1}$. 
+  The top $j^*$ is an injection, since obstructions to extending a homotopy lie in $\pi_{n+1}(K(G,n))$, so homotopic maps from $X_n$ are homotopic in $X_{n+1}$. 
   Likewise, the lower $i^*$ is an isomorphism, again by cellular homology and $j^*$ is an injection.  
   Thus, because the diagram commutes ($\Phi$ is natural), $\Phi$ is an isomorphism for $X$.  
 \end{proof}
@@ -189,11 +199,11 @@ This fact will become very important later.
 
 \label{sec:HopfInvariant}
 
-The Hopf Invariant is a somewhat mysterious invariant of maps between spheres of certain sizes, however, the existence of maps whose Hopf Invariant is equal to 1 is closely related to beautiful and elementary algebraic facts, in particular, the existence of finite dimensional division algebras over $\R$.  
+The Hopf Invariant is a somewhat mysterious invariant of maps between spheres of certain sizes. The existence of maps whose Hopf Invariant is equal to one is closely related to beautiful and elementary algebraic facts, in particular, the existence of finite dimensional division algebras over $\R$.  
 We can define the invariant as follows.  
 Let $n$ be an integer
 \[f:S^{4n-1}\to S^{2n}\]
-Letting $f$ be the attaching map of a $4n$ cell, we can form the complex
+Letting $f$ be the attaching map of a $4n$ cell, so we can form the complex
 \[S^{2n}\cup_f D^{4n}\]
 It is easy to see, by cellular cohomology, that the reduced cohomology group is
 \[H^*(S^{2n}\cup_f D^{4n})=\Sigma^{2n}\Z\oplus \Sigma^{4n}\Z\]
@@ -215,11 +225,11 @@ Notice that
 \[H^*(\C P^3) = \Z[\alpha]/(\alpha^3)\]
 we have that the Hopf Invariant of $\eta$ is one.  
 
-Because the preimage of any point is a circle, the preimage of a circle is a torus, though the preimage of a line is a mobius strip.  This is described in detail in \cite[Example~4.45]{HatcherAT}, and there are numerous visualizations which can be found.  
+This is low-dimensional enough to visualize.  Because the preimage of any point is a circle, the preimage of a circle is a torus, but somehow twisted,  making the preimage of a line is a mobius strip.  This is described in detail in \cite[Example~4.45]{HatcherAT}, and there are numerous visualizations which can be found.  
 
 We will state an easy lemma.  
 \begin{Lemma}
-  The Hopf Invariant is a map of groups 
+  The Hopf Invariant is a homomorphism of groups 
   \[H:\pi_{4n-1}(S^{2n})\to \Z\]
 \end{Lemma}
 
@@ -230,7 +240,7 @@ As promised, there is a fantastic equivalence
   \begin{enumerate}
     \item There is an element of Hopf Invariant 1 in $\pi_{2n-1}(S^n)$.
     \item There is an $n$-dimensional division algebra over $\R$ (not necessarily commutative or associative).
-    \item There is a map $\mu:S^{n-1}\times S^{n-1}\to S^{n-1}$ an a point $e\in S^{n-1}$ with $\mu(e,x)=\mu(x,e)=x$ for all $x\in S^{n-1}$.  We say that $S^{n-1}$ is an H-space in this case. 
+    \item There is a map $\mu:S^{n-1}\times S^{n-1}\to S^{n-1}$ and a point $e\in S^{n-1}$ with $\mu(e,x)=\mu(x,e)=x$ for all $x\in S^{n-1}$.  We say that $S^{n-1}$ is an H-space in this case. 
   \end{enumerate}
 \end{Theorem}
 Note that when $n$ is odd, the hairy ball theorem makes (2) and (3) false.  
@@ -278,10 +288,11 @@ Note that when $n$ is odd, the hairy ball theorem makes (2) and (3) false.
   which implies that
   \[\Phi^*:H^*(S^{n}\cup_f D^{2n},S^{2})\to H^*(S^{2n})\]
   is an isomorphism.
-  Finally, the bottom row is Kunneth, the bottom left vertical map is an isomorphism because it is a deformation retract and the bottom right vertical map is induced by a homeomorphism.  
+  Finally, the bottom row is K\"{u}nneth, the bottom left vertical map is an isomorphism because it is a deformation retract and the bottom right vertical map is induced by a homeomorphism.  
 
 
-Finally, to see that (1) implies (2), first prove that there only exists elements of Hopf Invariant One in $\pi_3(S^2),\pi_7(S^4)$ and $\pi_{15}(S^8)$, corresponding to the complex numbers, quaternions and octonions.  
+  Finally, (1) will imply (2) once we have classified all maps of Hopf Invariant One and associated to them a division algebra.  
+  
 
 \end{proof}
 
@@ -292,9 +303,9 @@ Finally, to see that (1) implies (2), first prove that there only exists element
 
 It turns out that we can explicitly describe the cohomology operations in $\F_2$ cohomology in terms of operations called Steenrod Squares.  
 Loosely speaking, the Steenrod Squares measure the failure of the cup product square to be commutative.  
-The $\F_2$-algebra they generate is known as the Steenrod Algebra, $\A$, and it will show up thoughout the calculations of the stable homotopy groups.  
+The $\F_2$-algebra they generate is known as the Steenrod Algebra, denoted $\A$.  It will show up throughout the calculations of the stable homotopy groups.  
 
-We will first give an axiomatic description of the Steenrod Squares.
+We will give a (non-minimal) axiomatic description of the Steenrod Squares.
 The let $H^n$ denote mod-2 cohomology.  
 
 \begin{Theorem}[Steenrod Squares]
@@ -308,7 +319,7 @@ The let $H^n$ denote mod-2 cohomology.
     \item $Sq^i$ is 0 for all $i>n$.  
     \item The Cartan formula holds:
       \[Sq^k(a\smile b)=\sum_{i+j=k}Sq^i(a)\smile Sq^j(b)\]
-    \item The Adem relationship holds if $i<2j$
+    \item Adem relations hold: if $i<2j$
       \[Sq^iSq^j=\sum_{k=0}^{i/2}\binomial{j-k-1}{i-2k}Sq^{i+j-k}Sq^k\]
     \item The Steenrod Squares commute with the natural isomorphism $H^n(X)\to H^{n+1}(\Sigma X)$, that is, they are ``stable''
   \end{enumerate}
@@ -319,17 +330,17 @@ The construction of these operations specifically is given in \cite[Ch~2]{Mosher
 The construction is similar to \ref{sec:SteenrodConstruction}, but in a different setting.  
 
 We want to consider some of the structure of the Steenrod Algebra $\A$.  
-First notice that by the Adem relation it is spanned by $Sq^{i_1}Sq^{i_n}...Sq^{i_k}$ where $i_j\ge i_{j+1}$.  
+First notice that, by the Adem relations, it is spanned, as an $\F_2$-vector space, by $Sq^{i_1}Sq^{i_n}...Sq^{i_k}$, where $i_j\ge i_{j+1}$.  
 It is shown in \cite[Ch~6]{MosherTengora} that these elements are actually a basis, known as the Serre-Cartan Basis.  
-The Steenrod Algebra is also, importantly, a Hopf Algebra, with comultiplication given
+The Steenrod Algebra is also, importantly, a Hopf Algebra, with comultiplication given by
 \[Sq^i\mapsto \sum_{i=j+k} Sq^j\otimes Sq^k\]
 One can check that this, with the obvious unit and counit (sending $Sq^0$ to 1, other squares to 0 and 1 to $Sq^0$) is a Hopf Algebra.  
 
-An easy application of the definition is to show the nonexistence of elements of Hopf Invariant 1.
-For a space to have Hopf Invariant 1, it must have Hopf Invariant 1 (mod 2).  
-Let $X=S^{2n}\cup_f e^{4n}$ be a space with Hopf Invariant, and let $\eta$ and $\mu$ be the two generators of cohomology.  
+An easy application of the definition is to show the nonexistence of certain elements of Hopf Invariant One.
+For a space to have Hopf Invariant One, it must have Hopf Invariant equivalent to 1 (mod 2).  
+Consider $X=S^{2n}\cup_f e^{4n}$, and let $\eta$ and $\mu$ be the two generators of $\F_2$-cohomology.  
 Then if the Hopf Invariant of $f$ is 1 (mod 2), $Sq^{2n}(\eta)=\mu$.
-Now, suppose that we can decompose the operation (as a natural transformation, or equivalently, as an element of the Steenrod Algebra) $Sq^{2n}$ as a sum of products of Steenrod Squares $Sq^i$ with $i<2n$.  
+Now, suppose that we can decompose the operation $Sq^{2n}$ (considered as a natural transformation, or equivalently, as an element of the Steenrod Algebra) as a sum of products of Steenrod Squares $Sq^i$ with $i<2n$.  
 This means that $Sq^{2n}(\eta)=0$, because for all $0<i<2n$ we have $H^{i+2n}(X)=0$, since there are no cells in these dimensions.  
 But it is an easy exercise in using the Adem relation to show $Sq^i$ is decomposable if $i$ is not a power of 2.  
 Thus we can conclude
