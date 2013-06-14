@@ -59,6 +59,17 @@ This will cause the differential formulas to take different forms depending on t
 Lastly, one of the formulas proved in this section will apply to the elements corresponding to potential Hopf Invariant maps. 
 Thus formula will put to rest once and for all the classification of finite dimensional division algebras over $\R$.  
 
+In Section 7 we will discuss computational methods which we implemented for computing in the Adams Spectral Sequence.
+The computations come in two main flavors.  
+The first is deterministically computing necessary homological constructions, including computing Ext over $\A$, products in Ext and Steenrod Operations on Ext.
+It will turn out that computing Steenrod Operations naively is beyond the reach of modern computing technology.
+Bruner and Nassau used a trick to reduce the computational load in low-dimensions.
+We prove that this trick \emph{does not} generalize but instead reduces to general graph-coloring, which is known to be NP-complete.
+The statement and proof of these complexity results are original, to the best of the author's knowledge.  
+The second flavor of computational methods will be to reason about the differentials by automatically propagating known information through the spectral sequences using techniques inspired by machine verification.  
+It turns out that most of the known differentials can be computed in this way.  
+These methods are also novel, to the best of the author's knowledge.  
+
 The author is greatly indebted to Jos\'e Cantarero and Gunnar Carlsson for the time and guidance given and for detailed and helpful comments in drafting the paper, 
 and Bob Bruner for suggesting computational methods.  
 

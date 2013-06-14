@@ -335,7 +335,7 @@ Thus if later we find more information about the $c_i$, our differential table w
 Often, our root is an And node, since it represents a conjunction of constraints.  
 We say a BoolNode is ``toplevel'' if it is a direct child of the root And node, or if it is the root and not an And node.
 If either a BoolVar $b$ is toplevel and not already in the variable table, we add an entry to the variable table simply associating $b$ to True.
-Likewise for the negated situation, Not (BoolVar $b$), where we associate $b$ to False.
+Likewise for the negated situation, Not $b$, we associate $b$ to False.
 
 
 \subsubsection{Linear Solving}
@@ -348,8 +348,49 @@ The resulting system is equivalent to the first, but simpler.
 When doing the Gaussian Elimination, we order the basis vectors so that BoolVars come first, since they are preferred as pivots.  
 For each equation of the form $b+x_1+...+x_n=0$ in the simplified system where the pivot $b$ is a BoolVar, add an entry to the variable table sending $b$ to the BoolNode representing $x_1+...+x_n$.
 For the remaining nontrivial equations in the simplified system, simply put them back to the original formula.  
+Note that sometimes it could be the case that $n=1$ and $x_1=1$ or $n=0$, in which case we sould just be setting $b$ to a Bool literal.  
 If anything is accomplished during this step (that is, anything is added to the variable table), we start the simplification step over.
 Otherwise, we go on to the next step.  
 
 \subsubsection{Updating $E_r$ Tables}
+
+We wish to update the tables containing preferred bases for each $E_r^{s,t}$.  
+We first simplify everything that needs to be simplified in the differential and projection tables, and update the timestamps accordingly.
+In the best case, for a given $E_{r-1}^{s,t}$, we know all the differentials into and out of this summand exactly, in which case we can simply pick projections onto
+$E_{r}^{s,t}$ and basis for $E_r^{s,t}$.  
+If, we know all of the cycles but not all of the differentials into $E_{r-1}^{s,t}$ (and therefor not all of the boundary relations), we can still often say something intelligent.  
+First pick an ordered basis of literals for the cycles $x_1,..,,x_n$ to over approximate our basis.  The actual basis for $E_r^{s,t}$ will be some a subset of these.
+If we know the differentials into $E_{r-1}^{s,t}$, the way we would pick relations is by saying if some $y$ in our basis of $E_{r-1}^{s-r,t-r+1}$ has
+\[dy=\sum_{i=1}^ic_ix_i\ne 0\]
+then, for the minimum $i$ with $c_i\ne 0$, add the relation $x_i=\sum_{j=i+1}^nc_ix_i$.  
+We can implement logical ``if-then-else'' statements by 
+\[\mbox{If $c$ Then $x$ Else $y$} ~:=~ \mbox{Sum} (\mbox{ScalarMult $c$ $x$}) (\mbox{ScalarMult (Not $c$) $y$})\]
+Thus we can make our basis out of the cascading ``if-then-else'' statements on if the basis vectors in $E_{r-1}^{s-r,t-r+1}$ have a coefficient of $x_i$.
+Since most $E_r^{s,t}$ are low dimensional (usually 1-dim or 2-dim, occasionally 3-dim in as far as we can compute Ext), the terms stay reasonably small.
+Since often times we can know some but not all of the coefficients of the $x_i$, these statements will often simplify further to exactly the sort of reasoning a human might attempt: for instance, if either $dy=x$ or $dy=0$ for the only nonzero $y$ in $E_{r-1}^{s-r,t-r+1}$, we might say the basis element corresponding to $x$ is
+\[\mbox{If $c$ Then $0$ Else $x$}~:=~\mbox{ScalarMult (Not $c$) $x$} \]
+where $c$ is some BoolVar which is true if and only if $dy=x$.  
+
+\subsubsection{Generating Constraints}
+
+Our three main sources of constraints are the Leibniz Rule (Theorem \ref{sec:product}), the Steenrod Operations (Theorem \ref{sec:dsq1}, Theorem \ref{sec:dsq2}, Theorem \ref{sec:hdiffthm}), and the $J$-homomorphism  (Theorem \label{sec:jthm}).  
+The Leibniz Rule constraints are easy to generate: for each new cycle $x\in E_r$ discovered in the previous round and each other known cycle $y$, write
+\[d_r(x)y+d_r(y)x+d_r(xy)=0\]
+The Steenrod Operation constraints follow much the same way, provided you can evaluate $Sq^ix$, or read them from a table.  
+
+The $\im(J)$ constraints are more interesting.
+Since we can calculate the $\im(J)$ directly on the $E_2$ page, we can generate a few constraints.  
+Since the $\im(J)$ must last until $E_\infty$, we know these elements are always cycles and never boundaries.
+Better yet, we know that if $x\notin\im(J)$ and $h_0x\in\im(J)$, then $x$ must at some point not be a cycle.  
+Many differentials, especially near $t-s\equiv 7$, can be inferred just from these rules and Leibniz, so we take great advantage of this.  
+
+
+  
+
+
+
+
+
+
+
 

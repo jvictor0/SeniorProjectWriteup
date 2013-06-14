@@ -1,20 +1,24 @@
-\section{Spectral Sequence Data}
+\section{Spectral Sequence Diagram}
 \label{sec:sseq}
 
-\[\begin{sseq}{80}{80}
-  \ssdropbull
-  \ssdroplabel{(0,0)}
-  \ssmove 2 1
-  \ssdropbull \ssname{a}
-  \ssdropbull \ssname{b}
-  \ssdroplabel[RU]{(2,1)}
-  \ssmove 0 4
-  \ssdropcircled{8}
-  \ssmoveto 5 4
-  \ssdropboxed{\spadesuit} \ssname{c}
-  \ssgoto a \ssgoto c \ssstroke
-  \ssdroplabel[R]{(5,4)}
-  \ssmove 3 0
-  \ssdropbull
-\end{sseq}\]
+\[ \begin{sseq}[xlabelstep=8,ylabelstep=4,entrysize=.3cm]{60}{30}
+    \input{ssinstbig.tex}
+  \end{sseq}
+  \]
+
+
+We have here the a diagram of the first 60 stems of the $E_2$ page of the Adams Spectral Sequence.
+The horizontal axis represents $t-s$ and the vertical axis represents $s$, so a dot in slot $(s,t-s)$ represents a $\F_2$ summand of $E_s^{s,t-s}$.  
+The vertical lines represent multiplication (see Theorem~\ref{sec:product}) by $h_0$, which converges to multiplication by 2 in $\pi_*^s$ (see Section \ref{sec:hopfe2} and \ref{sec:HopfInvariant} for a definition of $h_i$); that is, $x$ and $h_0x$ are connected by a vertical line.  
+The diagonal lines represent multiplication by $h_1$, the element of the Adams Spectral Sequence detecting the Hopf Fibration.  
+A differential, $d_r$, will go 1 square left and $r$ squares up.  
+Just from this picture and the Leibniz Rule, we can reason that all differentials before $t-s=13$ are zero, as mentioned in Section \label{sec:pairing}.
+
+One is forced to notice an imperfect pattern when staring at this picture.  
+The patterns in the dots seem to have a mod-8 periodicity  towards the top of the diagram.
+This is very deep and consequence of the so-called $J$-homomorphism and Bott Periodicity.  
+Indeed, the three dots in the ``triangles'' at the top of the diagram ending when $t-s\equiv 3$ (mod 8) are exactly the image of $J$.
+The long vertical ``towers'' when $t-s\equiv 7$ (mod 8) are also the image of the $J$ in those dimensions, and these converge to large cyclic summands of $\pi_*^s$, in part explaining the apparent jump in the size of $\pi_i^s$ when $i\equiv 7$ (mod 8).  
+The reader is referred to \cite{RavenelGreen} and \cite{imJ}.   
+
 
